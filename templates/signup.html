@@ -1,0 +1,102 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0,user-scalable=0"/>
+<title>CA</title>
+
+<!--Stylesheet-->
+{% block custom_css %}
+<link href="{% static 'fonts/fonts.css' %}" rel="stylesheet">
+<link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+<link href="{% static 'css/nice-select.css' %}" rel="stylesheet">
+<link href="{% static 'css/jquery-ui.min.css' %}" rel="stylesheet">
+<link href="{% static 'css/style.css' %}" rel="stylesheet">
+<link href="{% static 'css/responsive.css' %}" rel="stylesheet">
+{% endblock custom_css %}
+<!--Stylesheet-->
+
+</head>
+<body>
+
+<!--Wrapper Start-->
+<div class="wrapper_main">
+    <div class="login_main">
+        <div class="login_wrap">
+            <div class="logo"><a href="#"><img src="{% static 'images/logo.svg' %}" alt=""></a></div>
+            <div class="login_form">
+                <form class="needs-validation" method="POST" novalidate>
+                    {% csrf_token %}
+                    {% if msg != None %}
+                        <div class="alert alert-danger">
+                            {{msg}}
+                        </div>
+                    {% endif %}
+                    <span class="form_row">
+                        <input class="input_text form-control" id="username" type="text" placeholder="Username" name="username" required>
+                        <div class="invalid-feedback">
+                            Please choose a Username.
+                        </div>
+                    </span>
+                    <span class="form_row">
+                        <input class="input_text form-control" id="email" type="text" placeholder="Email" name="email" required>
+                        <div class="invalid-feedback">
+                            Enter Your Email
+                        </div>
+                    </span>
+                    <span class="form_row password">
+                        <input class="input_text form-control" id="password" name="password" type="password" placeholder="Password" required>
+                        <i class="icon"></i>
+                        <div class="invalid-feedback">
+                            Please choose a Password.
+                        </div>
+                    </span>
+                    <span class="form_row password">
+                        <input class="input_text form-control" id="c_password" type="password" placeholder="Confirm Password" name="c_password" required>
+                        <i class="icon"></i>
+                        <div class="invalid-feedback">
+                            Confirm Password.
+                        </div>
+                    </span>
+                    <span class="form_row btnbox"><input class="btn primary_btn" type="submit" value="Signup"></span>
+                </form>
+            </div>
+        </div>
+        <div class="contact_link"><a href="contact-us">Contact Us</a></div>
+    </div>
+</div>
+<!--Wrapper End-->
+
+<!--JavaScript-->
+<script src="{% static 'js/jquery-3.3.1.min.js' %}"></script>
+<script src="{% static 'js/jquery-ui.min.js' %}"></script>
+<script src="{% static 'js/popper.min.js' %}"></script>
+<script src="{% static 'js/bootstrap.min.js' %}"></script>
+<script src="{% static 'js/jquery.nice-select.js' %}"></script>
+<script src="{% static 'js/script.js' %}"></script>
+<!--JavaScript-->
+<script>
+    (function () {
+        'use strict'
+      
+        // Fetch all the forms we want to apply custom Bootstrap validation styles to
+        var forms = document.querySelectorAll('.needs-validation')
+      
+        // Loop over them and prevent submission
+        Array.prototype.slice.call(forms)
+          .forEach(function (form) {
+            form.addEventListener('submit', function (event) {
+              if (!form.checkValidity()) {
+                event.preventDefault()
+                event.stopPropagation()
+              }
+      
+              form.classList.add('was-validated')
+            }, false)
+          })
+      })()
+</script>
+
+</body>
+</html>

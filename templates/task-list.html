@@ -1,0 +1,710 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0,user-scalable=0"/>
+<title>CA</title>
+
+<!--Stylesheet-->
+<link href="fonts/fonts.css" rel="stylesheet">
+<link href="css/bootstrap.min.css" rel="stylesheet">
+<link href="css/nice-select.css" rel="stylesheet">
+<link href="css/jquery-ui.min.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+<link href="css/jquery.datetimepicker.css" rel="stylesheet" />
+<link href="css/style.css" rel="stylesheet">
+<link href="css/style-v2.css" rel="stylesheet">
+<link href="css/style-v3.css" rel="stylesheet">
+<link href="css/responsive.css" rel="stylesheet">
+<!--Stylesheet-->
+</head>
+<body>
+
+<!-- Header ST -->
+<header id="header">
+    <div class="header_wrapper flxrow">
+        <div class="ham_menubtn">
+            <a href="#">
+                <span></span>
+                <span></span>
+                <span></span>
+            </a>
+        </div>
+        <div class="logo"><a href="index.html"><img src="images/logo.svg" alt="logo"></a></div>
+        <div class="header_breadcrumb">
+            <ul>
+                <li><a href="#">Home</a></li>
+                <li>Profile</li>
+            </ul>
+        </div>
+        <div class="user_login flxrow">
+            <a href="#">
+                <div class="img" style="background-image:url(images/user-img.png);"></div>
+                <div class="name">
+                    <p>Alexander <span>Admin</span></p>
+                    <div class="down-caret">
+                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M5 7.5L10 12.5L15 7.5" stroke="black" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </div>
+                </div>
+            </a>
+            <div class="user_dropdown">
+                <ul>
+                    <li><a href="#">Profile <span><img src="images/profile-icon.svg" alt="profile icon"></span></a></li>
+                    <li><a href="#">Keyboard Shortcuts <span><img src="images/shortcut-icon.svg" alt="shortcut icon"></span></a></li>
+                    <li><a href="#">Logout <span><img src="images/logout-icon.svg" alt="logout icon"></span></a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</header>
+<!-- Header ED -->
+
+<!--Wrapper Start-->
+<div class="wrappers_main">
+    <div class="page-wrapper admin-edit-page task-list-page">
+        <div class="page-title d-flex flex-wrap align-items-center justify-content-between">
+            <h1>Task manager</h1>
+            <div class="top_add_file">
+                <a href="javascript:void(0)">
+                    Add Task
+                    <i>
+                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M10 4.16699V15.8337" stroke="#2C3E50" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                            <path d="M4.16663 10H15.8333" stroke="#2C3E50" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                        </svg>
+
+                    </i>
+                </a>
+            </div>
+        </div>
+        <div class="task-block">
+            <div class="task_row">
+                <div class="task_col">
+                    <div class="top_titles d-flex flex-wrap align-items-center">
+                        <h3>Todo</h3> 
+                        <i>
+                            <svg width="20" height="21" viewBox="0 0 20 21" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <rect y="0.5" width="20" height="20" rx="2" fill="#F6F9FF"/>
+                                <path d="M10 4.66602V16.3327" stroke="#2A76F4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M4.1665 10.5H15.8332" stroke="#2A76F4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </i>
+                    </div>
+                    <div class="column">
+                        <div class="portlet">
+                            <div class="drg_full">
+                                <div class="portlet-header-top">
+                                    <div class="left_numb">
+                                        #1
+                                    </div>
+                                    <div class="right_portlet_date">
+                                        23 March 
+                                        <i>
+                                            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M10.5002 2.91602H3.50016C2.85583 2.91602 2.3335 3.43835 2.3335 4.08268V11.0827C2.3335 11.727 2.85583 12.2493 3.50016 12.2493H10.5002C11.1445 12.2493 11.6668 11.727 11.6668 11.0827V4.08268C11.6668 3.43835 11.1445 2.91602 10.5002 2.91602Z" stroke="#959595" stroke-linecap="round" stroke-linejoin="round"/>
+                                                <path d="M9.3335 1.75V4.08333" stroke="#959595" stroke-linecap="round" stroke-linejoin="round"/>
+                                                <path d="M4.6665 1.75V4.08333" stroke="#959595" stroke-linecap="round" stroke-linejoin="round"/>
+                                                <path d="M2.3335 6.41602H11.6668" stroke="#959595" stroke-linecap="round" stroke-linejoin="round"/>
+                                                <path d="M5.83317 8.75H4.6665V9.91667H5.83317V8.75Z" stroke="#959595" stroke-linecap="round" stroke-linejoin="round"/>
+                                            </svg>
+                                        </i>
+                                    </div>
+                                </div>
+                                <div class="portlet-header">
+                                    <h3>Task title</h3>
+                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Orci amet magna amet, tempor donec sit nunc, ultricies.</p>
+                                </div>
+                                <div class="user_specify">
+                                    <i>
+                                        <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M9 15.75C12.7279 15.75 15.75 12.7279 15.75 9C15.75 5.27208 12.7279 2.25 9 2.25C5.27208 2.25 2.25 5.27208 2.25 9C2.25 12.7279 5.27208 15.75 9 15.75Z" stroke="#959595" stroke-linecap="round" stroke-linejoin="round"/>
+                                            <path d="M9 9.75C10.2426 9.75 11.25 8.74264 11.25 7.5C11.25 6.25736 10.2426 5.25 9 5.25C7.75736 5.25 6.75 6.25736 6.75 7.5C6.75 8.74264 7.75736 9.75 9 9.75Z" stroke="#959595" stroke-linecap="round" stroke-linejoin="round"/>
+                                            <path d="M4.62598 14.1368C4.81161 13.5189 5.19145 12.9774 5.70916 12.5925C6.22687 12.2076 6.85486 11.9998 7.49998 12H10.5C11.1459 11.9998 11.7747 12.208 12.2928 12.5938C12.8108 12.9796 13.1906 13.5223 13.3755 14.1412" stroke="#959595" stroke-linecap="round" stroke-linejoin="round"/>
+                                        </svg>
+                                    </i>
+                                    John Doe
+                                </div>
+                                <div class="portlet-bottom">
+                                    <div class="task_priority">
+                                        Urgent
+                                    </div>
+                                    <div class="asap_txt">
+                                        ASAP
+                                    </div>
+                                    <div class="priority_status high_priority">
+                                        High
+                                        <i>
+                                            <svg width="14" height="19" viewBox="0 0 14 19" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M7 9C9 6.04 7 2 6 1C6 4.038 4.227 5.741 3 7C1.774 8.26 1 10.24 1 12C1 13.5913 1.63214 15.1174 2.75736 16.2426C3.88258 17.3679 5.4087 18 7 18C8.5913 18 10.1174 17.3679 11.2426 16.2426C12.3679 15.1174 13 13.5913 13 12C13 10.468 11.944 8.06 11 7C9.214 10 8.209 10 7 9Z" stroke="#198754" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                            </svg>
+                                                
+                                        </i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="task_col">
+                    <div class="top_titles d-flex flex-wrap align-items-center">
+                        <h3>In-Progress</h3> 
+                        <i>
+                            <svg width="20" height="21" viewBox="0 0 20 21" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <rect y="0.5" width="20" height="20" rx="2" fill="#F6F9FF"/>
+                                <path d="M10 4.66602V16.3327" stroke="#2A76F4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M4.1665 10.5H15.8332" stroke="#2A76F4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </i>
+                    </div>
+                    <div class="column">
+                        <div class="portlet">
+                            <div class="drg_full">
+                                <div class="portlet-header-top">
+                                    <div class="left_numb">
+                                        #1
+                                    </div>
+                                    <div class="right_portlet_date">
+                                        23 March 
+                                        <i>
+                                            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M10.5002 2.91602H3.50016C2.85583 2.91602 2.3335 3.43835 2.3335 4.08268V11.0827C2.3335 11.727 2.85583 12.2493 3.50016 12.2493H10.5002C11.1445 12.2493 11.6668 11.727 11.6668 11.0827V4.08268C11.6668 3.43835 11.1445 2.91602 10.5002 2.91602Z" stroke="#959595" stroke-linecap="round" stroke-linejoin="round"/>
+                                                <path d="M9.3335 1.75V4.08333" stroke="#959595" stroke-linecap="round" stroke-linejoin="round"/>
+                                                <path d="M4.6665 1.75V4.08333" stroke="#959595" stroke-linecap="round" stroke-linejoin="round"/>
+                                                <path d="M2.3335 6.41602H11.6668" stroke="#959595" stroke-linecap="round" stroke-linejoin="round"/>
+                                                <path d="M5.83317 8.75H4.6665V9.91667H5.83317V8.75Z" stroke="#959595" stroke-linecap="round" stroke-linejoin="round"/>
+                                            </svg>
+                                        </i>
+                                    </div>
+                                </div>
+                                <div class="portlet-header">
+                                    <h3>Task title</h3>
+                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Orci amet magna amet, tempor donec sit nunc, ultricies.</p>
+                                </div>
+                                <div class="portlet-bottom">
+                                    <div class="task_priority">
+                                        Urgent
+                                    </div>
+                                    <div class="asap_txt">
+                                        ASAP
+                                    </div>
+                                    <div class="priority_status high_priority">
+                                        High
+                                        <i>
+                                            <svg width="14" height="19" viewBox="0 0 14 19" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M7 9C9 6.04 7 2 6 1C6 4.038 4.227 5.741 3 7C1.774 8.26 1 10.24 1 12C1 13.5913 1.63214 15.1174 2.75736 16.2426C3.88258 17.3679 5.4087 18 7 18C8.5913 18 10.1174 17.3679 11.2426 16.2426C12.3679 15.1174 13 13.5913 13 12C13 10.468 11.944 8.06 11 7C9.214 10 8.209 10 7 9Z" stroke="#198754" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                            </svg>
+                                                
+                                        </i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="portlet">
+                            <div class="drg_full">
+                                <div class="portlet-header-top">
+                                    <div class="left_numb">
+                                        #1
+                                    </div>
+                                    <div class="right_portlet_date">
+                                        23 March 
+                                        <i>
+                                            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M10.5002 2.91602H3.50016C2.85583 2.91602 2.3335 3.43835 2.3335 4.08268V11.0827C2.3335 11.727 2.85583 12.2493 3.50016 12.2493H10.5002C11.1445 12.2493 11.6668 11.727 11.6668 11.0827V4.08268C11.6668 3.43835 11.1445 2.91602 10.5002 2.91602Z" stroke="#959595" stroke-linecap="round" stroke-linejoin="round"/>
+                                                <path d="M9.3335 1.75V4.08333" stroke="#959595" stroke-linecap="round" stroke-linejoin="round"/>
+                                                <path d="M4.6665 1.75V4.08333" stroke="#959595" stroke-linecap="round" stroke-linejoin="round"/>
+                                                <path d="M2.3335 6.41602H11.6668" stroke="#959595" stroke-linecap="round" stroke-linejoin="round"/>
+                                                <path d="M5.83317 8.75H4.6665V9.91667H5.83317V8.75Z" stroke="#959595" stroke-linecap="round" stroke-linejoin="round"/>
+                                            </svg>
+                                        </i>
+                                    </div>
+                                </div>
+                                <div class="portlet-header">
+                                    <h3>Task title</h3>
+                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Orci amet magna amet, tempor donec sit nunc, ultricies.</p>
+                                </div>
+                                <div class="portlet-bottom">
+                                    <div class="task_priority">
+                                        Urgent
+                                    </div>
+                                    <div class="asap_txt">
+                                        ASAP
+                                    </div>
+                                    <div class="priority_status high_priority">
+                                        High
+                                        <i>
+                                            <svg width="14" height="19" viewBox="0 0 14 19" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M7 9C9 6.04 7 2 6 1C6 4.038 4.227 5.741 3 7C1.774 8.26 1 10.24 1 12C1 13.5913 1.63214 15.1174 2.75736 16.2426C3.88258 17.3679 5.4087 18 7 18C8.5913 18 10.1174 17.3679 11.2426 16.2426C12.3679 15.1174 13 13.5913 13 12C13 10.468 11.944 8.06 11 7C9.214 10 8.209 10 7 9Z" stroke="#198754" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                            </svg>
+                                                
+                                        </i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="task_col">
+                    <div class="top_titles d-flex flex-wrap align-items-center">
+                        <h3>Completed</h3> 
+                        <i>
+                            <svg width="20" height="21" viewBox="0 0 20 21" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <rect y="0.5" width="20" height="20" rx="2" fill="#F6F9FF"/>
+                                <path d="M10 4.66602V16.3327" stroke="#2A76F4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M4.1665 10.5H15.8332" stroke="#2A76F4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </i>
+                    </div>
+                    <div class="column">
+                        <div class="portlet">
+                            <div class="drg_full">
+                                <div class="portlet-header-top">
+                                    <div class="left_numb">
+                                        #1
+                                    </div>
+                                    <div class="right_portlet_date">
+                                        23 March 
+                                        <i>
+                                            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M10.5002 2.91602H3.50016C2.85583 2.91602 2.3335 3.43835 2.3335 4.08268V11.0827C2.3335 11.727 2.85583 12.2493 3.50016 12.2493H10.5002C11.1445 12.2493 11.6668 11.727 11.6668 11.0827V4.08268C11.6668 3.43835 11.1445 2.91602 10.5002 2.91602Z" stroke="#959595" stroke-linecap="round" stroke-linejoin="round"/>
+                                                <path d="M9.3335 1.75V4.08333" stroke="#959595" stroke-linecap="round" stroke-linejoin="round"/>
+                                                <path d="M4.6665 1.75V4.08333" stroke="#959595" stroke-linecap="round" stroke-linejoin="round"/>
+                                                <path d="M2.3335 6.41602H11.6668" stroke="#959595" stroke-linecap="round" stroke-linejoin="round"/>
+                                                <path d="M5.83317 8.75H4.6665V9.91667H5.83317V8.75Z" stroke="#959595" stroke-linecap="round" stroke-linejoin="round"/>
+                                            </svg>
+                                        </i>
+                                    </div>
+                                </div>
+                                <div class="portlet-header">
+                                    <h3>Task title</h3>
+                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Orci amet magna amet, tempor donec sit nunc, ultricies.</p>
+                                </div>
+                                <div class="portlet-bottom">
+                                    <div class="task_priority">
+                                        Urgent
+                                    </div>
+                                    <div class="asap_txt">
+                                        ASAP
+                                    </div>
+                                    <div class="priority_status high_priority">
+                                        High
+                                        <i>
+                                            <svg width="14" height="19" viewBox="0 0 14 19" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M7 9C9 6.04 7 2 6 1C6 4.038 4.227 5.741 3 7C1.774 8.26 1 10.24 1 12C1 13.5913 1.63214 15.1174 2.75736 16.2426C3.88258 17.3679 5.4087 18 7 18C8.5913 18 10.1174 17.3679 11.2426 16.2426C12.3679 15.1174 13 13.5913 13 12C13 10.468 11.944 8.06 11 7C9.214 10 8.209 10 7 9Z" stroke="#198754" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                            </svg>
+                                                
+                                        </i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="portlet">
+                            <div class="drg_full">
+                                <div class="portlet-header-top">
+                                    <div class="left_numb">
+                                        #1
+                                    </div>
+                                    <div class="right_portlet_date">
+                                        23 March 
+                                        <i>
+                                            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M10.5002 2.91602H3.50016C2.85583 2.91602 2.3335 3.43835 2.3335 4.08268V11.0827C2.3335 11.727 2.85583 12.2493 3.50016 12.2493H10.5002C11.1445 12.2493 11.6668 11.727 11.6668 11.0827V4.08268C11.6668 3.43835 11.1445 2.91602 10.5002 2.91602Z" stroke="#959595" stroke-linecap="round" stroke-linejoin="round"/>
+                                                <path d="M9.3335 1.75V4.08333" stroke="#959595" stroke-linecap="round" stroke-linejoin="round"/>
+                                                <path d="M4.6665 1.75V4.08333" stroke="#959595" stroke-linecap="round" stroke-linejoin="round"/>
+                                                <path d="M2.3335 6.41602H11.6668" stroke="#959595" stroke-linecap="round" stroke-linejoin="round"/>
+                                                <path d="M5.83317 8.75H4.6665V9.91667H5.83317V8.75Z" stroke="#959595" stroke-linecap="round" stroke-linejoin="round"/>
+                                            </svg>
+                                        </i>
+                                    </div>
+                                </div>
+                                <div class="portlet-header">
+                                    <h3>Task title</h3>
+                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Orci amet magna amet, tempor donec sit nunc, ultricies.</p>
+                                </div>
+                                <div class="portlet-bottom">
+                                    <div class="task_priority">
+                                        Urgent
+                                    </div>
+                                    <div class="asap_txt">
+                                        ASAP
+                                    </div>
+                                    <div class="priority_status medium_priority">
+                                        Medium
+                                        <i>
+                                            <svg width="14" height="19" viewBox="0 0 14 19" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M7 9C9 6.04 7 2 6 1C6 4.038 4.227 5.741 3 7C1.774 8.26 1 10.24 1 12C1 13.5913 1.63214 15.1174 2.75736 16.2426C3.88258 17.3679 5.4087 18 7 18C8.5913 18 10.1174 17.3679 11.2426 16.2426C12.3679 15.1174 13 13.5913 13 12C13 10.468 11.944 8.06 11 7C9.214 10 8.209 10 7 9Z" stroke="#198754" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                            </svg>
+                                                
+                                        </i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="portlet">
+                            <div class="drg_full">
+                                <div class="portlet-header-top">
+                                    <div class="left_numb">
+                                        #1
+                                    </div>
+                                    <div class="right_portlet_date">
+                                        23 March 
+                                        <i>
+                                            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M10.5002 2.91602H3.50016C2.85583 2.91602 2.3335 3.43835 2.3335 4.08268V11.0827C2.3335 11.727 2.85583 12.2493 3.50016 12.2493H10.5002C11.1445 12.2493 11.6668 11.727 11.6668 11.0827V4.08268C11.6668 3.43835 11.1445 2.91602 10.5002 2.91602Z" stroke="#959595" stroke-linecap="round" stroke-linejoin="round"/>
+                                                <path d="M9.3335 1.75V4.08333" stroke="#959595" stroke-linecap="round" stroke-linejoin="round"/>
+                                                <path d="M4.6665 1.75V4.08333" stroke="#959595" stroke-linecap="round" stroke-linejoin="round"/>
+                                                <path d="M2.3335 6.41602H11.6668" stroke="#959595" stroke-linecap="round" stroke-linejoin="round"/>
+                                                <path d="M5.83317 8.75H4.6665V9.91667H5.83317V8.75Z" stroke="#959595" stroke-linecap="round" stroke-linejoin="round"/>
+                                            </svg>
+                                        </i>
+                                    </div>
+                                </div>
+                                <div class="portlet-header">
+                                    <h3>Task title</h3>
+                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Orci amet magna amet, tempor donec sit nunc, ultricies.</p>
+                                </div>
+                                <div class="portlet-bottom">
+                                    <div class="task_priority">
+                                        Urgent
+                                    </div>
+                                    <div class="asap_txt">
+                                        ASAP
+                                    </div>
+                                    <div class="priority_status">
+                                        Low
+                                        <i>
+                                            <svg width="14" height="19" viewBox="0 0 14 19" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M7 9C9 6.04 7 2 6 1C6 4.038 4.227 5.741 3 7C1.774 8.26 1 10.24 1 12C1 13.5913 1.63214 15.1174 2.75736 16.2426C3.88258 17.3679 5.4087 18 7 18C8.5913 18 10.1174 17.3679 11.2426 16.2426C12.3679 15.1174 13 13.5913 13 12C13 10.468 11.944 8.06 11 7C9.214 10 8.209 10 7 9Z" stroke="#198754" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                            </svg>
+                                                
+                                        </i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="task_col">
+                    <div class="top_titles d-flex flex-wrap align-items-center">
+                        <h3>Verified</h3> 
+                        <i>
+                            <svg width="20" height="21" viewBox="0 0 20 21" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <rect y="0.5" width="20" height="20" rx="2" fill="#F6F9FF"/>
+                                <path d="M10 4.66602V16.3327" stroke="#2A76F4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M4.1665 10.5H15.8332" stroke="#2A76F4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </i>
+                    </div>
+                    <div class="column">
+                        <div class="portlet">
+                            <div class="drg_full">
+                                <div class="portlet-header-top">
+                                    <div class="left_numb">
+                                        #1
+                                    </div>
+                                    <div class="right_portlet_date">
+                                        23 March 
+                                        <i>
+                                            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M10.5002 2.91602H3.50016C2.85583 2.91602 2.3335 3.43835 2.3335 4.08268V11.0827C2.3335 11.727 2.85583 12.2493 3.50016 12.2493H10.5002C11.1445 12.2493 11.6668 11.727 11.6668 11.0827V4.08268C11.6668 3.43835 11.1445 2.91602 10.5002 2.91602Z" stroke="#959595" stroke-linecap="round" stroke-linejoin="round"/>
+                                                <path d="M9.3335 1.75V4.08333" stroke="#959595" stroke-linecap="round" stroke-linejoin="round"/>
+                                                <path d="M4.6665 1.75V4.08333" stroke="#959595" stroke-linecap="round" stroke-linejoin="round"/>
+                                                <path d="M2.3335 6.41602H11.6668" stroke="#959595" stroke-linecap="round" stroke-linejoin="round"/>
+                                                <path d="M5.83317 8.75H4.6665V9.91667H5.83317V8.75Z" stroke="#959595" stroke-linecap="round" stroke-linejoin="round"/>
+                                            </svg>
+                                        </i>
+                                    </div>
+                                </div>
+                                <div class="portlet-header">
+                                    <h3>Task title</h3>
+                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Orci amet magna amet, tempor donec sit nunc, ultricies.</p>
+                                </div>
+                                <div class="portlet-bottom">
+                                    <div class="task_priority">
+                                        Urgent
+                                    </div>
+                                    <div class="asap_txt">
+                                        ASAP
+                                    </div>
+                                    <div class="priority_status high_priority">
+                                        High
+                                        <i>
+                                            <svg width="14" height="19" viewBox="0 0 14 19" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M7 9C9 6.04 7 2 6 1C6 4.038 4.227 5.741 3 7C1.774 8.26 1 10.24 1 12C1 13.5913 1.63214 15.1174 2.75736 16.2426C3.88258 17.3679 5.4087 18 7 18C8.5913 18 10.1174 17.3679 11.2426 16.2426C12.3679 15.1174 13 13.5913 13 12C13 10.468 11.944 8.06 11 7C9.214 10 8.209 10 7 9Z" stroke="#198754" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                            </svg>
+                                                
+                                        </i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="portlet">
+                            <div class="drg_full">
+                                <div class="portlet-header-top">
+                                    <div class="left_numb">
+                                        #1
+                                    </div>
+                                    <div class="right_portlet_date">
+                                        23 March 
+                                        <i>
+                                            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M10.5002 2.91602H3.50016C2.85583 2.91602 2.3335 3.43835 2.3335 4.08268V11.0827C2.3335 11.727 2.85583 12.2493 3.50016 12.2493H10.5002C11.1445 12.2493 11.6668 11.727 11.6668 11.0827V4.08268C11.6668 3.43835 11.1445 2.91602 10.5002 2.91602Z" stroke="#959595" stroke-linecap="round" stroke-linejoin="round"/>
+                                                <path d="M9.3335 1.75V4.08333" stroke="#959595" stroke-linecap="round" stroke-linejoin="round"/>
+                                                <path d="M4.6665 1.75V4.08333" stroke="#959595" stroke-linecap="round" stroke-linejoin="round"/>
+                                                <path d="M2.3335 6.41602H11.6668" stroke="#959595" stroke-linecap="round" stroke-linejoin="round"/>
+                                                <path d="M5.83317 8.75H4.6665V9.91667H5.83317V8.75Z" stroke="#959595" stroke-linecap="round" stroke-linejoin="round"/>
+                                            </svg>
+                                        </i>
+                                    </div>
+                                </div>
+                                <div class="portlet-header">
+                                    <h3>Task title</h3>
+                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Orci amet magna amet, tempor donec sit nunc, ultricies.</p>
+                                </div>
+                                <div class="portlet-bottom">
+                                    <div class="task_priority">
+                                        Urgent
+                                    </div>
+                                    <div class="asap_txt">
+                                        ASAP
+                                    </div>
+                                    <div class="priority_status medium_priority">
+                                        Medium
+                                        <i>
+                                            <svg width="14" height="19" viewBox="0 0 14 19" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M7 9C9 6.04 7 2 6 1C6 4.038 4.227 5.741 3 7C1.774 8.26 1 10.24 1 12C1 13.5913 1.63214 15.1174 2.75736 16.2426C3.88258 17.3679 5.4087 18 7 18C8.5913 18 10.1174 17.3679 11.2426 16.2426C12.3679 15.1174 13 13.5913 13 12C13 10.468 11.944 8.06 11 7C9.214 10 8.209 10 7 9Z" stroke="#198754" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                            </svg>
+                                                
+                                        </i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="portlet">
+                            <div class="drg_full">
+                                <div class="portlet-header-top">
+                                    <div class="left_numb">
+                                        #1
+                                    </div>
+                                    <div class="right_portlet_date">
+                                        23 March 
+                                        <i>
+                                            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M10.5002 2.91602H3.50016C2.85583 2.91602 2.3335 3.43835 2.3335 4.08268V11.0827C2.3335 11.727 2.85583 12.2493 3.50016 12.2493H10.5002C11.1445 12.2493 11.6668 11.727 11.6668 11.0827V4.08268C11.6668 3.43835 11.1445 2.91602 10.5002 2.91602Z" stroke="#959595" stroke-linecap="round" stroke-linejoin="round"/>
+                                                <path d="M9.3335 1.75V4.08333" stroke="#959595" stroke-linecap="round" stroke-linejoin="round"/>
+                                                <path d="M4.6665 1.75V4.08333" stroke="#959595" stroke-linecap="round" stroke-linejoin="round"/>
+                                                <path d="M2.3335 6.41602H11.6668" stroke="#959595" stroke-linecap="round" stroke-linejoin="round"/>
+                                                <path d="M5.83317 8.75H4.6665V9.91667H5.83317V8.75Z" stroke="#959595" stroke-linecap="round" stroke-linejoin="round"/>
+                                            </svg>
+                                        </i>
+                                    </div>
+                                </div>
+                                <div class="portlet-header">
+                                    <h3>Task title</h3>
+                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Orci amet magna amet, tempor donec sit nunc, ultricies.</p>
+                                </div>
+                                <div class="portlet-bottom">
+                                    <div class="task_priority">
+                                        Urgent
+                                    </div>
+                                    <div class="asap_txt">
+                                        ASAP
+                                    </div>
+                                    <div class="priority_status">
+                                        Low
+                                        <i>
+                                            <svg width="14" height="19" viewBox="0 0 14 19" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M7 9C9 6.04 7 2 6 1C6 4.038 4.227 5.741 3 7C1.774 8.26 1 10.24 1 12C1 13.5913 1.63214 15.1174 2.75736 16.2426C3.88258 17.3679 5.4087 18 7 18C8.5913 18 10.1174 17.3679 11.2426 16.2426C12.3679 15.1174 13 13.5913 13 12C13 10.468 11.944 8.06 11 7C9.214 10 8.209 10 7 9Z" stroke="#198754" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                            </svg>
+                                                
+                                        </i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="rightside_task_form">
+            <div class="closed_task_form">
+                <a href="javascript:void(0)">
+                    <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="14" cy="14" r="14" fill="#E44B4B"/>
+                        <path d="M18.7432 9.74219L9.25788 19.2275" stroke="white" stroke-width="2"/>
+                        <path d="M18.7432 19.2285L9.25788 9.74323" stroke="white" stroke-width="2"/>
+                    </svg>
+                </a>
+            </div>
+            <div class="rightside_task_form_inner">
+                <form action="">
+                        <div class="side_form">
+                        <div class="form_row">
+                            <div class="form_col_1-1">
+                                <div class="input_container">
+                                    <label for="">Task title</label>
+                                    <input type="text" name="" id="" placeholder="Task title" class="input_field">
+                                </div>
+                            </div>
+                            <div class="form_col_1-1">
+                                <div class="input_container">
+                                    <label for="">Description</label>
+                                    <textarea name="" id="" placeholder="Description" class="input_field"></textarea>
+                                </div>
+                            </div>
+                            <div class="form_col_1-2">
+                                <div class="input_container">
+                                    <label for="">Due date</label>
+                                    <input type="text" id="duedatefield" name="" placeholder="Due date" class="input_field">
+                                </div>
+                            </div>
+                            <div class="form_col_1-2">
+                                <div class="input_container">
+                                    <label for="">Status</label>
+                                    <select name="" id="">
+                                        <option value="Draft">Draft</option>
+                                        <option value="Inbox">Inbox</option>
+                                        <option value="Send">Send</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form_col_1-2">
+                                <div class="input_container">
+                                    <label for="">Assign to</label>
+                                    <select name="" id="">
+                                        <option value="John">John</option>
+                                        <option value="John 2">John 2</option>
+                                        <option value="John 3">John 3</option>
+                                        <option value="John 4">John 4</option>
+                                        <option value="John 5">John 5</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form_col_1-2">
+                                <div class="input_container">
+                                    <label for="">Priority</label>
+                                    <select name="" id="">
+                                        <option value="High">High</option>
+                                        <option value="Medium">Medium</option>
+                                        <option value="Low">Low</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form_col_1-1">
+                                <div class="input_container select_multiple_container">
+                                    <label for="">Tags</label>
+                                    <select class="form-control select-multiple" multiple="multiple">
+                                        <option selected="selected">Blog cat</option>
+                                        <option selected="selected">Unknow</option>
+                                      </select>
+                                </div>
+                            </div>
+                            <div class="form_col_1-1">
+                                <hr>
+                            </div>
+                            <div class="form_col_1-1 form_col_heading">
+                                <h3>Time Tracking</h3>
+                            </div>
+                            <div class="form_col_1-2">
+                                <div class="input_container">
+                                    <label for="">Start date</label>
+                                    <input type="text" name="" id="search-from-date" class="input_field">
+                                </div>
+                            </div>
+                            <div class="form_col_1-2">
+                                <div class="input_container">
+                                    <label for="">Start date</label>
+                                    <input type="text" name="" id="search-to-date" class="input_field">
+                                </div>
+                            </div>
+                            <div class="form_col_1-1">
+                                <div class="form_submit flxrow">
+                                    <input class="primary_btn" type="submit" value="Save">
+                                    <input type="submit" value="Delete" class="primary_btn cancle_btn">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!--Wrapper End-->
+
+<!--JavaScript-->
+<script src="js/jquery-3.3.1.min.js"></script>
+<script src="js/jquery-ui.min.js"></script>
+<!-- <script src="js/jquery.ui.touch-punch.min.js"></script> -->
+<script src="js/popper.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+<script src="js/jquery.datetimepicker.full.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/jquery.nice-select.js"></script>
+<script src="js/script.js"></script>
+<script>
+    jQuery( function() {
+
+        jQuery( ".column" ).sortable({
+          connectWith: ".column",
+          handle: ".drg_full",
+          cancel: ".portlet-toggle",
+          placeholder: "portlet-placeholder"
+        });
+     
+        jQuery( ".portlet" )
+          .addClass( "ui-widget ui-widget-content ui-helper-clearfix" )
+          .find( ".portlet-header" )
+            .addClass( "ui-widget-header" )
+            .prepend( "<span class='ui-icon ui-icon-minusthick portlet-toggle'></span>");
+     
+       jQuery( ".portlet-toggle" ).on( "click", function() {
+          var icon = jQuery( this );
+          icon.toggleClass( "ui-icon-minusthick ui-icon-plusthick" );
+          icon.closest( ".portlet" ).find( ".portlet-content" ).toggle();
+        });
+        //jQuery('.ui-sortable').draggable();
+        
+    } );
+    jQuery(".select-multiple").select2({
+        tags: true,
+        /*tokenSeparators: [',', ' ']*/
+    });
+    jQuery(function(){
+        jQuery('#search-from-date').datetimepicker({
+         format:'d/m/Y H:i',
+         onShow:function( ct ){
+          this.setOptions({
+           maxDate:jQuery('#search-to-date').val()?jQuery('#search-to-date').val():false
+          })
+         },
+         //timepicker:false
+        });
+        jQuery('#search-to-date').datetimepicker({
+         format:'d/m/Y H:i',
+         onShow:function( ct ){
+          this.setOptions({
+           minDate:jQuery('#search-from-date').val()?jQuery('#search-from-date').val():false
+          })
+         },
+         //timepicker:false
+        });
+        jQuery('#duedatefield').datetimepicker({
+         format:'d/m/Y',
+         timepicker:false
+        });
+       });
+       jQuery(document).on('click','.top_add_file a, .task_col .top_titles i ,.ui-sortable .ui-widget.ui-widget-content', function(e) {
+            jQuery('body').addClass('open_sidebar');
+            jQuery('.rightside_task_form').addClass('active');
+       });
+       jQuery(".closed_task_form a").on('click', function(e) {
+            jQuery('body').removeClass('open_sidebar');
+            jQuery('.rightside_task_form').removeClass('active');
+       });
+</script>
+<!--JavaScript-->
+
+</body>
+</html>

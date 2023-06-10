@@ -1,0 +1,261 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+<head>
+
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0,user-scalable=0"/>
+<title>CA</title>
+
+<!--Stylesheet-->
+{% block custom_css %}
+<link href="{% static 'fonts/fonts.css' %}" rel="stylesheet">
+<link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+<link href="{% static 'css/nice-select.css' %}" rel="stylesheet">
+<link href="{% static 'css/jquery.mCustomScrollbar.css' %}" rel="stylesheet">
+<link href="{% static 'css/style.css' %}" rel="stylesheet">
+<link href="{% static 'css/responsive.css' %}" rel="stylesheet">
+{% endblock custom_css %}
+
+<!--Stylesheet-->
+
+</head>
+<body class="">
+    
+    <!-- Header ST -->
+    <header id="header">
+    <div class="header_wrapper flxrow">
+        <div class="ham_menubtn">
+            <a href="#">
+                <span></span>
+                <span></span>
+                <span></span>
+            </a>
+        </div>
+        
+        <div class="logo"><a href="index.html"><img src="{% static 'images/logo.svg' %}" alt="logo"></a></div>
+        <div class="search_head">
+            <form action="">
+                <div class="search_head_inner">
+                    <input type="text" class="input-search" placeholder="Search here...">
+                    <div class="search_results_wrap">
+                        <div class="search_results_inner">
+                            <div class="saearch_list_blk">
+                                <h4>Clients</h4>
+                                <div class="saearch_list_main saearch_client_list">
+                                    <!-- Repeat Div Start -->
+                                    <a href="javascript:void(0)" class="saearch_list">
+                                        <div class="left_image">
+                                            <div class="image_inner">
+                                                <img src="{% static 'images/clients_image_1.png'%}" alt="">
+                                            </div>
+                                        </div>
+                                        <div class="right_saearch_content">
+                                            <div class="search_name">Arya Kagathara</div>
+                                            <div class="deacription">Individual</div>
+                                        </div>
+                                    </a>
+                                    <a href="javascript:void(0)" class="saearch_list">
+                                        <div class="left_image">
+                                            <div class="image_inner">
+                                                <img src="{% static 'images/clients_image_2.png' %}" alt="">
+                                            </div>
+                                        </div>
+                                        <div class="right_saearch_content">
+                                            <div class="search_name">Hindustan Corporation</div>
+                                            <div class="deacription">Partnership - <strong>Arya Kagathara</strong></div>
+                                        </div>
+                                    </a>
+                                    <!-- Repeat Div End -->
+                                </div>
+                            </div>
+
+                            <div class="saearch_list_blk">
+                                <h4>Tasks</h4>
+                                <div class="saearch_list_main">
+                                    <!-- Repeat Div Start -->
+                                    <a href="javascript:void(0)" class="saearch_list">
+                                        <div class="left_image">
+                                            <div class="image_inner">
+                                                <img src="{% static 'images/edit-icon-dark.svg' %}" alt="">
+                                            </div>
+                                        </div>
+                                        <div class="right_saearch_content">
+                                            <div class="search_name">Complete IT filing of Arya Kagathara</div>
+                                            <div class="deacription">High - <strong>Pending</strong></div>
+                                        </div>
+                                    </a>
+                                    <a href="javascript:void(0)" class="saearch_list">
+                                        <div class="left_image">
+                                            <div class="image_inner">
+                                                <img src="{% static 'images/edit-icon-dark.svg' %}" alt="">
+                                            </div>
+                                        </div>
+                                        <div class="right_saearch_content">
+                                            <div class="search_name">ITR 2022</div>
+                                            <div class="deacription">Medium - <strong>Completed</strong></div>
+                                        </div>
+                                    </a>
+                                    <!-- Repeat Div End -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="searchbtn-row flxrow">
+                        <div class="search-filter">
+                            <div class="search_filter_inner">
+                                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M11.6667 6.66683C12.5871 6.66683 13.3333 5.92064 13.3333 5.00016C13.3333 4.07969 12.5871 3.3335 11.6667 3.3335C10.7462 3.3335 10 4.07969 10 5.00016C10 5.92064 10.7462 6.66683 11.6667 6.66683Z" stroke="black" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                    <path d="M3.33337 5H10" stroke="black" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                    <path d="M13.3334 5H16.6667" stroke="black" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                    <path d="M6.66667 11.6668C7.58714 11.6668 8.33333 10.9206 8.33333 10.0002C8.33333 9.07969 7.58714 8.3335 6.66667 8.3335C5.74619 8.3335 5 9.07969 5 10.0002C5 10.9206 5.74619 11.6668 6.66667 11.6668Z" stroke="black" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                    <path d="M3.33337 10H5.00004" stroke="black" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                    <path d="M8.33337 10H16.6667" stroke="black" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                    <path d="M14.1667 16.6668C15.0871 16.6668 15.8333 15.9206 15.8333 15.0002C15.8333 14.0797 15.0871 13.3335 14.1667 13.3335C13.2462 13.3335 12.5 14.0797 12.5 15.0002C12.5 15.9206 13.2462 16.6668 14.1667 16.6668Z" stroke="black" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                    <path d="M3.33337 15H12.5" stroke="black" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                    <path d="M15.8334 15H16.6667" stroke="black" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                            </div>
+                            <div class="user_dropdown">
+                                <ul>
+                                    <li><a href="#">All <span><img src="{% static 'images/job_icon_gray.svg' %}" alt="All List icon"></span></a></li>
+                                    <li><a href="#">Jobs <span><img src="{% static 'images/job_icon_gray.svg' %}" alt="Job icon"></span></a></li>
+                                    <li><a href="#">Clients <span><img src="{% static 'images/user_icon_gray.svg' %}" alt="Client icon"></span></a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <!-- <input type="submit" value="submit"> -->
+                        <button type="submit">
+                            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M8.33333 14.1667C11.555 14.1667 14.1667 11.555 14.1667 8.33333C14.1667 5.11167 11.555 2.5 8.33333 2.5C5.11167 2.5 2.5 5.11167 2.5 8.33333C2.5 11.555 5.11167 14.1667 8.33333 14.1667Z" stroke="black" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M17.5 17.5L12.5 12.5" stroke="black" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <a href="#" class="mobile_src_btn">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M8.33333 14.1667C11.555 14.1667 14.1667 11.555 14.1667 8.33333C14.1667 5.11167 11.555 2.5 8.33333 2.5C5.11167 2.5 2.5 5.11167 2.5 8.33333C2.5 11.555 5.11167 14.1667 8.33333 14.1667Z" stroke="black" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                <path d="M17.5 17.5L12.5 12.5" stroke="black" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+            </svg>
+        </a>
+        <div class="user_login flxrow">
+            
+            <a href="#" class="admin-btn">
+                <div class="img" style="background-image:url({% static 'images/user-img.png' %});"></div>
+                <div class="name">
+                    <p>Alexander <span>Admin</span></p>
+                    <div class="down-caret">
+                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M5 7.5L10 12.5L15 7.5" stroke="black" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </div>
+                </div>
+            </a>
+            <div class="user_dropdown">
+                <ul>
+                    <li><a href="#">Profile <span><img src="{% static 'images/profile-icon.svg' %}" alt="profile icon"></span></a></li>
+                    <li><a href="#">Keyboard Shortcuts <span><img src="{% static 'images/shortcut-icon.svg' %}" alt="shortcut icon"></span></a></li>
+                    <li><a href="#">Logout <span><img src="{% static 'images/logout-icon.svg' %}" alt="logout icon"></span></a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</header>
+<!-- Header ED -->
+
+<!--Wrapper Start-->
+<div class="wrapper_main">
+    <div class="dashboard flxrow">
+        <aside class="sidebar flxfix">
+            <div class="menu">
+                <ul>
+                    <li><a href="#"><span><img src="{% static 'images/home-icon.svg' %}" alt="home icon"></span>Home</a></li>
+                    <li><a href="client-edit"><span><img src="{% static 'images/clients-icon.svg' %}" alt="clients icon"></span>Clients</a></li>
+                    <li><a href="#"><span><img src="{% static 'images/job-icon.svg' %}" alt="job icon"></span>Jobs</a></li>
+                    <li><a href="#"><span><img src="{% static 'images/manage-icon.svg' %}" alt="manage icon"></span>Manage Employees</a></li>
+                    <li><a href="#"><span><img src="{% static 'images/inquiry-icon.svg' %}" alt="inquiry icon"></span>Inquiry</a></li>
+                    <li><a href="#"><span><img src="{% static 'images/announcements-icon.svg' %}" alt="announcements icon"></span>Announcements</a></li>
+                </ul>
+            </div>
+        </aside>
+        <div class="dashboard-container flxflexi">
+            <div class="announce-row flxrow">
+                <div class="an-col-1">
+                    <div class="announcebox flxrow">
+                        <div class="info flxflexi">
+                            <h4>Important Announcements</h4>
+                            <p>Please check the latest announcements to stay updated.</p>
+                            <div class="btnbox"><a href="#" class="primary_btn">Read more</a></div>
+                        </div>
+                        <div class="image flxfix">
+                            <img src="{% static 'images/announce-img.png' %}" alt="announce">
+                        </div>
+                    </div>
+                </div>
+                <div class="an-col-2">
+                    <div class="newsbox" id="newsContent">
+                        <div class="news-row">
+                            <div class="item">
+                                <h6>a Latin sch ampdesd a Latin scholar from ampde from at ...</h6>
+                                <p>2 days ago</p>
+                            </div>
+                            <div class="item">
+                                <h6>a Latin sch ampdesd a Latin scholar from ampde from at ...</h6>
+                                <p>2 days ago</p>
+                            </div>
+                            <div class="item">
+                                <h6>a Latin sch ampdesd a Latin scholar from ampde from at ...</h6>
+                                <p>2 days ago</p>
+                            </div>
+                            <div class="item">
+                                <h6>a Latin sch ampdesd a Latin scholar from ampde from at ...</h6>
+                                <p>2 days ago</p>
+                            </div>
+                            <div class="item">
+                                <h6>a Latin sch ampdesd a Latin scholar from ampde from at ...</h6>
+                                <p>2 days ago</p>
+                            </div>
+                            <div class="item">
+                                <h6>a Latin sch ampdesd a Latin scholar from ampde from at ...</h6>
+                                <p>2 days ago</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="chart-row flxrow">
+                <div class="ch-col">
+                    <div class="chartbox barChart">
+                        <h3>Jobs</h3>
+                        <canvas id="barChart"></canvas>
+                    </div>
+                </div>
+                <div class="ch-col">
+                    <div class="chartbox pieChart">
+                        <h3>Client</h3>
+                        <canvas id="pieChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--Wrapper End-->
+
+<!--JavaScript-->
+<script src="{% static 'js/jquery-3.3.1.min.js' %}"></script>
+<script src="{% static 'js/jquery-ui.min.js' %}"></script>
+<!-- <script src="{% static 'js/popper.min.js' %}"></script> -->
+<script src="{% static 'js/bootstrap.min.js' %}"></script>
+<script src="{% static 'js/jquery.nice-select.js' %}"></script>
+<script src="{% static 'js/jquery.mCustomScrollbar.concat.min.js' %}"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js' %}"></script>
+<script src="{% static 'js/developer-chart.js' %}"></script>
+<script src="{% static 'js/script.js' %}"></script>
+<!--JavaScript-->
+
+</body>
+</html>

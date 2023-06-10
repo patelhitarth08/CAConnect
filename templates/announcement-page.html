@@ -1,0 +1,308 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0,user-scalable=0"/>
+<title>CA</title>
+
+<!--Stylesheet-->
+<link href="fonts/fonts.css" rel="stylesheet">
+<link href="css/bootstrap.min.css" rel="stylesheet">
+<link href="css/nice-select.css" rel="stylesheet">
+<link href="css/jquery-ui.min.css" rel="stylesheet">
+<link href="css/datatables.min.css" rel="stylesheet">
+<link href="css/style.css" rel="stylesheet">
+<link href="css/style-v3.css" rel="stylesheet">
+<link href="css/style-v2.css" rel="stylesheet">
+<link href="css/responsive.css" rel="stylesheet">
+<!--Stylesheet-->
+
+</head>
+<body>
+
+<!-- Header ST -->
+<header id="header">
+    <div class="header_wrapper flxrow">
+        <div class="ham_menubtn">
+            <a href="#">
+                <span></span>
+                <span></span>
+                <span></span>
+            </a>
+        </div>
+        <div class="logo"><a href="index.html"><img src="images/logo.svg" alt="logo"></a></div>
+        <div class="text_head">
+            <ul class="flxrow"><li><a href="#">Clients   </a></li><li class="active"><a href="#">/ Details</a></li></ul>
+        </div>
+        
+        <div class="user_login flxrow">
+            <a href="#">
+                <div class="img" style="background-image:url(images/user-img.png);"></div>
+                <div class="name">
+                    <p>Alexander <span>Admin</span></p>
+                    <div class="down-caret">
+                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M5 7.5L10 12.5L15 7.5" stroke="black" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </div>
+                </div>
+            </a>
+            <!-- <div class="user_dropdown">
+                <ul>
+                    <li><a href="#">Profile <span><img src="images/profile-icon.svg" alt="profile icon"></span></a></li>
+                    <li><a href="#">Keyboard Shortcuts <span><img src="images/shortcut-icon.svg" alt="shortcut icon"></span></a></li>
+                    <li><a href="#">Logout <span><img src="images/logout-icon.svg" alt="logout icon"></span></a></li>
+                </ul>
+            </div> -->
+        </div>
+    </div>
+</header>
+<!-- Header ED -->
+
+<!--Wrapper Start-->
+<div class="wrapper_main">
+        <div class="dash_wrap_inner announcement-page">
+
+            <div class="announcements-main">
+                <div class="ann-main-top flxrow">
+                    <h3>Announcements</h3>
+                    <div class="ann-main-top__dropdown">
+                        <a href="#">Sort By Date <span><img src="images/drop-down__arrow.svg" alt=""></span></a>
+                        <div class="ann-main-top__dropdown_box flxrow">
+                            <a href="#">Accending <span><img src="images/Accending_icon.svg" alt=""></span></a>
+                            <a href="#">Descending <span><img src="images/Descending.svg" alt=""></span></a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="ann-main-bottom">
+
+                    <div class="ann-main-bottom_wrap">
+
+                    <div class="ann-main__box">
+                        <h5>Title</h5>
+                        <span>2 days ago</span>
+                        <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book</p>
+                        <div class="btn-grp flxrow">
+                            <div class="btn-box edit_btn">
+                                <a href="#"><svg width="20" height="20" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M1.3335 13.6668H4.66683L13.4168 4.91676C13.8589 4.47473 14.1072 3.87521 14.1072 3.25009C14.1072 2.62497 13.8589 2.02545 13.4168 1.58342C12.9748 1.1414 12.3753 0.893066 11.7502 0.893066C11.125 0.893066 10.5255 1.1414 10.0835 1.58342L1.3335 10.3334V13.6668Z" stroke="#A6ABBD" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                </a>
+                            </div>
+                            <div class="btn-box delete_btn">
+                                <a href="#">
+                                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M3.33337 5.83301H16.6667" stroke="#A6ABBD" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                                        <path d="M8.33337 9.16699V14.167" stroke="#A6ABBD" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                                        <path d="M11.6666 9.16699V14.167" stroke="#A6ABBD" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                                        <path d="M4.16663 5.83301L4.99996 15.833C4.99996 16.275 5.17555 16.699 5.48811 17.0115C5.80068 17.3241 6.2246 17.4997 6.66663 17.4997H13.3333C13.7753 17.4997 14.1992 17.3241 14.5118 17.0115C14.8244 16.699 15 16.275 15 15.833L15.8333 5.83301" stroke="#A6ABBD" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                                        <path d="M7.5 5.83333V3.33333C7.5 3.11232 7.5878 2.90036 7.74408 2.74408C7.90036 2.5878 8.11232 2.5 8.33333 2.5H11.6667C11.8877 2.5 12.0996 2.5878 12.2559 2.74408C12.4122 2.90036 12.5 3.11232 12.5 3.33333V5.83333" stroke="#A6ABBD" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                                    </svg>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="ann-main__box">
+                        <h5>Title</h5>
+                        <span>2 days ago</span>
+                        <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book</p>
+                        <div class="btn-grp flxrow">
+                            <div class="btn-box edit_btn">
+                                <a href="#"><svg width="20" height="20" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M1.3335 13.6668H4.66683L13.4168 4.91676C13.8589 4.47473 14.1072 3.87521 14.1072 3.25009C14.1072 2.62497 13.8589 2.02545 13.4168 1.58342C12.9748 1.1414 12.3753 0.893066 11.7502 0.893066C11.125 0.893066 10.5255 1.1414 10.0835 1.58342L1.3335 10.3334V13.6668Z" stroke="#A6ABBD" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                </a>
+                            </div>
+                            <div class="btn-box delete_btn">
+                                <a href="#">
+                                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M3.33337 5.83301H16.6667" stroke="#A6ABBD" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                                        <path d="M8.33337 9.16699V14.167" stroke="#A6ABBD" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                                        <path d="M11.6666 9.16699V14.167" stroke="#A6ABBD" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                                        <path d="M4.16663 5.83301L4.99996 15.833C4.99996 16.275 5.17555 16.699 5.48811 17.0115C5.80068 17.3241 6.2246 17.4997 6.66663 17.4997H13.3333C13.7753 17.4997 14.1992 17.3241 14.5118 17.0115C14.8244 16.699 15 16.275 15 15.833L15.8333 5.83301" stroke="#A6ABBD" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                                        <path d="M7.5 5.83333V3.33333C7.5 3.11232 7.5878 2.90036 7.74408 2.74408C7.90036 2.5878 8.11232 2.5 8.33333 2.5H11.6667C11.8877 2.5 12.0996 2.5878 12.2559 2.74408C12.4122 2.90036 12.5 3.11232 12.5 3.33333V5.83333" stroke="#A6ABBD" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                                    </svg>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="ann-main__box">
+                        <h5>Title</h5>
+                        <span>2 days ago</span>
+                        <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book</p>
+                        <div class="btn-grp flxrow">
+                            <div class="btn-box edit_btn">
+                                <a href="#"><svg width="20" height="20" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M1.3335 13.6668H4.66683L13.4168 4.91676C13.8589 4.47473 14.1072 3.87521 14.1072 3.25009C14.1072 2.62497 13.8589 2.02545 13.4168 1.58342C12.9748 1.1414 12.3753 0.893066 11.7502 0.893066C11.125 0.893066 10.5255 1.1414 10.0835 1.58342L1.3335 10.3334V13.6668Z" stroke="#A6ABBD" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                </a>
+                            </div>
+                            <div class="btn-box delete_btn">
+                                <a href="#">
+                                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M3.33337 5.83301H16.6667" stroke="#A6ABBD" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                                        <path d="M8.33337 9.16699V14.167" stroke="#A6ABBD" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                                        <path d="M11.6666 9.16699V14.167" stroke="#A6ABBD" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                                        <path d="M4.16663 5.83301L4.99996 15.833C4.99996 16.275 5.17555 16.699 5.48811 17.0115C5.80068 17.3241 6.2246 17.4997 6.66663 17.4997H13.3333C13.7753 17.4997 14.1992 17.3241 14.5118 17.0115C14.8244 16.699 15 16.275 15 15.833L15.8333 5.83301" stroke="#A6ABBD" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                                        <path d="M7.5 5.83333V3.33333C7.5 3.11232 7.5878 2.90036 7.74408 2.74408C7.90036 2.5878 8.11232 2.5 8.33333 2.5H11.6667C11.8877 2.5 12.0996 2.5878 12.2559 2.74408C12.4122 2.90036 12.5 3.11232 12.5 3.33333V5.83333" stroke="#A6ABBD" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                                    </svg>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="ann-main__box">
+                        <h5>Title</h5>
+                        <span>2 days ago</span>
+                        <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book</p>
+                        <div class="btn-grp flxrow">
+                            <div class="btn-box edit_btn">
+                                <a href="#"><svg width="20" height="20" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M1.3335 13.6668H4.66683L13.4168 4.91676C13.8589 4.47473 14.1072 3.87521 14.1072 3.25009C14.1072 2.62497 13.8589 2.02545 13.4168 1.58342C12.9748 1.1414 12.3753 0.893066 11.7502 0.893066C11.125 0.893066 10.5255 1.1414 10.0835 1.58342L1.3335 10.3334V13.6668Z" stroke="#A6ABBD" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                </a>
+                            </div>
+                            <div class="btn-box delete_btn">
+                                <a href="#">
+                                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M3.33337 5.83301H16.6667" stroke="#A6ABBD" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                                        <path d="M8.33337 9.16699V14.167" stroke="#A6ABBD" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                                        <path d="M11.6666 9.16699V14.167" stroke="#A6ABBD" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                                        <path d="M4.16663 5.83301L4.99996 15.833C4.99996 16.275 5.17555 16.699 5.48811 17.0115C5.80068 17.3241 6.2246 17.4997 6.66663 17.4997H13.3333C13.7753 17.4997 14.1992 17.3241 14.5118 17.0115C14.8244 16.699 15 16.275 15 15.833L15.8333 5.83301" stroke="#A6ABBD" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                                        <path d="M7.5 5.83333V3.33333C7.5 3.11232 7.5878 2.90036 7.74408 2.74408C7.90036 2.5878 8.11232 2.5 8.33333 2.5H11.6667C11.8877 2.5 12.0996 2.5878 12.2559 2.74408C12.4122 2.90036 12.5 3.11232 12.5 3.33333V5.83333" stroke="#A6ABBD" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                                    </svg>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    </div>
+                    
+                <div class="bottom-btn__box flxrow">
+                    <div class="add_btn">
+                        <a href="javascript:void(0)" class="primary_btn" data-toggle="modal" data-target="#add-announcement">Add<span><img src="images/add-btn_icon(+).svg" alt=""></span></a>
+                    </div>
+                    <div class="pagenation_btn">
+                        <span class="flxrow">
+                            <a href="#" class="current">1</a>
+                            <a href="#">2</a>
+                            <a href="#">3</a>
+                            <a href="#">4</a>
+                        </span>
+                    </div>
+                </div>
+                </div>
+                
+            </div>
+
+            <!-- Modal -->
+            <div class="modal fade" id="add-announcement" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                   <div class="add-announcement__popup">
+                    <div class="add-announcement_head">
+                        <h3>Add Announcement</h3>
+                    </div>
+                    <div class="add-announcement_body">
+                        <form action="">
+                            <div class="form-row"><input type="text" placeholder="Add title"></div>
+                            <div class="form-row"><textarea name="" id="" cols="" rows="" placeholder="Message"></textarea></div>
+                            <div class="btnbox_wrap flxrow">
+                                <div class="form-submit_btn"><input type="button" class="primary_btn" value="Submit"></div>
+                                <div class="form-close_btn"><input type="button" class="primary_btn cancle_btn" data-bs-dismiss="modal" aria-label="Close" value="Close"></div>
+                            </div>
+                        </form>
+                    </div>
+                   </div>
+                </div>
+                </div>
+            </div>
+            <!-- Modal -->
+
+        </div>
+</div>
+
+
+<!--Wrapper End-->
+
+<!--JavaScript-->
+<script src="js/jquery-3.3.1.min.js"></script>
+<script src="js/jquery-ui.min.js"></script>
+<script src="js/popper.min.js"></script>
+<script src="js/jquery.dataTables.min.js"></script>
+<script src="js/dataTables.responsive.min.js"></script>
+<script src="js/responsive.bootstrap.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/jquery.nice-select.js"></script>
+<script src="js/script.js"></script>
+<!--JavaScript-->
+
+<script>
+    jQuery(document).ready(function() {
+        jQuery(".input_container .show_hide_pwd").click(function() {
+            var paswd= jQuery(this).parent().find('input');
+            if(paswd.attr("type")== "password"){
+                paswd.attr("type","text");
+                jQuery(this).parent().addClass('show_password');
+            }
+            else{
+                paswd.attr("type","password");
+                jQuery(this).parent().removeClass('show_password');
+            }
+        });
+
+       jQuery('input[type="file"]').each(function() {
+           jQuery(this).change(function(e){
+                var val =jQuery(this).val();
+                var filename = val.replace(/^.*[\\\/]/, '');
+
+                if( filename != '' ){
+                    jQuery(this).parent().find('label').html(filename);
+                }else {
+                    jQuery(this).parent().find('label').html('Browse file');
+                }
+                // setTimeout(function(){
+                    // jQuery(this).parent().find('label').html(filename);
+                    // alert(filename);
+                //},1000)
+            });
+        });
+
+        jQuery('.dash_filter .radio_list input[type="radio"]').each(function() {
+            jQuery(this).change(function(e){
+                 if(jQuery('input[id="company_form"]').is(":checked")){
+                     jQuery('.dash_filter .company_dropdown').addClass('show_dropdown');
+                } else{
+                    jQuery('.dash_filter .company_dropdown').removeClass('show_dropdown');
+                }
+             });
+         });
+    });
+</script>
+
+<script>
+    jQuery(document).ready(function() {
+        var table2 = jQuery('#client_list').DataTable({
+            "pagingType": "numbers",
+            displayLength: 10,
+            language: {
+                paginate: {
+                  next: '', // or '→'
+                  previous: '' // or '←' 
+                }
+            },
+            responsive: true,
+            "dom": '<"bottom"f>rt<"bottom_datatable"lp><"clear">',
+            language: {
+                searchPlaceholder: "Search here...",
+                search: ""
+            },
+        });
+        
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,87 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0,user-scalable=0"/>
+<title>CA</title>
+
+{% block custom_css %}
+<link href="{% static 'fonts/fonts.css' %}" rel="stylesheet">
+<link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+<link href="{% static 'css/nice-select.css' %}" rel="stylesheet">
+<link href="{% static 'css/jquery-ui.min.css' %}" rel="stylesheet">
+<link href="{% static 'css/style.css' %}" rel="stylesheet">
+<link href="{% static 'css/responsive.css' %}" rel="stylesheet">
+{% endblock custom_css %}
+
+</head>
+<body>
+
+<!--Wrapper Start-->
+    <div class="contact-page">
+        <div class="contact-main flxrow">
+            <div class="logo"><a href="#"><img src="{% static 'images/logo.svg' %}" alt=""></a></div>
+            <div class="contact-form flxrow">
+                <div class="contact-form-left">
+                    <h2>Where to find us.</h2>
+                    <div class="contact-box">
+
+                        <div class="contact-box-u flxrow">
+                            <div class="icon"><span><img src="{% static 'images/location-pin.svg' %}" alt=""></span></div>
+                            <div class="contact-box-u-text">
+                                <h4> Address</h4>
+                                <a href="#">Dummy Text Lorem Ipsum <br>Rajkot - 689389</a>
+                            </div>
+                        </div>
+
+                        <div class="contact-box-u flxrow">
+                            <div class="icon"><span><img src="{% static 'images/phone.svg' %}" alt=""></span></div>
+                            <div class="contact-box-u-text">
+                                <h4> Phone Number</h4>
+                                <a href="#">+91 1234567890</a>
+                            </div>
+                        </div>
+
+                        <div class="contact-box-u flxrow">
+                            <div class="icon"><span><img src="{% static 'images/Mail.svg' %}" alt=""></span></div>
+                            <div class="contact-box-u-text">
+                                <h4> Email</h4>
+                                <a href="#">test@gmail.com</a>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="contact-form-right">
+                    <h2>Get in Touch</h2>
+                    <form action="">
+                        <span class="form-row"><input type="text" placeholder="Name*"></span>
+                        <span class="input-wrap flxrow">
+                            <div class="form-row"><input type="text" placeholder="Email"></div>
+                            <p>or</p>
+                            <div class="form-row"><input type="text" placeholder="Phone No"></div>
+                        </span>
+                        <span class="form-row"><input type="text" placeholder="Subject*"></span>
+                        <span class="form-row msg"><textarea name="" id="" cols="" rows="" placeholder="Message"></textarea></span>
+                        <span class="form-row"><input type="text" placeholder="From where did you get our reference?"></span>
+                        <span class="input-btn"><input type="button" class="primary_btn" value="Submit"></span>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </div>
+<!--Wrapper End-->
+
+<!--JavaScript-->
+<script src="{% static 'js/jquery-3.3.1.min.js' %}"></script>
+<script src="{% static 'js/jquery-ui.min.js' %}"></script>
+<script src="{% static 'js/popper.min.js' %}"></script>
+<script src="{% static 'js/bootstrap.min.js' %}"></script>
+<script src="{% static 'js/jquery.nice-select.js' %}"></script>
+<script src="{% static 'js/script.js' %}"></script>
+<!--JavaScript-->
+
+</body>
+</html>

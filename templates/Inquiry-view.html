@@ -1,0 +1,161 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0,user-scalable=0" />
+    <title>CA</title>
+
+    <!--Stylesheet-->
+    <link href="fonts/fonts.css" rel="stylesheet">
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/nice-select.css" rel="stylesheet">
+    <link href="css/jquery-ui.min.css" rel="stylesheet">
+    <link href="css/datatables.min.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+    <link href="css/style-v2.css" rel="stylesheet">
+    <link href="css/responsive.css" rel="stylesheet">
+    <!--Stylesheet-->
+
+</head>
+
+<body>
+
+    <!-- Header ST -->
+    <header id="header">
+        <div class="header_wrapper flxrow">
+            <div class="ham_menubtn">
+                <a href="#">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </a>
+            </div>
+            <div class="logo"><a href="index.html"><img src="images/logo.svg" alt="logo"></a></div>
+            <div class="search_head">
+                <form action="">
+                    <input type="text" class="input-search" placeholder="Search here...">
+                    <div class="searchbtn-row flxrow">
+                        <div class="search-filter">
+                            <svg width="20" height="20" viewBox="0 0 20 20" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path
+                                    d="M11.6667 6.66683C12.5871 6.66683 13.3333 5.92064 13.3333 5.00016C13.3333 4.07969 12.5871 3.3335 11.6667 3.3335C10.7462 3.3335 10 4.07969 10 5.00016C10 5.92064 10.7462 6.66683 11.6667 6.66683Z"
+                                    stroke="black" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                                <path d="M3.33337 5H10" stroke="black" stroke-width="1.5" stroke-linecap="round"
+                                    stroke-linejoin="round" />
+                                <path d="M13.3334 5H16.6667" stroke="black" stroke-width="1.5" stroke-linecap="round"
+                                    stroke-linejoin="round" />
+                                <path
+                                    d="M6.66667 11.6668C7.58714 11.6668 8.33333 10.9206 8.33333 10.0002C8.33333 9.07969 7.58714 8.3335 6.66667 8.3335C5.74619 8.3335 5 9.07969 5 10.0002C5 10.9206 5.74619 11.6668 6.66667 11.6668Z"
+                                    stroke="black" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                                <path d="M3.33337 10H5.00004" stroke="black" stroke-width="1.5" stroke-linecap="round"
+                                    stroke-linejoin="round" />
+                                <path d="M8.33337 10H16.6667" stroke="black" stroke-width="1.5" stroke-linecap="round"
+                                    stroke-linejoin="round" />
+                                <path
+                                    d="M14.1667 16.6668C15.0871 16.6668 15.8333 15.9206 15.8333 15.0002C15.8333 14.0797 15.0871 13.3335 14.1667 13.3335C13.2462 13.3335 12.5 14.0797 12.5 15.0002C12.5 15.9206 13.2462 16.6668 14.1667 16.6668Z"
+                                    stroke="black" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                                <path d="M3.33337 15H12.5" stroke="black" stroke-width="1.5" stroke-linecap="round"
+                                    stroke-linejoin="round" />
+                                <path d="M15.8334 15H16.6667" stroke="black" stroke-width="1.5" stroke-linecap="round"
+                                    stroke-linejoin="round" />
+                            </svg>
+                        </div>
+                        <!-- <input type="submit" value="submit"> -->
+                        <button type="submit">
+                            <svg width="20" height="20" viewBox="0 0 20 20" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path
+                                    d="M8.33333 14.1667C11.555 14.1667 14.1667 11.555 14.1667 8.33333C14.1667 5.11167 11.555 2.5 8.33333 2.5C5.11167 2.5 2.5 5.11167 2.5 8.33333C2.5 11.555 5.11167 14.1667 8.33333 14.1667Z"
+                                    stroke="black" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                                <path d="M17.5 17.5L12.5 12.5" stroke="black" stroke-width="1.5" stroke-linecap="round"
+                                    stroke-linejoin="round" />
+                            </svg>
+                        </button>
+                    </div>
+                </form>
+            </div>
+            <div class="user_login flxrow">
+                <a href="#">
+                    <div class="img" style="background-image:url(images/user-img.png);"></div>
+                    <div class="name">
+                        <p>Alexander <span>Admin</span></p>
+                        <div class="down-caret">
+                            <svg width="20" height="20" viewBox="0 0 20 20" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path d="M5 7.5L10 12.5L15 7.5" stroke="black" stroke-width="1.5" stroke-linecap="round"
+                                    stroke-linejoin="round" />
+                            </svg>
+                        </div>
+                    </div>
+                </a>
+                <!-- <div class="user_dropdown">
+                <ul>
+                    <li><a href="#">Profile <span><img src="images/profile-icon.svg" alt="profile icon"></span></a></li>
+                    <li><a href="#">Keyboard Shortcuts <span><img src="images/shortcut-icon.svg" alt="shortcut icon"></span></a></li>
+                    <li><a href="#">Logout <span><img src="images/logout-icon.svg" alt="logout icon"></span></a></li>
+                </ul>
+            </div> -->
+            </div>
+        </div>
+    </header>
+    <!-- Header ED -->
+
+    <!--Wrapper Start-->
+    <div class="wrapper_main">
+
+        <div class="dash_wrap_inner inquire-list">
+            <div class="titel">
+                <h3>inquiry List</h3>
+                <span>5 new inquiry</span>
+            </div>
+
+            <div class="inquire-view-main">
+                <div class="top_sec">
+                    <h3>What is process to file case</h3>
+                    <div class="title_box">
+                        <span>Subject</span>
+                        <h5>What is process to file case</h5>
+                    </div>
+                    <div class="title_wraper flxrow">
+                        <div class="title_box">
+                            <span>Name</span>
+                            <h5>Alexander</h5>
+                        </div>
+                        <div class="title_box">
+                            <span>Email</span>
+                            <h5>info.alexander@gmail.com</h5>
+                        </div>
+                        <div class="title_box">
+                            <span>Reference</span>
+                            <h5>Alexa@123</h5>
+                        </div>
+                    </div>
+                </div>
+                <div class="buttom_sec">
+                    <span>Message</span>
+                    <p>Pellentesque ante felis, consequat vel tellus vitae, scelerisque pellentesque augue. Suspendisse potenti. Fusce non bibendum purus. Vestibulum eget pretium urna. Proin hendrerit mi tellus, quis tempor massa condimentum sagittis. Curabitur mattis erat ut tincidunt accumsan. Nam et est sagittis, aliquam tellus sed, lobortis tellus.</p>
+                    <div class="btnbox"><a href="#" class="primary_btn">Delete</a></div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!--Wrapper End-->
+
+    <!--JavaScript-->
+    <script src="js/jquery-3.3.1.min.js"></script>
+    <script src="js/jquery-ui.min.js"></script>
+    <script src="js/popper.min.js"></script>
+    <script src="js/jquery.dataTables.min.js"></script>
+    <script src="js/dataTables.responsive.min.js"></script>
+    <script src="js/responsive.bootstrap.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/jquery.nice-select.js"></script>
+    <script src="js/script.js"></script>
+    <!--JavaScript-->
+</body>
+
+</html>

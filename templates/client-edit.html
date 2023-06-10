@@ -1,0 +1,499 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0,user-scalable=0"/>
+<title>CA</title>
+
+<!--Stylesheet-->
+{% block custom_css %}
+<link href="{% static 'fonts/fonts.css' %}" rel="stylesheet">
+<link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+<link href="{% static 'css/nice-select.css' %}" rel="stylesheet">
+<link href="{% static 'css/jquery-ui.min.css' %}" rel="stylesheet">
+<link href="{% static 'css/style.css' %}" rel="stylesheet">
+<link href="{% static 'css/style-v3.css' %}" rel="stylesheet">
+<link href="{% static 'css/style-v2.css' %}" rel="stylesheet">
+<link href="{% static 'css/responsive.css' %}" rel="stylesheet">
+{% endblock custom_css %}
+<!--Stylesheet-->
+
+</head>
+<body>
+
+<!-- Header ST -->
+<header id="header">
+    <div class="header_wrapper flxrow">
+        <div class="ham_menubtn">
+            <a href="#">
+                <span></span>
+                <span></span>
+                <span></span>
+            </a>
+        </div>
+        <div class="logo"><a href="index.html"><img src="{% static 'images/logo.svg' %}" alt="logo"></a></div>
+        <div class="search_head">
+            <form action="">
+                <input type="text" class="input-search" placeholder="Search here...">
+                <div class="searchbtn-row flxrow">
+                    <div class="search-filter">
+                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M11.6667 6.66683C12.5871 6.66683 13.3333 5.92064 13.3333 5.00016C13.3333 4.07969 12.5871 3.3335 11.6667 3.3335C10.7462 3.3335 10 4.07969 10 5.00016C10 5.92064 10.7462 6.66683 11.6667 6.66683Z" stroke="black" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M3.33337 5H10" stroke="black" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M13.3334 5H16.6667" stroke="black" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M6.66667 11.6668C7.58714 11.6668 8.33333 10.9206 8.33333 10.0002C8.33333 9.07969 7.58714 8.3335 6.66667 8.3335C5.74619 8.3335 5 9.07969 5 10.0002C5 10.9206 5.74619 11.6668 6.66667 11.6668Z" stroke="black" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M3.33337 10H5.00004" stroke="black" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M8.33337 10H16.6667" stroke="black" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M14.1667 16.6668C15.0871 16.6668 15.8333 15.9206 15.8333 15.0002C15.8333 14.0797 15.0871 13.3335 14.1667 13.3335C13.2462 13.3335 12.5 14.0797 12.5 15.0002C12.5 15.9206 13.2462 16.6668 14.1667 16.6668Z" stroke="black" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M3.33337 15H12.5" stroke="black" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M15.8334 15H16.6667" stroke="black" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </div>
+                    <!-- <input type="submit" value="submit"> -->
+                    <button type="submit">
+                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M8.33333 14.1667C11.555 14.1667 14.1667 11.555 14.1667 8.33333C14.1667 5.11167 11.555 2.5 8.33333 2.5C5.11167 2.5 2.5 5.11167 2.5 8.33333C2.5 11.555 5.11167 14.1667 8.33333 14.1667Z" stroke="black" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M17.5 17.5L12.5 12.5" stroke="black" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </button>
+                </div>
+            </form>
+        </div>
+        <div class="user_login flxrow">
+            <a href="#">
+                <div class="img" style="background-image:url({% static 'images/user-img.png' %});"></div>
+                <div class="name">
+                    <p>Alexander <span>Admin</span></p>
+                    <div class="down-caret">
+                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M5 7.5L10 12.5L15 7.5" stroke="black" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </div>
+                </div>
+            </a>
+            <!-- <div class="user_dropdown">
+                <ul>
+                    <li><a href="#">Profile <span><img src="images/profile-icon.svg" alt="profile icon"></span></a></li>
+                    <li><a href="#">Keyboard Shortcuts <span><img src="images/shortcut-icon.svg" alt="shortcut icon"></span></a></li>
+                    <li><a href="#">Logout <span><img src="images/logout-icon.svg" alt="logout icon"></span></a></li>
+                </ul>
+            </div> -->
+        </div>
+    </div>
+</header>
+<!-- Header ED -->
+
+<!--Wrapper Start-->
+<div class="wrapper_main">
+    <div class="dash_wrap">
+        <div class="dash_wrap_inner client-edit">
+            <form method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                {% if message != None %}
+                <div class="alert alert-danger">
+                    {{message}}
+                </div>
+                {% endif %}
+                <div class="part_form">
+                    <div class="dash_wrap_filter form_row">
+                        <div class="dash_filter form_col_1-3">
+                            <div class="radio_grp_wrap">
+                                <div class="radio_grp">
+                                    <div class="radio_list">
+                                        <input type="radio" name="type_form" id="individual_form" value="Individual">
+                                        <label for="individual_form">Individual</label>
+                                    </div>
+                                    <div class="radio_list">
+                                        <input type="radio" name="type_form" id="company_form" value="Company">
+                                        <label for="company_form">Company</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="dash_filter form_col_1-3">
+                            <div class="company_dropdown">
+                                <select name="company_type" id="company_type">
+                                    <option value="Artificial Juridical Person">Type</option>
+                                    <option value="Artificial Juridical Person">Artificial Juridical Person</option>
+                                    <option value="Association of Persons (AOP)">Association of Persons (AOP)</option>
+                                    <option value="Association of Persons (Trust)">Association of Persons (Trust)</option>
+                                    <option value="Body of Individuals (BOI)">Body of Individuals (BOI)</option>
+                                    <option value="Company Other Tan Domestic Company">Company Other Tan Domestic Company</option>
+                                    <option value="Co-Operative Society">Co-Operative Society</option>
+                                    <option value="Government">Government</option>
+                                    <option value="Hindu Undivided Family (HUF)">Hindu Undivided Family (HUF)</option>
+                                    <option value="Local Authority">Local Authority</option>
+                                    <option value="Partnership Firm">Partnership Firm</option>
+                                    <option value="Private Limited">Private Limited</option>
+                                    <option value="Public Limited">Public Limited</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="dash_wrap_filter form_row">
+                        <div class="dash_filter form_col_1-3">
+                            <div class="resident_dropdown">
+                                <select name="r_status" id="r_status">
+                                    <option value="Resident Status">Resident Status</option>
+                                    <option value="Non Resident">Non Resident</option>
+                                    <option value="Resident">Resident</option>
+                                    <option value="Resident But Not odinarily Residents">Resident But Not odinarily Residents</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="part_form">
+                    <h3>Clients details</h3>
+                    <div class="form_row">
+                        <div class="form_col_1-3">
+                            <div class="input_container">
+                                <input type="text" name="username" id="username" class="input_field" placeholder="Username*">
+                            </div>
+                        </div>
+                        <div class="form_col_1-3">
+                            <div class="input_container">
+                                <input type="text" name="name" id="name" class="input_field" placeholder="Name*">
+                            </div>
+                        </div>
+                        <div class="form_col_1-3">
+                            <div class="input_container">
+                                <input type="email" name="email" id="email" class="input_field" placeholder="Email*">
+                            </div>
+                        </div>
+                        <div class="form_col_1-3">
+                            <div class="input_container">
+                                <input type="number" name="p_number" id="p_number" class="input_field" placeholder="Phone Numbers*">
+                            </div>
+                        </div>
+                        <div class="form_col_1-3">
+                            <div class="input_container">
+                                <input type="password" name="password" required id="password" class="input_field" placeholder="Password*">
+                                <span class="show_hide_pwd"></span>
+                            </div>
+                        </div>
+                        <div class="form_col_1-3">
+                            <div class="input_container">
+                                <input type="password" name="c_password" required id="c_password" class="input_field" placeholder="Conform password*">
+                                <span class="show_hide_pwd"></span>
+                            </div>
+                        </div>
+                        <div class="form_col_1-3">
+                            <div class="input_container">
+                                <select name="category_type" id="category_type">
+                                    <option value="Category type">Category type</option>
+                                    <option value="Category 1">Category 1</option>
+                                    <option value="Category 2">Category 2</option>
+                                    <option value="Category 3">Category 3</option>
+                                    <option value="Category 4">Category 4</option>
+                                    <option value="Category 5">Category 5</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form_col_1-3">
+                            <div class="input_container">
+                                <select name="group" id="group">
+                                    <option value="none">Group with</option>
+                                    {% for client in clients %}
+                                        <option value={{client.name}}>{{client.name}}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form_col_1-3">
+                            <div class="input_container">
+                                <input type="date" name="dob" id="dob" class="input_field" placeholder="DOB/DOI">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="part_form">
+                    <h3>Office Address</h3>
+                    <div class="form_row">
+                        <div class="form_col_1-3">
+                            <div class="input_container">
+                                <input type="text" name="o_b_no" id="o_b_no" class="input_field" placeholder="Building No / Flat No">
+                            </div>
+                        </div>
+                        <div class="form_col_1-3">
+                            <div class="input_container">
+                                <input type="text" name="o_f_no" id="o_f_no" class="input_field" placeholder="Floor No">
+                            </div>
+                        </div>
+                        <div class="form_col_1-3">
+                            <div class="input_container">
+                                <input type="text" name="o_b_name" id="o_b_name" class="input_field" placeholder="Name of The Building">
+                            </div>
+                        </div>
+                        <div class="form_col_1-3">
+                            <div class="input_container">
+                                <input type="text" name="o_road" id="o_road" class="input_field" placeholder="Road / Street">
+                            </div>
+                        </div>
+                        <div class="form_col_1-3">
+                            <div class="input_container">
+                                <input type="text" name="o_locality" id="o_locality" class="input_field" placeholder="Locality / Village">
+                            </div>
+                        </div>
+                        <div class="form_col_1-3">
+                            <div class="input_container">
+                                <select name="o_city" id="o_city">
+                                    <option value="Category type">City / District</option>
+                                    <option value="Category 1">City 1</option>
+                                    <option value="Category 2">City 2</option>
+                                    <option value="Category 3">City 3</option>
+                                    <option value="Category 4">City 4</option>
+                                    <option value="Category 5">City 5</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form_col_1-3">
+                            <div class="input_container">
+                                <select name="o_state" id="o_state">
+                                    <option value="Category type">State</option>
+                                    <option value="Category 1">State 1</option>
+                                    <option value="Category 2">State 2</option>
+                                    <option value="Category 3">State 3</option>
+                                    <option value="Category 4">State 4</option>
+                                    <option value="Category 5">State 5</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form_col_1-3">
+                            <div class="input_container">
+                                <input type="number" name="o_pincode" id="o_pincode" class="input_field" placeholder="Pincode">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="part_form">
+                    <h3>Residence Address</h3>
+                    <div class="form_row">
+                        <div class="form_col_1-3">
+                            <div class="input_container">
+                                <input type="text" name="r_b_no" id="r_b_no" class="input_field" placeholder="Building No / Flat No">
+                            </div>
+                        </div>
+                        <div class="form_col_1-3">
+                            <div class="input_container">
+                                <input type="text" name="r_f_no" id="r_f_no" class="input_field" placeholder="Floor No">
+                            </div>
+                        </div>
+                        <div class="form_col_1-3">
+                            <div class="input_container">
+                                <input type="text" name="r_b_name" id="r_b_name" class="input_field" placeholder="Name of The Building">
+                            </div>
+                        </div>
+                        <div class="form_col_1-3">
+                            <div class="input_container">
+                                <input type="text" name="r_road" id="r_road" class="input_field" placeholder="Road / Street">
+                            </div>
+                        </div>
+                        <div class="form_col_1-3">
+                            <div class="input_container">
+                                <input type="text" name="r_locality" id="r_locality" class="input_field" placeholder="Locality / Village">
+                            </div>
+                        </div>
+                        <div class="form_col_1-3">
+                            <div class="input_container">
+                                <select name="r_city" id="r_city">
+                                    <option value="Category type">City / District</option>
+                                    <option value="Category 1">City 1</option>
+                                    <option value="Category 2">City 2</option>
+                                    <option value="Category 3">City 3</option>
+                                    <option value="Category 4">City 4</option>
+                                    <option value="Category 5">City 5</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form_col_1-3">
+                            <div class="input_container">
+                                <select name="r_state" id="r_state">
+                                    <option value="Category type">State</option>
+                                    <option value="Category 1">State 1</option>
+                                    <option value="Category 2">State 2</option>
+                                    <option value="Category 3">State 3</option>
+                                    <option value="Category 4">State 4</option>
+                                    <option value="Category 5">State 5</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form_col_1-3">
+                            <div class="input_container">
+                                <input type="number" name="r_pincode" id="r_pincode" class="input_field" placeholder="Pincode">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="part_form">
+                    <h3>Personal details</h3>
+                    <div class="form_row">
+                        <div class="form_col_1-3">
+                            <div class="input_container">
+                                <input type="text" name="field_name" id="field_name" class="input_field" placeholder="Field name">
+                            </div>
+                        </div>
+                        <div class="form_col_1-3">
+                            <div class="input_container">
+                                <input type="text" name="details" id="details" class="input_field" placeholder="Details">
+                            </div>
+                        </div>
+                        <div class="form_col_1-3">
+                            <div class="input_container">
+                                <input type="file" name="file" id="file_upload">
+                                <label for="file_upload">Browse file</label>
+                            </div>
+                        </div>
+                        <div class="remove_btn">
+                            <a href="javascript:void(0)" class="remove_field">
+                                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M15 5L5 15" stroke="#00003E" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                    <path d="M5 5L15 15" stroke="#00003E" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="form_row">
+                        <div class="form_col_1-3">
+                            <div class="input_container">
+                                <input type="text" name="field_name" id="" class="input_field" placeholder="Field name">
+                            </div>
+                        </div>
+                        <div class="form_col_1-3">
+                            <div class="input_container">
+                                <input type="text" name="details" id="" class="input_field" placeholder="Details">
+                            </div>
+                        </div>
+                        <div class="form_col_1-3">
+                            <div class="input_container">
+                                <input type="file" name="file" id="file_upload2">
+                                <label for="file_upload2">Browse file</label>
+                            </div>
+                        </div>
+                        <div class="remove_btn">
+                            <a href="javascript:void(0)" class="remove_field">
+                                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M15 5L5 15" stroke="#00003E" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                    <path d="M5 5L15 15" stroke="#00003E" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="more_add">
+                        <a href="javascript:void(0)">
+                            <svg width="31" height="30" viewBox="0 0 31 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M5.00464 10V7.5C5.00464 6.83696 5.26827 6.20107 5.73755 5.73223C6.20682 5.26339 6.8433 5 7.50695 5H10.0093" stroke="#2C3E50" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M5.00464 20V22.5C5.00464 23.163 5.26827 23.7989 5.73755 24.2678C6.20682 24.7366 6.8433 25 7.50695 25H10.0093" stroke="#2C3E50" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M20.0186 5H22.5209C23.1845 5 23.821 5.26339 24.2903 5.73223C24.7595 6.20107 25.0232 6.83696 25.0232 7.5V10" stroke="#2C3E50" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M20.0186 25H22.5209C23.1845 25 23.821 24.7366 24.2903 24.2678C24.7595 23.7989 25.0232 23.163 25.0232 22.5V20" stroke="#2C3E50" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M11.2604 15H18.7673" stroke="#2C3E50" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M15.0139 11.25V18.75" stroke="#2C3E50" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+                <div class="part_form">
+                    <h3>Authorize persons</h3>
+                    <div class="form_row">
+                        <div class="form_col_1-3">
+                            <div class="input_container">
+                                <input type="text" name="a_name" id="a_name" class="input_field" placeholder="Name">
+                            </div>
+                        </div>
+                        <div class="form_col_1-3">
+                            <div class="input_container">
+                                <input type="email" name="a_email" id="a_email" class="input_field" placeholder="Email">
+                            </div>
+                        </div>
+                        <div class="form_col_1-3">
+                            <div class="input_container">
+                                <input type="number" name="a_p_no" id="a_p_no" class="input_field" placeholder="Phone Numbers">
+                            </div>
+                        </div>
+                        <div class="remove_btn">
+                            <a href="javascript:void(0)" class="remove_field">
+                                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M15 5L5 15" stroke="#00003E" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                    <path d="M5 5L15 15" stroke="#00003E" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="more_add">
+                        <a href="javascript:void(0)">
+                            <svg width="31" height="30" viewBox="0 0 31 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M5.00464 10V7.5C5.00464 6.83696 5.26827 6.20107 5.73755 5.73223C6.20682 5.26339 6.8433 5 7.50695 5H10.0093" stroke="#2C3E50" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                                <path d="M5.00464 20V22.5C5.00464 23.163 5.26827 23.7989 5.73755 24.2678C6.20682 24.7366 6.8433 25 7.50695 25H10.0093" stroke="#2C3E50" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                                <path d="M20.0186 5H22.5209C23.1845 5 23.821 5.26339 24.2903 5.73223C24.7595 6.20107 25.0232 6.83696 25.0232 7.5V10" stroke="#2C3E50" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                                <path d="M20.0186 25H22.5209C23.1845 25 23.821 24.7366 24.2903 24.2678C24.7595 23.7989 25.0232 23.163 25.0232 22.5V20" stroke="#2C3E50" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                                <path d="M11.2604 15H18.7673" stroke="#2C3E50" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                                <path d="M15.0139 11.25V18.75" stroke="#2C3E50" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+                <div class="form_submit">
+                    <input type="submit" value="Submit" class="primary_btn">
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!--Wrapper End-->
+
+<!--JavaScript-->
+<script src="{% static 'js/jquery-3.3.1.min.js' %}"></script>
+<script src="{% static 'js/jquery-ui.min.js' %}"></script>
+<script src="{% static 'js/popper.min.js' %}"></script>
+<script src="{% static 'js/bootstrap.min.js' %}"></script>
+<script src="{% static 'js/jquery.nice-select.js' %}"></script>
+<script src="{% static 'js/script.js' %}"></script>
+<!--JavaScript-->
+
+<script>
+    jQuery(document).ready(function() {
+        jQuery(".input_container .show_hide_pwd").click(function() {
+            var paswd= jQuery(this).parent().find('input');
+            if(paswd.attr("type")== "password"){
+                paswd.attr("type","text");
+                jQuery(this).parent().addClass('show_password');
+            }
+            else{
+                paswd.attr("type","password");
+                jQuery(this).parent().removeClass('show_password');
+            }
+        });
+
+       jQuery('input[type="file"]').each(function() {
+           jQuery(this).change(function(e){
+                var val =jQuery(this).val();
+                var filename = val.replace(/^.*[\\\/]/, '');
+
+                if( filename != '' ){
+                    jQuery(this).parent().find('label').html(filename);
+                }else {
+                    jQuery(this).parent().find('label').html('Browse file');
+                }
+                // setTimeout(function(){
+                    // jQuery(this).parent().find('label').html(filename);
+                    // alert(filename);
+                //},1000)
+            });
+        });
+
+        jQuery('.dash_filter .radio_list input[type="radio"]').each(function() {
+            jQuery(this).change(function(e){
+                 if(jQuery('input[id="company_form"]').is(":checked")){
+                     jQuery('.dash_filter .company_dropdown').addClass('show_dropdown');
+                } else{
+                    jQuery('.dash_filter .company_dropdown').removeClass('show_dropdown');
+                }
+             });
+         });
+    });
+</script>
+
+</body>
+</html>
