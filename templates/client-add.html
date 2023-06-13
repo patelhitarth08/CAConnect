@@ -101,33 +101,20 @@
                             <div class="radio_grp_wrap">
                                 <div class="radio_grp">
                                     <div class="radio_list">
-                                        {% if client.client_type == "Individual" %}
-                                            <input type="radio" checked name="type_form" id="individual_form" value="Individual">
-                                        {% else %}
-                                            <input type="radio" name="type_form" id="individual_form" value="Individual">
-                                        {% endif %}
+                                        <input type="radio" name="type_form" id="individual_form" value="Individual">
                                         <label for="individual_form">Individual</label>
                                     </div>
                                     <div class="radio_list">
-                                        {% if client.client_type == "Company" %}
-                                            <input type="radio" checked name="type_form" id="company_form" value="Company">
-                                            
-                                        {% else %}
-                                            <input type="radio" name="type_form" id="company_form" value="Company">
-                                        {% endif %}
+                                        <input type="radio" name="type_form" id="company_form" value="Company">
                                         <label for="company_form">Company</label>
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <div class="dash_filter form_col_1-3">
-                            {% if client.client_type == "Company" %}
-                                <div class="company_dropdown show_dropdown">
-                            {% else %}
-                                <div class="company_dropdown">
-                            {% endif %}
+                            <div class="company_dropdown">
                                 <select name="company_type" id="company_type">
-                                    <option value="{{client.company_type}}">{{client.company_type}}</option>
+                                    <option value="Artificial Juridical Person">Type</option>
                                     <option value="Artificial Juridical Person">Artificial Juridical Person</option>
                                     <option value="Association of Persons (AOP)">Association of Persons (AOP)</option>
                                     <option value="Association of Persons (Trust)">Association of Persons (Trust)</option>
@@ -148,7 +135,7 @@
                         <div class="dash_filter form_col_1-3">
                             <div class="resident_dropdown">
                                 <select name="r_status" id="r_status">
-                                    <option value="{{client.residence_status}}">{{client.residence_status}}</option>
+                                    <option value="Resident Status">Resident Status</option>
                                     <option value="Non Resident">Non Resident</option>
                                     <option value="Resident">Resident</option>
                                     <option value="Resident But Not odinarily Residents">Resident But Not odinarily Residents</option>
@@ -162,22 +149,22 @@
                     <div class="form_row">
                         <div class="form_col_1-3">
                             <div class="input_container">
-                                <input type="text" name="username" id="username" class="input_field" value="{{client.username}}" placeholder="{{client.username}} (Username*)">
+                                <input type="text" name="username" id="username" class="input_field" placeholder="Username*">
                             </div>
                         </div>
                         <div class="form_col_1-3">
                             <div class="input_container">
-                                <input type="text" name="name" id="name" class="input_field" value="{{client.name}}" placeholder="{{client.name}} (Name*)">
+                                <input type="text" name="name" id="name" class="input_field" placeholder="Name*">
                             </div>
                         </div>
                         <div class="form_col_1-3">
                             <div class="input_container">
-                                <input type="email" name="email" id="email" class="input_field" value="{{client.email}}" placeholder="{{client.email}} (Email*)">
+                                <input type="email" name="email" id="email" class="input_field" placeholder="Email*">
                             </div>
                         </div>
                         <div class="form_col_1-3">
                             <div class="input_container">
-                                <input type="number" name="p_number" id="p_number" class="input_field" value="{{client.phone_number}}" placeholder="{{client.phone_number}} (Phone Number*)">
+                                <input type="number" name="p_number" id="p_number" class="input_field" placeholder="Phone Numbers*">
                             </div>
                         </div>
                         <div class="form_col_1-3">
@@ -195,7 +182,7 @@
                         <div class="form_col_1-3">
                             <div class="input_container">
                                 <select name="category_type" id="category_type">
-                                    <option value="{{client.category}}">{{client.category}} (Category)</option>
+                                    <option value="Category type">Category type</option>
                                     <option value="Category 1">Category 1</option>
                                     <option value="Category 2">Category 2</option>
                                     <option value="Category 3">Category 3</option>
@@ -207,7 +194,7 @@
                         <div class="form_col_1-3">
                             <div class="input_container">
                                 <select name="group" id="group">
-                                    <option value="{{client.group_with}}">{{client.group_with}}</option>
+                                    <option value="none">Group with</option>
                                     {% for client in clients %}
                                         <option value={{client.name}}>{{client.name}}</option>
                                     {% endfor %}
@@ -216,7 +203,7 @@
                         </div>
                         <div class="form_col_1-3">
                             <div class="input_container">
-                                <input type="date" name="dob" id="dob" class="input_field" value="{{ client.birth_date|date:'Y-m-d' }}">
+                                <input type="date" name="dob" id="dob" class="input_field" placeholder="DOB/DOI">
                             </div>
                         </div>
                     </div>
@@ -226,33 +213,33 @@
                     <div class="form_row">
                         <div class="form_col_1-3">
                             <div class="input_container">
-                                <input type="text" name="o_b_no" id="o_b_no" class="input_field" value="{{o_address.building_number}}" placeholder="{{o_address.building_number}} (Building No / Flat No)">
+                                <input type="text" name="o_b_no" id="o_b_no" class="input_field" placeholder="Building No / Flat No">
                             </div>
                         </div>
                         <div class="form_col_1-3">
                             <div class="input_container">
-                                <input type="text" name="o_f_no" id="o_f_no" class="input_field" value="{{o_address.floor_number}}" placeholder="{{o_address.floor_number}} (Floor No)">
+                                <input type="text" name="o_f_no" id="o_f_no" class="input_field" placeholder="Floor No">
                             </div>
                         </div>
                         <div class="form_col_1-3">
                             <div class="input_container">
-                                <input type="text" name="o_b_name" id="o_b_name" class="input_field" value="{{o_address.name_of_building}}" placeholder="{{o_address.name_of_building}} (Name of The Building)">
+                                <input type="text" name="o_b_name" id="o_b_name" class="input_field" placeholder="Name of The Building">
                             </div>
                         </div>
                         <div class="form_col_1-3">
                             <div class="input_container">
-                                <input type="text" name="o_road" id="o_road" class="input_field" value="{{o_address.street}}" placeholder="{{o_address.street}} (Road / Street)">
+                                <input type="text" name="o_road" id="o_road" class="input_field" placeholder="Road / Street">
                             </div>
                         </div>
                         <div class="form_col_1-3">
                             <div class="input_container">
-                                <input type="text" name="o_locality" id="o_locality" class="input_field" value="{{o_address.locality}}" placeholder="{{o_address.locality}} (Locality / Village)">
+                                <input type="text" name="o_locality" id="o_locality" class="input_field" placeholder="Locality / Village">
                             </div>
                         </div>
                         <div class="form_col_1-3">
                             <div class="input_container">
                                 <select name="o_city" id="o_city">
-                                    <option value="{{o_address.city}}">{{o_address.city}} (City / District)</option>
+                                    <option value="Category type">City / District</option>
                                     <option value="Category 1">City 1</option>
                                     <option value="Category 2">City 2</option>
                                     <option value="Category 3">City 3</option>
@@ -264,7 +251,7 @@
                         <div class="form_col_1-3">
                             <div class="input_container">
                                 <select name="o_state" id="o_state">
-                                    <option value="{{o_address.state}}">{{o_address.state}} (State)</option>
+                                    <option value="Category type">State</option>
                                     <option value="Category 1">State 1</option>
                                     <option value="Category 2">State 2</option>
                                     <option value="Category 3">State 3</option>
@@ -275,7 +262,7 @@
                         </div>
                         <div class="form_col_1-3">
                             <div class="input_container">
-                                <input type="number" name="o_pincode" id="o_pincode" class="input_field" value="{{o_address.pincode}}" placeholder="{{o_address.pincode}} (Pincode)">
+                                <input type="number" name="o_pincode" id="o_pincode" class="input_field" placeholder="Pincode">
                             </div>
                         </div>
                     </div>
@@ -285,33 +272,33 @@
                     <div class="form_row">
                         <div class="form_col_1-3">
                             <div class="input_container">
-                                <input type="text" name="r_b_no" id="r_b_no" class="input_field" value="{{r_address.building_number}}" placeholder="{{r_address.building_number}} (Building No / Flat No)">
+                                <input type="text" name="r_b_no" id="r_b_no" class="input_field" placeholder="Building No / Flat No">
                             </div>
                         </div>
                         <div class="form_col_1-3">
                             <div class="input_container">
-                                <input type="text" name="r_f_no" id="r_f_no" class="input_field" value="{{r_address.floor_number}}" placeholder="{{r_address.floor_number}} (Floor No)">
+                                <input type="text" name="r_f_no" id="r_f_no" class="input_field" placeholder="Floor No">
                             </div>
                         </div>
                         <div class="form_col_1-3">
                             <div class="input_container">
-                                <input type="text" name="r_b_name" id="r_b_name" class="input_field" value="{{r_address.name_of_building}}" placeholder="{{r_address.name_of_building}} (Name of The Building)">
+                                <input type="text" name="r_b_name" id="r_b_name" class="input_field" placeholder="Name of The Building">
                             </div>
                         </div>
                         <div class="form_col_1-3">
                             <div class="input_container">
-                                <input type="text" name="r_road" id="r_road" class="input_field" value="{{r_address.street}}" placeholder="{{r_address.street}} (Road / Street)">
+                                <input type="text" name="r_road" id="r_road" class="input_field" placeholder="Road / Street">
                             </div>
                         </div>
                         <div class="form_col_1-3">
                             <div class="input_container">
-                                <input type="text" name="r_locality" id="r_locality" class="input_field" value="{{r_address.locality}}" placeholder="{{r_address.locality}} (Locality / Village)">
+                                <input type="text" name="r_locality" id="r_locality" class="input_field" placeholder="Locality / Village">
                             </div>
                         </div>
                         <div class="form_col_1-3">
                             <div class="input_container">
                                 <select name="r_city" id="r_city">
-                                    <option value="{{r_address.city}}">{{r_address.city}} (City / District)</option>
+                                    <option value="Category type">City / District</option>
                                     <option value="Category 1">City 1</option>
                                     <option value="Category 2">City 2</option>
                                     <option value="Category 3">City 3</option>
@@ -323,7 +310,7 @@
                         <div class="form_col_1-3">
                             <div class="input_container">
                                 <select name="r_state" id="r_state">
-                                    <option value="{{r_address.state}}">{{r_address.state}} (State)</option>
+                                    <option value="Category type">State</option>
                                     <option value="Category 1">State 1</option>
                                     <option value="Category 2">State 2</option>
                                     <option value="Category 3">State 3</option>
@@ -334,7 +321,7 @@
                         </div>
                         <div class="form_col_1-3">
                             <div class="input_container">
-                                <input type="number" name="r_pincode" id="r_pincode" class="input_field" value="{{r_address.pincode}}" placeholder="{{r_address.pincode}} (Pincode)">
+                                <input type="number" name="r_pincode" id="r_pincode" class="input_field" placeholder="Pincode">
                             </div>
                         </div>
                     </div>
@@ -342,52 +329,22 @@
 
                 {% comment %} <div class="part_form">
                     <h3>Personal details</h3>
-                    {% if p_count != 1 %}
-                    {% for p_detail in p_details %}
+                    
                     <div class="form_row" id="row">
                         <div class="form_col_1-3">
                             <div class="input_container">
-                                <input type="text" name="field_name" id="" class="input_field" value = "{{p_detail.field_name}}" placeholder="{{p_detail.field_name}} (Field name)">
+                                <input type="text" name="field_name" id="" class="input_field" placeholder="Field name">
                             </div>
                         </div>
                         <div class="form_col_1-3">
                             <div class="input_container">
-                                <input type="text" name="details" id="" class="input_field" value = "{{p_detail.details}}" placeholder="{{p_detail.details}} (Details)">
-                            </div>
-                        </div>
-                        <div class="form_col_1-3">
-                            <div class="input_container">
-                                <input type="file" name="file" id="file_upload_{{forloop.counter}}">
-                                <label for="file_upload_{{forloop.counter}}">{{ p_detail.file }}</label>
-                            </div>
-                        </div>
-
-                        <div class="remove_btn">
-                            <a id="DeleteRow" href="javascript:void(0)" class="remove_field">
-                                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M15 5L5 15" stroke="#00003E" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                                    <path d="M5 5L15 15" stroke="#00003E" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                                </svg>
-                            </a>
-                        </div>
-                    </div>
-                    {% endfor %}
-                    {% else %}
-                    <div class="form_row" id="row">
-                        <div class="form_col_1-3">
-                            <div class="input_container">
-                                <input type="text" name="field_name" id="" class="input_field" value = "{{p_details.field_name}}" placeholder="{{p_details.field_name}}(Field name)">
-                            </div>
-                        </div>
-                        <div class="form_col_1-3">
-                            <div class="input_container">
-                                <input type="text" name="details" id="" class="input_field" value = "{{p_details.details}}" placeholder="{{p_details.details}} (Details)">
+                                <input type="text" name="details" id="" class="input_field" placeholder="Details">
                             </div>
                         </div>
                         <div class="form_col_1-3">
                             <div class="input_container">
                                 <input type="file" name="file" id="file_upload">
-                                <label for="file_upload">{{p_details.file}}</label>
+                                <label for="file_upload">Browse file</label>
                             </div>
                         </div>
 
@@ -400,9 +357,6 @@
                             </a>
                         </div>
                     </div>
-                    {% endif %}
-                    
-
                     <div id="newinput"></div>
 
                     <div class="more_add">
@@ -420,21 +374,20 @@
                 </div> {% endcomment %}
                 <div class="part_form">
                     <h3>Authorize persons</h3>
-                    {% for auth_person in auth_persons %}
                     <div class="form_row" id="row">
                         <div class="form_col_1-3">
                             <div class="input_container">
-                                <input type="text" name="a_name" id="a_name" class="input_field" value = "{{auth_person.name}}" placeholder="{{auth_person.name}} (Name)">
+                                <input type="text" name="a_name" id="a_name" class="input_field" placeholder="Name">
                             </div>
                         </div>
                         <div class="form_col_1-3">
                             <div class="input_container">
-                                <input type="email" name="a_email" id="a_email" class="input_field" value = "{{auth_person.email}}" placeholder="Email">
+                                <input type="email" name="a_email" id="a_email" class="input_field" placeholder="Email">
                             </div>
                         </div>
                         <div class="form_col_1-3">
                             <div class="input_container">
-                                <input type="number" name="a_p_no" id="a_p_no" class="input_field" value = "{{auth_person.phone_number}}" placeholder="Phone Numbers">
+                                <input type="number" name="a_p_no" id="a_p_no" class="input_field" placeholder="Phone Numbers">
                             </div>
                         </div>
                         <div class="remove_btn">
@@ -446,8 +399,6 @@
                             </a>
                         </div>
                     </div>
-                    {% endfor %}
-
                     <div id="newinputOfA"></div>
                     <div class="more_add">
                         <a id="rowAdderOfA" href="javascript:void(0)">
@@ -466,6 +417,7 @@
                     <input type="submit" value="Submit" class="primary_btn">
                 </div>
             </form>
+            
         </div>
     </div>
 </div>

@@ -1,3 +1,4 @@
+{% load static %}
 <!doctype html>
 <html lang="en">
 
@@ -7,16 +8,18 @@
     <title>CA</title>
 
     <!--Stylesheet-->
-    <link href="fonts/fonts.css" rel="stylesheet">
-    <link href="css/bootstrap.min.css" rel="stylesheet">
-    <link href="css/nice-select.css" rel="stylesheet">
-    <link href="css/jquery-ui.min.css" rel="stylesheet">
-    <link href="css/datatables.min.css" rel="stylesheet">
-    <link href="css/style.css" rel="stylesheet">
-    <link href="css/style-v3.css" rel="stylesheet">
-    <link href="css/style-v2.css" rel="stylesheet">
-    <link href="css/responsive.css" rel="stylesheet">
-    <!--Stylesheet-->
+    {% block custom_css %}
+    <link href="{% static 'fonts/fonts.css' %}" rel="stylesheet">
+    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+    <link href="{% static 'css/nice-select.css' %}" rel="stylesheet">
+    <link href="{% static 'css/jquery-ui.min.css' %}" rel="stylesheet">
+    <link href="{% static 'css/datatables.min.css' %}" rel="stylesheet">
+    <link href="{% static 'css/style.css' %}" rel="stylesheet">
+    <link href="{% static 'css/style-v3.css' %}" rel="stylesheet">
+    <link href="{% static 'css/style-v2.css' %}" rel="stylesheet">
+    <link href="{% static 'css/responsive.css' %}" rel="stylesheet">
+    {% endblock custom_css %}
+<!--Stylesheet-->
 
 </head>
 
@@ -32,7 +35,7 @@
                     <span></span>
                 </a>
             </div>
-            <div class="logo"><a href="index.html"><img src="images/logo.svg" alt="logo"></a></div>
+            <div class="logo"><a href="index.html"><img src="{% static 'images/logo.svg' %}" alt="logo"></a></div>
             <div class="search_head">
                 <form action="">
                     <input type="text" class="input-search" placeholder="Search here...">
@@ -79,7 +82,7 @@
             </div>
             <div class="user_login flxrow">
                 <a href="#">
-                    <div class="img" style="background-image:url(images/user-img.png);"></div>
+                    <div class="img" style="background-image:url({% static 'images/user-img.png' %});"></div>
                     <div class="name">
                         <p>Alexander <span>Admin</span></p>
                         <div class="down-caret">
@@ -109,14 +112,14 @@
             <div class="dash_wrap_inner client-list-page">
                 <div class="page-title">
                     <h1>Clients List</h1>
-                    <p>5 Employees</p>
+                    <p>{{count}} Employees</p>
                 </div>
 
                 <div class="bottom_client_dtl">
                     <div class="select_cat_description">
                         <div class="tab-pane-wrap">
                             <div class="top_add_file">
-                                <a href="client-edit.html" class="modal_personal_file">
+                                <a href="client-add" class="modal_personal_file">
                                     Add Client
                                     <i>
                                         <svg width="20" height="20" viewBox="0 0 20 20" fill="none"
@@ -205,20 +208,20 @@
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    {% for client in clients %}
                                     <tr>
                                         <td>
                                             <div class="client_dtls">
-                                                <div class="client_dtls_top">Alexander</div>
-                                                <div class="client_dtls_bottom">Indivisual</div>
+                                                <div class="client_dtls_top">{{client.name}}</div>
+                                                <div class="client_dtls_bottom">{{client.client_type}}</div>
                                             </div>
                                         </td>
                                         <td>
                                             <div class="client_dtls">
-                                                <div class="client_dtls_top"><a href="tel:+91 1234567890">+91
-                                                        1234567890</a></div>
+                                                <div class="client_dtls_top"><a href="tel:{{client.phone_number}}">{{client.phone_number}}</a></div>
                                                 <div class="client_dtls_bottom"><a
-                                                        href="mailto:info.alexander@gmail.com">info.alexander@gmail.com</a>
-                                                </div>
+                                                        href="mailto:{{client.email}}">{{client.email}}</a>
+                                                    </div>
                                             </div>
                                         </td>
                                         <td>
@@ -230,15 +233,20 @@
                                         <td class="text-center">
                                             <div class="status_main">
                                                 <div class="status">
+                                                    {% if client.status == 1 %}
                                                     <div class="status_color active"></div>
                                                     <div class="status_text">Active</div>
+                                                    {% else %}
+                                                    <div class="status_color inactive"></div>
+                                                    <div class="status_text">Inactive</div>
+                                                    {% endif %}
                                                 </div>
                                             </div>
                                         </td>
                                         <td class="button_action">
                                             <div class="button_grp">
                                                 <div class="button_box view_box_bnt">
-                                                    <a href="#">
+                                                    <a href="client-detail/{{client.id}}">
                                                         <svg width="20" height="20" viewBox="0 0 20 20" fill="none"
                                                             xmlns="http://www.w3.org/2000/svg">
                                                             <path
@@ -253,14 +261,14 @@
                                                     </a>
                                                 </div>
                                                 <div class="button_box edit_box_btn">
-                                                    <a href="#">
+                                                    <a href="client-edit/{{client.id}}">
                                                         <svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
                                                             <path d="M1.3335 13.6668H4.66683L13.4168 4.91676C13.8589 4.47473 14.1072 3.87521 14.1072 3.25009C14.1072 2.62497 13.8589 2.02545 13.4168 1.58342C12.9748 1.1414 12.3753 0.893066 11.7502 0.893066C11.125 0.893066 10.5255 1.1414 10.0835 1.58342L1.3335 10.3334V13.6668Z" stroke="#A6ABBD" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
                                                             </svg>                                                            
                                                     </a>
                                                 </div>
                                                 <div class="button_box delete_box_btn">
-                                                    <a href="#">
+                                                    <a href="delete_client/{{client.id}}">
                                                         <svg width="20" height="20" viewBox="0 0 20 20" fill="none"
                                                             xmlns="http://www.w3.org/2000/svg">
                                                             <path d="M3.33337 5.83301H16.6667" stroke="#A6ABBD"
@@ -287,499 +295,8 @@
                                             </div>
                                         </td>
                                     </tr>
-                                    <tr>
-                                        <td>
-                                            <div class="client_dtls">
-                                                <div class="client_dtls_top">Alexander</div>
-                                                <div class="client_dtls_bottom">Indivisual</div>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <div class="client_dtls">
-                                                <div class="client_dtls_top"><a href="tel:+91 1234567890">+91
-                                                        1234567890</a></div>
-                                                <div class="client_dtls_bottom"><a
-                                                        href="mailto:info.alexander@gmail.com">info.alexander@gmail.com</a>
-                                                </div>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <div class="client_dtls">
-                                                <div class="client_dtls_top">Arya Kagathara</div>
-                                                <div class="client_dtls_bottom">Dr. S P Kagathara</div>
-                                            </div>
-                                        </td>
-                                        <td class="text-center">
-                                            <div class="status_main">
-                                                <div class="status">
-                                                    <div class="status_color"></div>
-                                                    <div class="status_text">In-Active</div>
-                                                </div>
-                                            </div>
-                                        </td>
-                                        <td class="button_action">
-                                            <div class="button_grp">
-                                                <div class="button_box view_box_bnt">
-                                                    <a href="#">
-                                                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none"
-                                                            xmlns="http://www.w3.org/2000/svg">
-                                                            <path
-                                                                d="M10 11.6663C10.9205 11.6663 11.6667 10.9201 11.6667 9.99967C11.6667 9.0792 10.9205 8.33301 10 8.33301C9.07957 8.33301 8.33337 9.0792 8.33337 9.99967C8.33337 10.9201 9.07957 11.6663 10 11.6663Z"
-                                                                stroke="#A6ABBD" stroke-width="1.5"
-                                                                stroke-linecap="round" stroke-linejoin="round" />
-                                                            <path
-                                                                d="M18.3333 10.0003C16.1108 13.8895 13.3333 15.8337 9.99996 15.8337C6.66663 15.8337 3.88913 13.8895 1.66663 10.0003C3.88913 6.11116 6.66663 4.16699 9.99996 4.16699C13.3333 4.16699 16.1108 6.11116 18.3333 10.0003Z"
-                                                                stroke="#A6ABBD" stroke-width="1.5"
-                                                                stroke-linecap="round" stroke-linejoin="round" />
-                                                        </svg>
-                                                    </a>
-                                                </div>
-                                                <div class="button_box edit_box_btn">
-                                                    <a href="#">
-                                                        <svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                            <path d="M1.3335 13.6668H4.66683L13.4168 4.91676C13.8589 4.47473 14.1072 3.87521 14.1072 3.25009C14.1072 2.62497 13.8589 2.02545 13.4168 1.58342C12.9748 1.1414 12.3753 0.893066 11.7502 0.893066C11.125 0.893066 10.5255 1.1414 10.0835 1.58342L1.3335 10.3334V13.6668Z" stroke="#A6ABBD" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                                                            </svg>                                                            
-                                                    </a>
-                                                </div>
-                                                <div class="button_box delete_box_btn">
-                                                    <a href="#">
-                                                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none"
-                                                            xmlns="http://www.w3.org/2000/svg">
-                                                            <path d="M3.33337 5.83301H16.6667" stroke="#A6ABBD"
-                                                                stroke-width="1.5" stroke-linecap="round"
-                                                                stroke-linejoin="round" />
-                                                            <path d="M8.33337 9.16699V14.167" stroke="#A6ABBD"
-                                                                stroke-width="1.5" stroke-linecap="round"
-                                                                stroke-linejoin="round" />
-                                                            <path d="M11.6666 9.16699V14.167" stroke="#A6ABBD"
-                                                                stroke-width="1.5" stroke-linecap="round"
-                                                                stroke-linejoin="round" />
-                                                            <path
-                                                                d="M4.16663 5.83301L4.99996 15.833C4.99996 16.275 5.17555 16.699 5.48811 17.0115C5.80068 17.3241 6.2246 17.4997 6.66663 17.4997H13.3333C13.7753 17.4997 14.1992 17.3241 14.5118 17.0115C14.8244 16.699 15 16.275 15 15.833L15.8333 5.83301"
-                                                                stroke="#A6ABBD" stroke-width="1.5"
-                                                                stroke-linecap="round" stroke-linejoin="round" />
-                                                            <path
-                                                                d="M7.5 5.83333V3.33333C7.5 3.11232 7.5878 2.90036 7.74408 2.74408C7.90036 2.5878 8.11232 2.5 8.33333 2.5H11.6667C11.8877 2.5 12.0996 2.5878 12.2559 2.74408C12.4122 2.90036 12.5 3.11232 12.5 3.33333V5.83333"
-                                                                stroke="#A6ABBD" stroke-width="1.5"
-                                                                stroke-linecap="round" stroke-linejoin="round" />
-                                                        </svg>
+                                    {% endfor %}
 
-                                                    </a>
-                                                </div>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <div class="client_dtls">
-                                                <div class="client_dtls_top">Alexander</div>
-                                                <div class="client_dtls_bottom">Indivisual</div>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <div class="client_dtls">
-                                                <div class="client_dtls_top"><a href="tel:+91 1234567890">+91
-                                                        1234567890</a></div>
-                                                <div class="client_dtls_bottom"><a
-                                                        href="mailto:info.alexander@gmail.com">info.alexander@gmail.com</a>
-                                                </div>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <div class="client_dtls">
-                                                <div class="client_dtls_top">Arya Kagathara</div>
-                                                <div class="client_dtls_bottom">Dr. S P Kagathara</div>
-                                            </div>
-                                        </td>
-                                        <td class="text-center">
-                                            <div class="status_main">
-                                                <div class="status">
-                                                    <div class="status_color active"></div>
-                                                    <div class="status_text">Active</div>
-                                                </div>
-                                            </div>
-                                        </td>
-                                        <td class="button_action">
-                                            <div class="button_grp">
-                                                <div class="button_box view_box_bnt">
-                                                    <a href="#">
-                                                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none"
-                                                            xmlns="http://www.w3.org/2000/svg">
-                                                            <path
-                                                                d="M10 11.6663C10.9205 11.6663 11.6667 10.9201 11.6667 9.99967C11.6667 9.0792 10.9205 8.33301 10 8.33301C9.07957 8.33301 8.33337 9.0792 8.33337 9.99967C8.33337 10.9201 9.07957 11.6663 10 11.6663Z"
-                                                                stroke="#A6ABBD" stroke-width="1.5"
-                                                                stroke-linecap="round" stroke-linejoin="round" />
-                                                            <path
-                                                                d="M18.3333 10.0003C16.1108 13.8895 13.3333 15.8337 9.99996 15.8337C6.66663 15.8337 3.88913 13.8895 1.66663 10.0003C3.88913 6.11116 6.66663 4.16699 9.99996 4.16699C13.3333 4.16699 16.1108 6.11116 18.3333 10.0003Z"
-                                                                stroke="#A6ABBD" stroke-width="1.5"
-                                                                stroke-linecap="round" stroke-linejoin="round" />
-                                                        </svg>
-                                                    </a>
-                                                </div>
-                                                <div class="button_box edit_box_btn">
-                                                    <a href="#">
-                                                        <svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                            <path d="M1.3335 13.6668H4.66683L13.4168 4.91676C13.8589 4.47473 14.1072 3.87521 14.1072 3.25009C14.1072 2.62497 13.8589 2.02545 13.4168 1.58342C12.9748 1.1414 12.3753 0.893066 11.7502 0.893066C11.125 0.893066 10.5255 1.1414 10.0835 1.58342L1.3335 10.3334V13.6668Z" stroke="#A6ABBD" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                                                            </svg>                                                            
-                                                    </a>
-                                                </div>
-                                                <div class="button_box delete_box_btn">
-                                                    <a href="#">
-                                                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none"
-                                                            xmlns="http://www.w3.org/2000/svg">
-                                                            <path d="M3.33337 5.83301H16.6667" stroke="#A6ABBD"
-                                                                stroke-width="1.5" stroke-linecap="round"
-                                                                stroke-linejoin="round" />
-                                                            <path d="M8.33337 9.16699V14.167" stroke="#A6ABBD"
-                                                                stroke-width="1.5" stroke-linecap="round"
-                                                                stroke-linejoin="round" />
-                                                            <path d="M11.6666 9.16699V14.167" stroke="#A6ABBD"
-                                                                stroke-width="1.5" stroke-linecap="round"
-                                                                stroke-linejoin="round" />
-                                                            <path
-                                                                d="M4.16663 5.83301L4.99996 15.833C4.99996 16.275 5.17555 16.699 5.48811 17.0115C5.80068 17.3241 6.2246 17.4997 6.66663 17.4997H13.3333C13.7753 17.4997 14.1992 17.3241 14.5118 17.0115C14.8244 16.699 15 16.275 15 15.833L15.8333 5.83301"
-                                                                stroke="#A6ABBD" stroke-width="1.5"
-                                                                stroke-linecap="round" stroke-linejoin="round" />
-                                                            <path
-                                                                d="M7.5 5.83333V3.33333C7.5 3.11232 7.5878 2.90036 7.74408 2.74408C7.90036 2.5878 8.11232 2.5 8.33333 2.5H11.6667C11.8877 2.5 12.0996 2.5878 12.2559 2.74408C12.4122 2.90036 12.5 3.11232 12.5 3.33333V5.83333"
-                                                                stroke="#A6ABBD" stroke-width="1.5"
-                                                                stroke-linecap="round" stroke-linejoin="round" />
-                                                        </svg>
-
-                                                    </a>
-                                                </div>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <div class="client_dtls">
-                                                <div class="client_dtls_top">Alexander</div>
-                                                <div class="client_dtls_bottom">Indivisual</div>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <div class="client_dtls">
-                                                <div class="client_dtls_top"><a href="tel:+91 1234567890">+91
-                                                        1234567890</a></div>
-                                                <div class="client_dtls_bottom"><a
-                                                        href="mailto:info.alexander@gmail.com">info.alexander@gmail.com</a>
-                                                </div>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <div class="client_dtls">
-                                                <div class="client_dtls_top">Arya Kagathara</div>
-                                                <div class="client_dtls_bottom">Dr. S P Kagathara</div>
-                                            </div>
-                                        </td>
-                                        <td class="text-center">
-                                            <div class="status_main">
-                                                <div class="status">
-                                                    <div class="status_color"></div>
-                                                    <div class="status_text">In-Active</div>
-                                                </div>
-                                            </div>
-                                        </td>
-                                        <td class="button_action">
-                                            <div class="button_grp">
-                                                <div class="button_box view_box_bnt">
-                                                    <a href="#">
-                                                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none"
-                                                            xmlns="http://www.w3.org/2000/svg">
-                                                            <path
-                                                                d="M10 11.6663C10.9205 11.6663 11.6667 10.9201 11.6667 9.99967C11.6667 9.0792 10.9205 8.33301 10 8.33301C9.07957 8.33301 8.33337 9.0792 8.33337 9.99967C8.33337 10.9201 9.07957 11.6663 10 11.6663Z"
-                                                                stroke="#A6ABBD" stroke-width="1.5"
-                                                                stroke-linecap="round" stroke-linejoin="round" />
-                                                            <path
-                                                                d="M18.3333 10.0003C16.1108 13.8895 13.3333 15.8337 9.99996 15.8337C6.66663 15.8337 3.88913 13.8895 1.66663 10.0003C3.88913 6.11116 6.66663 4.16699 9.99996 4.16699C13.3333 4.16699 16.1108 6.11116 18.3333 10.0003Z"
-                                                                stroke="#A6ABBD" stroke-width="1.5"
-                                                                stroke-linecap="round" stroke-linejoin="round" />
-                                                        </svg>
-                                                    </a>
-                                                </div>
-                                                <div class="button_box edit_box_btn">
-                                                    <a href="#">
-                                                        <svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                            <path d="M1.3335 13.6668H4.66683L13.4168 4.91676C13.8589 4.47473 14.1072 3.87521 14.1072 3.25009C14.1072 2.62497 13.8589 2.02545 13.4168 1.58342C12.9748 1.1414 12.3753 0.893066 11.7502 0.893066C11.125 0.893066 10.5255 1.1414 10.0835 1.58342L1.3335 10.3334V13.6668Z" stroke="#A6ABBD" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                                                            </svg>                                                            
-                                                    </a>
-                                                </div>
-                                                <div class="button_box delete_box_btn">
-                                                    <a href="#">
-                                                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none"
-                                                            xmlns="http://www.w3.org/2000/svg">
-                                                            <path d="M3.33337 5.83301H16.6667" stroke="#A6ABBD"
-                                                                stroke-width="1.5" stroke-linecap="round"
-                                                                stroke-linejoin="round" />
-                                                            <path d="M8.33337 9.16699V14.167" stroke="#A6ABBD"
-                                                                stroke-width="1.5" stroke-linecap="round"
-                                                                stroke-linejoin="round" />
-                                                            <path d="M11.6666 9.16699V14.167" stroke="#A6ABBD"
-                                                                stroke-width="1.5" stroke-linecap="round"
-                                                                stroke-linejoin="round" />
-                                                            <path
-                                                                d="M4.16663 5.83301L4.99996 15.833C4.99996 16.275 5.17555 16.699 5.48811 17.0115C5.80068 17.3241 6.2246 17.4997 6.66663 17.4997H13.3333C13.7753 17.4997 14.1992 17.3241 14.5118 17.0115C14.8244 16.699 15 16.275 15 15.833L15.8333 5.83301"
-                                                                stroke="#A6ABBD" stroke-width="1.5"
-                                                                stroke-linecap="round" stroke-linejoin="round" />
-                                                            <path
-                                                                d="M7.5 5.83333V3.33333C7.5 3.11232 7.5878 2.90036 7.74408 2.74408C7.90036 2.5878 8.11232 2.5 8.33333 2.5H11.6667C11.8877 2.5 12.0996 2.5878 12.2559 2.74408C12.4122 2.90036 12.5 3.11232 12.5 3.33333V5.83333"
-                                                                stroke="#A6ABBD" stroke-width="1.5"
-                                                                stroke-linecap="round" stroke-linejoin="round" />
-                                                        </svg>
-
-                                                    </a>
-                                                </div>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <div class="client_dtls">
-                                                <div class="client_dtls_top">Alexander</div>
-                                                <div class="client_dtls_bottom">Indivisual</div>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <div class="client_dtls">
-                                                <div class="client_dtls_top"><a href="tel:+91 1234567890">+91
-                                                        1234567890</a></div>
-                                                <div class="client_dtls_bottom"><a
-                                                        href="mailto:info.alexander@gmail.com">info.alexander@gmail.com</a>
-                                                </div>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <div class="client_dtls">
-                                                <div class="client_dtls_top">Arya Kagathara</div>
-                                                <div class="client_dtls_bottom">Dr. S P Kagathara</div>
-                                            </div>
-                                        </td>
-                                        <td class="text-center">
-                                            <div class="status_main">
-                                                <div class="status">
-                                                    <div class="status_color active"></div>
-                                                    <div class="status_text">Active</div>
-                                                </div>
-                                            </div>
-                                        </td>
-                                        <td class="button_action">
-                                            <div class="button_grp">
-                                                <div class="button_box view_box_bnt">
-                                                    <a href="#">
-                                                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none"
-                                                            xmlns="http://www.w3.org/2000/svg">
-                                                            <path
-                                                                d="M10 11.6663C10.9205 11.6663 11.6667 10.9201 11.6667 9.99967C11.6667 9.0792 10.9205 8.33301 10 8.33301C9.07957 8.33301 8.33337 9.0792 8.33337 9.99967C8.33337 10.9201 9.07957 11.6663 10 11.6663Z"
-                                                                stroke="#A6ABBD" stroke-width="1.5"
-                                                                stroke-linecap="round" stroke-linejoin="round" />
-                                                            <path
-                                                                d="M18.3333 10.0003C16.1108 13.8895 13.3333 15.8337 9.99996 15.8337C6.66663 15.8337 3.88913 13.8895 1.66663 10.0003C3.88913 6.11116 6.66663 4.16699 9.99996 4.16699C13.3333 4.16699 16.1108 6.11116 18.3333 10.0003Z"
-                                                                stroke="#A6ABBD" stroke-width="1.5"
-                                                                stroke-linecap="round" stroke-linejoin="round" />
-                                                        </svg>
-                                                    </a>
-                                                </div>
-                                                <div class="button_box edit_box_btn">
-                                                    <a href="#">
-                                                        <svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                            <path d="M1.3335 13.6668H4.66683L13.4168 4.91676C13.8589 4.47473 14.1072 3.87521 14.1072 3.25009C14.1072 2.62497 13.8589 2.02545 13.4168 1.58342C12.9748 1.1414 12.3753 0.893066 11.7502 0.893066C11.125 0.893066 10.5255 1.1414 10.0835 1.58342L1.3335 10.3334V13.6668Z" stroke="#A6ABBD" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                                                            </svg>                                                            
-                                                    </a>
-                                                </div>
-                                                <div class="button_box delete_box_btn">
-                                                    <a href="#">
-                                                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none"
-                                                            xmlns="http://www.w3.org/2000/svg">
-                                                            <path d="M3.33337 5.83301H16.6667" stroke="#A6ABBD"
-                                                                stroke-width="1.5" stroke-linecap="round"
-                                                                stroke-linejoin="round" />
-                                                            <path d="M8.33337 9.16699V14.167" stroke="#A6ABBD"
-                                                                stroke-width="1.5" stroke-linecap="round"
-                                                                stroke-linejoin="round" />
-                                                            <path d="M11.6666 9.16699V14.167" stroke="#A6ABBD"
-                                                                stroke-width="1.5" stroke-linecap="round"
-                                                                stroke-linejoin="round" />
-                                                            <path
-                                                                d="M4.16663 5.83301L4.99996 15.833C4.99996 16.275 5.17555 16.699 5.48811 17.0115C5.80068 17.3241 6.2246 17.4997 6.66663 17.4997H13.3333C13.7753 17.4997 14.1992 17.3241 14.5118 17.0115C14.8244 16.699 15 16.275 15 15.833L15.8333 5.83301"
-                                                                stroke="#A6ABBD" stroke-width="1.5"
-                                                                stroke-linecap="round" stroke-linejoin="round" />
-                                                            <path
-                                                                d="M7.5 5.83333V3.33333C7.5 3.11232 7.5878 2.90036 7.74408 2.74408C7.90036 2.5878 8.11232 2.5 8.33333 2.5H11.6667C11.8877 2.5 12.0996 2.5878 12.2559 2.74408C12.4122 2.90036 12.5 3.11232 12.5 3.33333V5.83333"
-                                                                stroke="#A6ABBD" stroke-width="1.5"
-                                                                stroke-linecap="round" stroke-linejoin="round" />
-                                                        </svg>
-
-                                                    </a>
-                                                </div>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <div class="client_dtls">
-                                                <div class="client_dtls_top">Alexander</div>
-                                                <div class="client_dtls_bottom">Indivisual</div>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <div class="client_dtls">
-                                                <div class="client_dtls_top"><a href="tel:+91 1234567890">+91
-                                                        1234567890</a></div>
-                                                <div class="client_dtls_bottom"><a
-                                                        href="mailto:info.alexander@gmail.com">info.alexander@gmail.com</a>
-                                                </div>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <div class="client_dtls">
-                                                <div class="client_dtls_top">Arya Kagathara</div>
-                                                <div class="client_dtls_bottom">Dr. S P Kagathara</div>
-                                            </div>
-                                        </td>
-                                        <td class="text-center">
-                                            <div class="status_main">
-                                                <div class="status">
-                                                    <div class="status_color"></div>
-                                                    <div class="status_text">In-Active</div>
-                                                </div>
-                                            </div>
-                                        </td>
-                                        <td class="button_action">
-                                            <div class="button_grp">
-                                                <div class="button_box view_box_bnt">
-                                                    <a href="#">
-                                                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none"
-                                                            xmlns="http://www.w3.org/2000/svg">
-                                                            <path
-                                                                d="M10 11.6663C10.9205 11.6663 11.6667 10.9201 11.6667 9.99967C11.6667 9.0792 10.9205 8.33301 10 8.33301C9.07957 8.33301 8.33337 9.0792 8.33337 9.99967C8.33337 10.9201 9.07957 11.6663 10 11.6663Z"
-                                                                stroke="#A6ABBD" stroke-width="1.5"
-                                                                stroke-linecap="round" stroke-linejoin="round" />
-                                                            <path
-                                                                d="M18.3333 10.0003C16.1108 13.8895 13.3333 15.8337 9.99996 15.8337C6.66663 15.8337 3.88913 13.8895 1.66663 10.0003C3.88913 6.11116 6.66663 4.16699 9.99996 4.16699C13.3333 4.16699 16.1108 6.11116 18.3333 10.0003Z"
-                                                                stroke="#A6ABBD" stroke-width="1.5"
-                                                                stroke-linecap="round" stroke-linejoin="round" />
-                                                        </svg>
-                                                    </a>
-                                                </div>
-                                                <div class="button_box edit_box_btn">
-                                                    <a href="#">
-                                                        <svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                            <path d="M1.3335 13.6668H4.66683L13.4168 4.91676C13.8589 4.47473 14.1072 3.87521 14.1072 3.25009C14.1072 2.62497 13.8589 2.02545 13.4168 1.58342C12.9748 1.1414 12.3753 0.893066 11.7502 0.893066C11.125 0.893066 10.5255 1.1414 10.0835 1.58342L1.3335 10.3334V13.6668Z" stroke="#A6ABBD" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                                                            </svg>
-                                                            
-                                                    </a>
-                                                </div>
-                                                <div class="button_box delete_box_btn">
-                                                    <a href="#">
-                                                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none"
-                                                            xmlns="http://www.w3.org/2000/svg">
-                                                            <path d="M3.33337 5.83301H16.6667" stroke="#A6ABBD"
-                                                                stroke-width="1.5" stroke-linecap="round"
-                                                                stroke-linejoin="round" />
-                                                            <path d="M8.33337 9.16699V14.167" stroke="#A6ABBD"
-                                                                stroke-width="1.5" stroke-linecap="round"
-                                                                stroke-linejoin="round" />
-                                                            <path d="M11.6666 9.16699V14.167" stroke="#A6ABBD"
-                                                                stroke-width="1.5" stroke-linecap="round"
-                                                                stroke-linejoin="round" />
-                                                            <path
-                                                                d="M4.16663 5.83301L4.99996 15.833C4.99996 16.275 5.17555 16.699 5.48811 17.0115C5.80068 17.3241 6.2246 17.4997 6.66663 17.4997H13.3333C13.7753 17.4997 14.1992 17.3241 14.5118 17.0115C14.8244 16.699 15 16.275 15 15.833L15.8333 5.83301"
-                                                                stroke="#A6ABBD" stroke-width="1.5"
-                                                                stroke-linecap="round" stroke-linejoin="round" />
-                                                            <path
-                                                                d="M7.5 5.83333V3.33333C7.5 3.11232 7.5878 2.90036 7.74408 2.74408C7.90036 2.5878 8.11232 2.5 8.33333 2.5H11.6667C11.8877 2.5 12.0996 2.5878 12.2559 2.74408C12.4122 2.90036 12.5 3.11232 12.5 3.33333V5.83333"
-                                                                stroke="#A6ABBD" stroke-width="1.5"
-                                                                stroke-linecap="round" stroke-linejoin="round" />
-                                                        </svg>
-
-                                                    </a>
-                                                </div>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <div class="client_dtls">
-                                                <div class="client_dtls_top">Alexander</div>
-                                                <div class="client_dtls_bottom">Indivisual</div>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <div class="client_dtls">
-                                                <div class="client_dtls_top"><a href="tel:+91 1234567890">+91
-                                                        1234567890</a></div>
-                                                <div class="client_dtls_bottom"><a
-                                                        href="mailto:info.alexander@gmail.com">info.alexander@gmail.com</a>
-                                                </div>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <div class="client_dtls">
-                                                <div class="client_dtls_top">Arya Kagathara</div>
-                                                <div class="client_dtls_bottom">Dr. S P Kagathara</div>
-                                            </div>
-                                        </td>
-                                        <td class="text-center">
-                                            <div class="status_main">
-                                                <div class="status">
-                                                    <div class="status_color"></div>
-                                                    <div class="status_text">In-Active</div>
-                                                </div>
-                                            </div>
-                                        </td>
-                                        <td class="button_action">
-                                            <div class="button_grp">
-                                                <div class="button_box view_box_bnt">
-                                                    <a href="#">
-                                                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none"
-                                                            xmlns="http://www.w3.org/2000/svg">
-                                                            <path
-                                                                d="M10 11.6663C10.9205 11.6663 11.6667 10.9201 11.6667 9.99967C11.6667 9.0792 10.9205 8.33301 10 8.33301C9.07957 8.33301 8.33337 9.0792 8.33337 9.99967C8.33337 10.9201 9.07957 11.6663 10 11.6663Z"
-                                                                stroke="#A6ABBD" stroke-width="1.5"
-                                                                stroke-linecap="round" stroke-linejoin="round" />
-                                                            <path
-                                                                d="M18.3333 10.0003C16.1108 13.8895 13.3333 15.8337 9.99996 15.8337C6.66663 15.8337 3.88913 13.8895 1.66663 10.0003C3.88913 6.11116 6.66663 4.16699 9.99996 4.16699C13.3333 4.16699 16.1108 6.11116 18.3333 10.0003Z"
-                                                                stroke="#A6ABBD" stroke-width="1.5"
-                                                                stroke-linecap="round" stroke-linejoin="round" />
-                                                        </svg>
-                                                    </a>
-                                                </div>
-                                                <div class="button_box edit_box_btn">
-                                                    <a href="#">
-                                                        <svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                            <path d="M1.3335 13.6668H4.66683L13.4168 4.91676C13.8589 4.47473 14.1072 3.87521 14.1072 3.25009C14.1072 2.62497 13.8589 2.02545 13.4168 1.58342C12.9748 1.1414 12.3753 0.893066 11.7502 0.893066C11.125 0.893066 10.5255 1.1414 10.0835 1.58342L1.3335 10.3334V13.6668Z" stroke="#A6ABBD" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                                                            </svg>                                                            
-                                                    </a>
-                                                </div>
-                                                <div class="button_box delete_box_btn">
-                                                    <a href="#">
-                                                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none"
-                                                            xmlns="http://www.w3.org/2000/svg">
-                                                            <path d="M3.33337 5.83301H16.6667" stroke="#A6ABBD"
-                                                                stroke-width="1.5" stroke-linecap="round"
-                                                                stroke-linejoin="round" />
-                                                            <path d="M8.33337 9.16699V14.167" stroke="#A6ABBD"
-                                                                stroke-width="1.5" stroke-linecap="round"
-                                                                stroke-linejoin="round" />
-                                                            <path d="M11.6666 9.16699V14.167" stroke="#A6ABBD"
-                                                                stroke-width="1.5" stroke-linecap="round"
-                                                                stroke-linejoin="round" />
-                                                            <path
-                                                                d="M4.16663 5.83301L4.99996 15.833C4.99996 16.275 5.17555 16.699 5.48811 17.0115C5.80068 17.3241 6.2246 17.4997 6.66663 17.4997H13.3333C13.7753 17.4997 14.1992 17.3241 14.5118 17.0115C14.8244 16.699 15 16.275 15 15.833L15.8333 5.83301"
-                                                                stroke="#A6ABBD" stroke-width="1.5"
-                                                                stroke-linecap="round" stroke-linejoin="round" />
-                                                            <path
-                                                                d="M7.5 5.83333V3.33333C7.5 3.11232 7.5878 2.90036 7.74408 2.74408C7.90036 2.5878 8.11232 2.5 8.33333 2.5H11.6667C11.8877 2.5 12.0996 2.5878 12.2559 2.74408C12.4122 2.90036 12.5 3.11232 12.5 3.33333V5.83333"
-                                                                stroke="#A6ABBD" stroke-width="1.5"
-                                                                stroke-linecap="round" stroke-linejoin="round" />
-                                                        </svg>
-
-                                                    </a>
-                                                </div>
-                                            </div>
-                                        </td>
-                                    </tr>
                                 </tbody>
                             </table>
                         </div>
@@ -793,15 +310,15 @@
     <!--Wrapper End-->
 
     <!--JavaScript-->
-    <script src="js/jquery-3.3.1.min.js"></script>
-    <script src="js/jquery-ui.min.js"></script>
-    <script src="js/popper.min.js"></script>
-    <script src="js/jquery.dataTables.min.js"></script>
-    <script src="js/dataTables.responsive.min.js"></script>
-    <script src="js/responsive.bootstrap.min.js"></script>
-    <script src="js/bootstrap.min.js"></script>
-    <script src="js/jquery.nice-select.js"></script>
-    <script src="js/script.js"></script>
+    <script src="{% static 'js/jquery-3.3.1.min.js' %}"></script>
+    <script src="{% static 'js/jquery-ui.min.js' %}"></script>
+    <script src="{% static 'js/popper.min.js' %}"></script>
+    <script src="{% static 'js/jquery.dataTables.min.js' %}"></script>
+    <script src="{% static 'js/dataTables.responsive.min.js' %}"></script>
+    <script src="{% static 'js/responsive.bootstrap.min.js' %}"></script>
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'js/jquery.nice-select.js' %}"></script>
+    <script src="{% static 'js/script.js' %}"></script>
     <!--JavaScript-->
 
     <script>

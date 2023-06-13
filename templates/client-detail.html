@@ -1,3 +1,4 @@
+{% load static %}
 <!doctype html>
 <html lang="en">
 <head>
@@ -6,15 +7,17 @@
 <title>CA</title>
 
 <!--Stylesheet-->
-<link href="fonts/fonts.css" rel="stylesheet">
-<link href="css/bootstrap.min.css" rel="stylesheet">
-<link href="css/nice-select.css" rel="stylesheet">
-<link href="css/jquery-ui.min.css" rel="stylesheet">
-<link href="css/datatables.min.css" rel="stylesheet">
-<link href="css/style.css" rel="stylesheet">
-<link href="css/style-v3.css" rel="stylesheet">
-<link href="css/style-v2.css" rel="stylesheet">
-<link href="css/responsive.css" rel="stylesheet">
+{% block custom_css %}
+<link href="{% static 'fonts/fonts.css/' %}" rel="stylesheet">
+<link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+<link href="{% static 'css/nice-select.css' %}" rel="stylesheet">
+<link href="{% static 'css/jquery-ui.min.css' %}" rel="stylesheet">
+<link href="{% static 'css/datatables.min.css' %}" rel="stylesheet">
+<link href="{% static 'css/style.css' %}" rel="stylesheet">
+<link href="{% static 'css/style-v3.css' %}" rel="stylesheet">
+<link href="{% static 'css/style-v2.css' %}" rel="stylesheet">
+<link href="{% static 'css/responsive.css' %}" rel="stylesheet">
+{% endblock custom_css %}
 <!--Stylesheet-->
 
 </head>
@@ -30,7 +33,7 @@
                 <span></span>
             </a>
         </div>
-        <div class="logo"><a href="index.html"><img src="images/logo.svg" alt="logo"></a></div>
+        <div class="logo"><a href="index.html"><img src="{% static 'images/logo.svg' %}" alt="logo"></a></div>
         <div class="search_head">
             <form action="">
                 <input type="text" class="input-search" placeholder="Search here...">
@@ -60,7 +63,7 @@
         </div>
         <div class="user_login flxrow">
             <a href="#">
-                <div class="img" style="background-image:url(images/user-img.png);"></div>
+                <div class="img" style="background-image:url({% static 'images/user-img.png' %});"></div>
                 <div class="name">
                     <p>Alexander <span>Admin</span></p>
                     <div class="down-caret">
@@ -87,12 +90,20 @@
     <div class="dash_wrap">
         <div class="dash_wrap_inner client-detai">
             <div class="page-title d-flex flex-wrap align-items-center justify-content-between">
-                <h1>Alexander</h1>
+                <h1>{{client.name}}</h1>
                 <div class="filter_right">
                     <div class="filter_right_list switch-box">
                         <div class="custom-switch">
-                            <input type="checkbox" class="custom-control-input" id="customswitch1">
-                            <label class="custom-control-label" for="customswitch1"></label>
+                            <form id="myForm" method="POST" action="{% url 'CAadmin:toggle_status' %}">
+                                {% csrf_token %}
+                                <input type="hidden" name="client_id" value="{{ client.id }}">
+                                {% if client.status == 0 %}
+                                    <input type="checkbox" checked class="custom-control-input" id="customswitch1">
+                                {% else %}
+                                    <input type="checkbox"  class="custom-control-input" id="customswitch1">
+                                {% endif %}
+                                <label class="custom-control-label" for="customswitch1"></label>
+                            </form>
                         </div>
                     </div>
                     
@@ -124,7 +135,7 @@
                             <div class="client_dtl">
                                 <div class="label_title">Client type</div>
                                 <div class="client_dtl_parsnal">
-                                    <span>Individual</span>
+                                    <span>{{client.client_type}}</span>
                                 </div>
                             </div>
                         </div>
@@ -132,7 +143,7 @@
                             <div class="client_dtl">
                                 <div class="label_title">Company type</div>
                                 <div class="client_dtl_parsnal">
-                                    <span>Private Limited</span>
+                                    <span>{{client.company_type}}</span>
                                 </div>
                             </div>
                         </div>
@@ -140,7 +151,7 @@
                             <div class="client_dtl">
                                 <div class="label_title">Resident Status</div>
                                 <div class="client_dtl_parsnal">
-                                    <span>Resident</span>
+                                    <span>{{client.residence_status}}</span>
                                 </div>
                             </div>
                         </div>
@@ -150,9 +161,9 @@
                             <div class="client_dtl">
                                 <div class="label_title">Username</div>
                                 <div class="client_dtl_parsnal">
-                                    <span>Alexa@123</span> 
+                                    <span id="username">{{client.username}}</span> 
                                     <div class="copy_tag_box">
-                                        <a href="javascript:void(0)" class="copy_tag">
+                                        <a href="#" onclick="copyUsername(event)" class="copy_tag">
                                             <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                                                 <path d="M15.8333 2.5H7.49998C6.57951 2.5 5.83331 3.24619 5.83331 4.16667V12.5C5.83331 13.4205 6.57951 14.1667 7.49998 14.1667H15.8333C16.7538 14.1667 17.5 13.4205 17.5 12.5V4.16667C17.5 3.24619 16.7538 2.5 15.8333 2.5Z" stroke="#A6ABBD" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
                                                 <path d="M14.1667 14.1663V15.833C14.1667 16.275 13.9911 16.699 13.6785 17.0115C13.366 17.3241 12.942 17.4997 12.5 17.4997H4.16667C3.72464 17.4997 3.30072 17.3241 2.98816 17.0115C2.67559 16.699 2.5 16.275 2.5 15.833V7.49967C2.5 7.05765 2.67559 6.63372 2.98816 6.32116C3.30072 6.0086 3.72464 5.83301 4.16667 5.83301H5.83333" stroke="#A6ABBD" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
@@ -166,9 +177,9 @@
                             <div class="client_dtl">
                                 <div class="label_title">Name</div>
                                 <div class="client_dtl_parsnal">
-                                    <span>Alexander</span> 
+                                    <span id="name">{{client.name}}</span> 
                                     <div class="copy_tag_box">
-                                        <a href="javascript:void(0)" class="copy_tag">
+                                        <a href="#" onclick="copyName(event)" class="copy_tag">
                                             <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                                                 <path d="M15.8333 2.5H7.49998C6.57951 2.5 5.83331 3.24619 5.83331 4.16667V12.5C5.83331 13.4205 6.57951 14.1667 7.49998 14.1667H15.8333C16.7538 14.1667 17.5 13.4205 17.5 12.5V4.16667C17.5 3.24619 16.7538 2.5 15.8333 2.5Z" stroke="#A6ABBD" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
                                                 <path d="M14.1667 14.1663V15.833C14.1667 16.275 13.9911 16.699 13.6785 17.0115C13.366 17.3241 12.942 17.4997 12.5 17.4997H4.16667C3.72464 17.4997 3.30072 17.3241 2.98816 17.0115C2.67559 16.699 2.5 16.275 2.5 15.833V7.49967C2.5 7.05765 2.67559 6.63372 2.98816 6.32116C3.30072 6.0086 3.72464 5.83301 4.16667 5.83301H5.83333" stroke="#A6ABBD" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
@@ -182,9 +193,9 @@
                             <div class="client_dtl">
                                 <div class="label_title">Email</div>
                                 <div class="client_dtl_parsnal">
-                                    <span>info.alexander@gmail.com</span> 
+                                    <span id="email">{{client.email}}</span> 
                                     <div class="copy_tag_box">
-                                        <a href="javascript:void(0)" class="copy_tag">
+                                        <a href="#" onclick="copyEmail(event)" class="copy_tag">
                                             <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                                                 <path d="M15.8333 2.5H7.49998C6.57951 2.5 5.83331 3.24619 5.83331 4.16667V12.5C5.83331 13.4205 6.57951 14.1667 7.49998 14.1667H15.8333C16.7538 14.1667 17.5 13.4205 17.5 12.5V4.16667C17.5 3.24619 16.7538 2.5 15.8333 2.5Z" stroke="#A6ABBD" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
                                                 <path d="M14.1667 14.1663V15.833C14.1667 16.275 13.9911 16.699 13.6785 17.0115C13.366 17.3241 12.942 17.4997 12.5 17.4997H4.16667C3.72464 17.4997 3.30072 17.3241 2.98816 17.0115C2.67559 16.699 2.5 16.275 2.5 15.833V7.49967C2.5 7.05765 2.67559 6.63372 2.98816 6.32116C3.30072 6.0086 3.72464 5.83301 4.16667 5.83301H5.83333" stroke="#A6ABBD" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
@@ -198,9 +209,9 @@
                             <div class="client_dtl">
                                 <div class="label_title">Phone Number</div>
                                 <div class="client_dtl_parsnal">
-                                    <span>+91-99xxx-xxxxx</span> 
+                                    <span id="phone">{{client.phone_number}}</span> 
                                     <div class="copy_tag_box">
-                                        <a href="javascript:void(0)" class="copy_tag">
+                                        <a href="#" onclick="copyPhone(event)" class="copy_tag">
                                             <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                                                 <path d="M15.8333 2.5H7.49998C6.57951 2.5 5.83331 3.24619 5.83331 4.16667V12.5C5.83331 13.4205 6.57951 14.1667 7.49998 14.1667H15.8333C16.7538 14.1667 17.5 13.4205 17.5 12.5V4.16667C17.5 3.24619 16.7538 2.5 15.8333 2.5Z" stroke="#A6ABBD" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
                                                 <path d="M14.1667 14.1663V15.833C14.1667 16.275 13.9911 16.699 13.6785 17.0115C13.366 17.3241 12.942 17.4997 12.5 17.4997H4.16667C3.72464 17.4997 3.30072 17.3241 2.98816 17.0115C2.67559 16.699 2.5 16.275 2.5 15.833V7.49967C2.5 7.05765 2.67559 6.63372 2.98816 6.32116C3.30072 6.0086 3.72464 5.83301 4.16667 5.83301H5.83333" stroke="#A6ABBD" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
@@ -214,7 +225,7 @@
                             <div class="client_dtl">
                                 <div class="label_title">Birth Date</div>
                                 <div class="client_dtl_parsnal">
-                                    <span>31/04/1878</span> 
+                                    <span>{{client.birth_date}}</span> 
                                 </div>
                             </div>
                         </div>
@@ -224,7 +235,7 @@
                             <div class="client_dtl">
                                 <div class="label_title">Category type</div>
                                 <div class="client_dtl_parsnal">
-                                    <span>Family, Corporate</span>
+                                    <span>{{client.category}}</span>
                                 </div>
                             </div>
                         </div>
@@ -232,20 +243,21 @@
                             <div class="client_dtl">
                                 <div class="label_title">Group with</div>
                                 <div class="client_dtl_parsnal">
-                                    <span>Mit Kagathara</span>
+                                    <span>{{client.group_with}}</span>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="client_dtl_lista">
+                {% comment %} <div class="client_dtl_lista">
                     <h3>Personal details</h3>
+                    {% for p_detail in p_details %}
                     <div class="client_dtl_row form_row">
                         <div class="form_col_1-3">
                             <div class="client_dtl">
                                 <div class="label_title">Field name</div>
                                 <div class="client_dtl_parsnal">
-                                    <span>GST number</span> 
+                                    <span>{{p_detail.field_name}}</span> 
                                 </div>
                             </div>
                         </div>
@@ -253,7 +265,7 @@
                             <div class="client_dtl">
                                 <div class="label_title">Detail</div>
                                 <div class="client_dtl_parsnal">
-                                    <span>125GHFDxxxx</span> 
+                                    <span>{{p_detail.details}}</span> 
                                     <div class="copy_tag_box">
                                         <a href="javascript:void(0)" class="copy_tag">
                                             <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -269,9 +281,9 @@
                             <div class="client_dtl">
                                 <div class="label_title">File</div>
                                 <div class="client_dtl_parsnal">
-                                    <span>incometax-document.doc</span> 
+                                    <span>{{p_detail.file}}</span> 
                                     <div class="copy_tag_box">
-                                        <a href="files/Dummy-Document.docx" class="copy_tag" target="_blank">
+                                        <a href="/media/{{ p_detail.file }}" class="copy_tag" target="_blank">
                                             <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                                                 <path d="M11.6666 2.5V5.83333C11.6666 6.05435 11.7544 6.26631 11.9107 6.42259C12.067 6.57887 12.2789 6.66667 12.5 6.66667H15.8333" stroke="#A6ABBD" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
                                                 <path d="M14.1666 17.5H5.83329C5.39127 17.5 4.96734 17.3244 4.65478 17.0118C4.34222 16.6993 4.16663 16.2754 4.16663 15.8333V4.16667C4.16663 3.72464 4.34222 3.30072 4.65478 2.98816C4.96734 2.67559 5.39127 2.5 5.83329 2.5H11.6666L15.8333 6.66667V15.8333C15.8333 16.2754 15.6577 16.6993 15.3451 17.0118C15.0326 17.3244 14.6087 17.5 14.1666 17.5Z" stroke="#A6ABBD" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
@@ -283,50 +295,9 @@
                         </div>
                         
                     </div>
-                    <div class="client_dtl_row form_row">
-                        <div class="form_col_1-3">
-                            <div class="client_dtl">
-                                <div class="label_title">Field name</div>
-                                <div class="client_dtl_parsnal">
-                                    <span>GST number</span> 
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form_col_1-3">
-                            <div class="client_dtl">
-                                <div class="label_title">Detail</div>
-                                <div class="client_dtl_parsnal">
-                                    <span>125GHFDxxxx</span> 
-                                    <div class="copy_tag_box">
-                                        <a href="javascript:void(0)" class="copy_tag">
-                                            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                <path d="M15.8333 2.5H7.49998C6.57951 2.5 5.83331 3.24619 5.83331 4.16667V12.5C5.83331 13.4205 6.57951 14.1667 7.49998 14.1667H15.8333C16.7538 14.1667 17.5 13.4205 17.5 12.5V4.16667C17.5 3.24619 16.7538 2.5 15.8333 2.5Z" stroke="#A6ABBD" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                                                <path d="M14.1667 14.1663V15.833C14.1667 16.275 13.9911 16.699 13.6785 17.0115C13.366 17.3241 12.942 17.4997 12.5 17.4997H4.16667C3.72464 17.4997 3.30072 17.3241 2.98816 17.0115C2.67559 16.699 2.5 16.275 2.5 15.833V7.49967C2.5 7.05765 2.67559 6.63372 2.98816 6.32116C3.30072 6.0086 3.72464 5.83301 4.16667 5.83301H5.83333" stroke="#A6ABBD" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                                            </svg>
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form_col_1-3">
-                            <div class="client_dtl">
-                                <div class="label_title">File</div>
-                                <div class="client_dtl_parsnal">
-                                    <span>incometax-document.doc</span> 
-                                    <div class="copy_tag_box">
-                                        <a href="files/dummy.pdf" class="copy_tag" target="_blank">
-                                            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                <path d="M11.6666 2.5V5.83333C11.6666 6.05435 11.7544 6.26631 11.9107 6.42259C12.067 6.57887 12.2789 6.66667 12.5 6.66667H15.8333" stroke="#A6ABBD" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                                                <path d="M14.1666 17.5H5.83329C5.39127 17.5 4.96734 17.3244 4.65478 17.0118C4.34222 16.6993 4.16663 16.2754 4.16663 15.8333V4.16667C4.16663 3.72464 4.34222 3.30072 4.65478 2.98816C4.96734 2.67559 5.39127 2.5 5.83329 2.5H11.6666L15.8333 6.66667V15.8333C15.8333 16.2754 15.6577 16.6993 15.3451 17.0118C15.0326 17.3244 14.6087 17.5 14.1666 17.5Z" stroke="#A6ABBD" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                                            </svg>
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        
-                    </div>
-                </div>
+                    {% endfor %}
+                    
+                </div> {% endcomment %}
                 <div class="client_dtl_lista">
                     <h3>Office Address</h3>
                     <div class="client_dtl_row form_row">
@@ -334,7 +305,7 @@
                             <div class="client_dtl">
                                 <div class="label_title">Building No / Flat No</div>
                                 <div class="client_dtl_parsnal">
-                                    <span>Building No</span> 
+                                    <span>{{o_address.building_number}}</span> 
                                 </div>
                             </div>
                         </div>
@@ -342,7 +313,7 @@
                             <div class="client_dtl">
                                 <div class="label_title">Floor No</div>
                                 <div class="client_dtl_parsnal">
-                                    <span>125GHFDxxxx</span> 
+                                    <span>{{o_address.floor_number}}</span> 
                                 </div>
                             </div>
                         </div>
@@ -350,7 +321,7 @@
                             <div class="client_dtl">
                                 <div class="label_title">Name of The Building</div>
                                 <div class="client_dtl_parsnal">
-                                    <span>Icon</span>
+                                    <span>{{o_address.name_of_building}}</span>
                                 </div>
                             </div>
                         </div>
@@ -361,7 +332,7 @@
                             <div class="client_dtl">
                                 <div class="label_title">Road / Street</div>
                                 <div class="client_dtl_parsnal">
-                                    <span>Road 12</span> 
+                                    <span>{{o_address.street}}</span> 
                                 </div>
                             </div>
                         </div>
@@ -369,7 +340,7 @@
                             <div class="client_dtl">
                                 <div class="label_title">Locality / Village</div>
                                 <div class="client_dtl_parsnal">
-                                    <span>Village name</span> 
+                                    <span>{{o_address.locality}}</span> 
                                 </div>
                             </div>
                         </div>
@@ -377,7 +348,7 @@
                             <div class="client_dtl">
                                 <div class="label_title">City / District</div>
                                 <div class="client_dtl_parsnal">
-                                    <span>City Name</span> 
+                                    <span>{{o_address.city}}</span> 
                                 </div>
                             </div>
                         </div>
@@ -385,7 +356,7 @@
                             <div class="client_dtl">
                                 <div class="label_title">State</div>
                                 <div class="client_dtl_parsnal">
-                                    <span>State Name</span> 
+                                    <span>{{o_address.state}}</span> 
                                 </div>
                             </div>
                         </div>
@@ -393,7 +364,7 @@
                             <div class="client_dtl">
                                 <div class="label_title">Pincode</div>
                                 <div class="client_dtl_parsnal">
-                                    <span>123 123</span> 
+                                    <span>{{o_address.pincode}}</span> 
                                 </div>
                             </div>
                         </div>
@@ -408,7 +379,7 @@
                             <div class="client_dtl">
                                 <div class="label_title">Building No / Flat No</div>
                                 <div class="client_dtl_parsnal">
-                                    <span>Building No</span> 
+                                    <span>{{r_address.building_number}}</span> 
                                 </div>
                             </div>
                         </div>
@@ -416,7 +387,7 @@
                             <div class="client_dtl">
                                 <div class="label_title">Floor No</div>
                                 <div class="client_dtl_parsnal">
-                                    <span>125GHFDxxxx</span> 
+                                    <span>{{r_address.floor_number}}</span> 
                                 </div>
                             </div>
                         </div>
@@ -424,7 +395,7 @@
                             <div class="client_dtl">
                                 <div class="label_title">Name of The Building</div>
                                 <div class="client_dtl_parsnal">
-                                    <span>Icon</span>
+                                    <span>{{r_address.name_of_building}}</span>
                                 </div>
                             </div>
                         </div>
@@ -435,7 +406,7 @@
                             <div class="client_dtl">
                                 <div class="label_title">Road / Street</div>
                                 <div class="client_dtl_parsnal">
-                                    <span>Road 12</span> 
+                                    <span>{{r_address.street}}</span> 
                                 </div>
                             </div>
                         </div>
@@ -443,7 +414,7 @@
                             <div class="client_dtl">
                                 <div class="label_title">Locality / Village</div>
                                 <div class="client_dtl_parsnal">
-                                    <span>Village name</span> 
+                                    <span>{{r_address.locality}}</span> 
                                 </div>
                             </div>
                         </div>
@@ -451,7 +422,7 @@
                             <div class="client_dtl">
                                 <div class="label_title">City / District</div>
                                 <div class="client_dtl_parsnal">
-                                    <span>City Name</span> 
+                                    <span>{{r_address.city}}</span> 
                                 </div>
                             </div>
                         </div>
@@ -459,7 +430,7 @@
                             <div class="client_dtl">
                                 <div class="label_title">State</div>
                                 <div class="client_dtl_parsnal">
-                                    <span>State Name</span> 
+                                    <span>{{r_address.state}}</span> 
                                 </div>
                             </div>
                         </div>
@@ -467,7 +438,7 @@
                             <div class="client_dtl">
                                 <div class="label_title">Pincode</div>
                                 <div class="client_dtl_parsnal">
-                                    <span>123 123</span> 
+                                    <span>{{r_address.pincode}}</span> 
                                 </div>
                             </div>
                         </div>
@@ -477,12 +448,13 @@
 
                 <div class="client_dtl_lista">
                     <h3>Authorize persons</h3>
+                    {% for auth_person in auth_persons %}
                     <div class="client_dtl_row form_row">
                         <div class="form_col_1-3">
                             <div class="client_dtl">
                                 <div class="label_title">Name</div>
                                 <div class="client_dtl_parsnal">
-                                    <span>Alexander</span> 
+                                    <span>{{auth_person.name}}</span> 
                                     <div class="copy_tag_box">
                                         <a href="javascript:void(0)" class="copy_tag">
                                             <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -498,7 +470,7 @@
                             <div class="client_dtl">
                                 <div class="label_title">Phone Number</div>
                                 <div class="client_dtl_parsnal">
-                                    <span>+91-99xxx-xxxxx</span> 
+                                    <span>{{auth_person.phone_number}}</span> 
                                     <div class="copy_tag_box">
                                         <a href="javascript:void(0)" class="copy_tag">
                                             <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -514,7 +486,7 @@
                             <div class="client_dtl">
                                 <div class="label_title">Email</div>
                                 <div class="client_dtl_parsnal">
-                                    <span>info.alexander@gmail.com</span> 
+                                    <span>{{auth_person.email}}</span> 
                                     <div class="copy_tag_box">
                                         <a href="javascript:void(0)" class="copy_tag">
                                             <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -527,6 +499,7 @@
                             </div>
                         </div>
                     </div>
+                    {% endfor %}
                 </div>
             </div>
             <div class="bottom_client_dtl">
@@ -1678,15 +1651,80 @@
 <!--Wrapper End-->
 
 <!--JavaScript-->
-<script src="js/jquery-3.3.1.min.js"></script>
-<script src="js/jquery-ui.min.js"></script>
-<script src="js/popper.min.js"></script>
-<script src="js/jquery.dataTables.min.js"></script>
-<script src="js/dataTables.responsive.min.js"></script>
-<script src="js/responsive.bootstrap.min.js"></script>
-<script src="js/bootstrap.min.js"></script>
-<script src="js/jquery.nice-select.js"></script>
-<script src="js/script.js"></script>
+<script>
+    // Get the form element
+    var checkbox = document.getElementById('customswitch1');
+
+  // Add event listener to capture the input event
+  checkbox.addEventListener('input', function() {
+    // Get the form element
+    var form = document.getElementById('myForm');
+
+    // Submit the form
+    form.submit();
+  });
+
+  function copyUsername(event) {    
+    var textElement = document.getElementById("username");
+    
+    var range = document.createRange();
+    range.selectNode(textElement);
+    window.getSelection().removeAllRanges();
+    window.getSelection().addRange(range);
+
+    document.execCommand("copy");
+
+    alert("Text copied: " + textElement.textContent);
+  }
+
+  function copyName(event) {    
+    var textElement = document.getElementById("name");
+    
+    var range = document.createRange();
+    range.selectNode(textElement);
+    window.getSelection().removeAllRanges();
+    window.getSelection().addRange(range);
+
+    document.execCommand("copy");
+
+    alert("Text copied: " + textElement.textContent);
+  }
+
+  function copyEmail(event) {    
+    var textElement = document.getElementById("email");
+    
+    var range = document.createRange();
+    range.selectNode(textElement);
+    window.getSelection().removeAllRanges();
+    window.getSelection().addRange(range);
+
+    document.execCommand("copy");
+
+    alert("Text copied: " + textElement.textContent);
+  }
+
+  function copyPhone(event) {    
+    var textElement = document.getElementById("phone");
+    
+    var range = document.createRange();
+    range.selectNode(textElement);
+    window.getSelection().removeAllRanges();
+    window.getSelection().addRange(range);
+
+    document.execCommand("copy");
+
+    alert("Text copied: " + textElement.textContent);
+  }
+</script>
+<script src="{% static 'js/jquery-3.3.1.min.js' %}"></script>
+<script src="{% static 'js/jquery-ui.min.js' %}"></script>
+<script src="{% static 'js/popper.min.js' %}"></script>
+<script src="{% static 'js/jquery.dataTables.min.js' %}"></script>
+<script src="{% static 'js/dataTables.responsive.min.js' %}"></script>
+<script src="{% static 'js/responsive.bootstrap.min.js' %}"></script>
+<script src="{% static 'js/bootstrap.min.js' %}"></script>
+<script src="{% static 'js/jquery.nice-select.js' %}"></script>
+<script src="{% static 'js/script.js' %}"></script>
 <!--JavaScript-->
 
 

@@ -41,6 +41,7 @@ class Client(models.Model):
     category = models.CharField(max_length=50, choices=CATEGORIES)
     group_with = models.CharField(max_length=50, choices=GROUP_WITH_OPTIONS)
     password = models.CharField(max_length=100)
+    status = models.BooleanField(default=True)
 
     def __str__(self):
         return self.username
@@ -77,7 +78,7 @@ class Address(models.Model):
 
 
 class PersonalDetails(models.Model):
-    client = models.OneToOneField(Client, on_delete=models.CASCADE)
+    client = models.ForeignKey(Client, on_delete=models.CASCADE)
     field_name = models.CharField(max_length=100)
     details = models.TextField()
     file = models.FileField()
