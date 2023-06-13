@@ -1,3 +1,5 @@
+import csv
+import json
 from django.core.files.storage import default_storage
 from django.db import IntegrityError
 from django.shortcuts import redirect, render
@@ -190,9 +192,27 @@ def client_add(request):
             }
             return render(request, 'client-add.html', contex)
     clients = Client.objects.all()
+
+    states_cities_data = {}
+    with open('states_cities.csv', 'r',  encoding='utf-8') as file:
+        reader = csv.reader(file)
+        next(reader)  # Skip the header row
+
+        for row in reader:
+            state = row[0]
+            cities = row[1:]
+
+            if state not in states_cities_data:
+                states_cities_data[state] = []
+
+            states_cities_data[state].extend(cities)
+        states_cities_data = dict(sorted(states_cities_data.items()))
+        states_cities_json = json.dumps(states_cities_data)
+
     message = None
     edit = False
-    context = {'clients': clients, 'message': message, 'edit': edit}
+    context = {'clients': clients, 'message': message,
+               'edit': edit, 'states_cities_data': states_cities_json}
     return render(request=request, template_name='client-add.html', context=context)
 
 
@@ -397,13 +417,28 @@ def client_edit(request, client_id):
         client_id=client_id, type="Residence").first()
     o_address = Address.objects.filter(
         client_id=client_id, type="Office").first()
-    # p_details = PersonalDetails.objects.filter(
-    #     client_id=client_id).all()
-    # p_count = p_details.count()
+
+    states_cities_data = {}
+    with open('states_cities.csv', 'r',  encoding='utf-8') as file:
+        reader = csv.reader(file)
+        next(reader)  # Skip the header row
+
+        for row in reader:
+            state = row[0]
+            cities = row[1:]
+
+            if state not in states_cities_data:
+                states_cities_data[state] = []
+
+            states_cities_data[state].extend(cities)
+        states_cities_data = dict(sorted(states_cities_data.items()))
+        states_cities_json = json.dumps(states_cities_data)
+        # print(states_cities_data)
+
     message = None
     edit = True
     context = {'client': client, 'auth_persons': auth_persons, 'r_address': r_address,
-               'o_address': o_address, 'message': message, 'edit': edit}
+               'o_address': o_address, 'message': message, 'edit': edit, 'states_cities_data': states_cities_json}
     return render(request=request, template_name='client-edit.html', context=context)
 
 

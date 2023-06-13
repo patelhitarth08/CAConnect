@@ -179,7 +179,7 @@
                                 <div class="client_dtl_parsnal">
                                     <span id="name">{{client.name}}</span> 
                                     <div class="copy_tag_box">
-                                        <a href="#" onclick="copyName(event)" class="copy_tag">
+                                        <a href="#" onclick="copyText(this.parentNode.previousElementSibling)" class="copy_tag">
                                             <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                                                 <path d="M15.8333 2.5H7.49998C6.57951 2.5 5.83331 3.24619 5.83331 4.16667V12.5C5.83331 13.4205 6.57951 14.1667 7.49998 14.1667H15.8333C16.7538 14.1667 17.5 13.4205 17.5 12.5V4.16667C17.5 3.24619 16.7538 2.5 15.8333 2.5Z" stroke="#A6ABBD" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
                                                 <path d="M14.1667 14.1663V15.833C14.1667 16.275 13.9911 16.699 13.6785 17.0115C13.366 17.3241 12.942 17.4997 12.5 17.4997H4.16667C3.72464 17.4997 3.30072 17.3241 2.98816 17.0115C2.67559 16.699 2.5 16.275 2.5 15.833V7.49967C2.5 7.05765 2.67559 6.63372 2.98816 6.32116C3.30072 6.0086 3.72464 5.83301 4.16667 5.83301H5.83333" stroke="#A6ABBD" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
@@ -195,7 +195,7 @@
                                 <div class="client_dtl_parsnal">
                                     <span id="email">{{client.email}}</span> 
                                     <div class="copy_tag_box">
-                                        <a href="#" onclick="copyEmail(event)" class="copy_tag">
+                                        <a href="#" onclick="copyText(this.parentNode.previousElementSibling)" class="copy_tag">
                                             <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                                                 <path d="M15.8333 2.5H7.49998C6.57951 2.5 5.83331 3.24619 5.83331 4.16667V12.5C5.83331 13.4205 6.57951 14.1667 7.49998 14.1667H15.8333C16.7538 14.1667 17.5 13.4205 17.5 12.5V4.16667C17.5 3.24619 16.7538 2.5 15.8333 2.5Z" stroke="#A6ABBD" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
                                                 <path d="M14.1667 14.1663V15.833C14.1667 16.275 13.9911 16.699 13.6785 17.0115C13.366 17.3241 12.942 17.4997 12.5 17.4997H4.16667C3.72464 17.4997 3.30072 17.3241 2.98816 17.0115C2.67559 16.699 2.5 16.275 2.5 15.833V7.49967C2.5 7.05765 2.67559 6.63372 2.98816 6.32116C3.30072 6.0086 3.72464 5.83301 4.16667 5.83301H5.83333" stroke="#A6ABBD" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
@@ -211,7 +211,7 @@
                                 <div class="client_dtl_parsnal">
                                     <span id="phone">{{client.phone_number}}</span> 
                                     <div class="copy_tag_box">
-                                        <a href="#" onclick="copyPhone(event)" class="copy_tag">
+                                        <a href="#" onclick="copyText(this.parentNode.previousElementSibling)" class="copy_tag">
                                             <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                                                 <path d="M15.8333 2.5H7.49998C6.57951 2.5 5.83331 3.24619 5.83331 4.16667V12.5C5.83331 13.4205 6.57951 14.1667 7.49998 14.1667H15.8333C16.7538 14.1667 17.5 13.4205 17.5 12.5V4.16667C17.5 3.24619 16.7538 2.5 15.8333 2.5Z" stroke="#A6ABBD" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
                                                 <path d="M14.1667 14.1663V15.833C14.1667 16.275 13.9911 16.699 13.6785 17.0115C13.366 17.3241 12.942 17.4997 12.5 17.4997H4.16667C3.72464 17.4997 3.30072 17.3241 2.98816 17.0115C2.67559 16.699 2.5 16.275 2.5 15.833V7.49967C2.5 7.05765 2.67559 6.63372 2.98816 6.32116C3.30072 6.0086 3.72464 5.83301 4.16667 5.83301H5.83333" stroke="#A6ABBD" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
@@ -456,7 +456,7 @@
                                 <div class="client_dtl_parsnal">
                                     <span>{{auth_person.name}}</span> 
                                     <div class="copy_tag_box">
-                                        <a href="javascript:void(0)" class="copy_tag">
+                                        <a href="#" onclick="copyText(this.parentNode.previousElementSibling)" class="copy_tag">
                                             <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                                                 <path d="M15.8333 2.5H7.49998C6.57951 2.5 5.83331 3.24619 5.83331 4.16667V12.5C5.83331 13.4205 6.57951 14.1667 7.49998 14.1667H15.8333C16.7538 14.1667 17.5 13.4205 17.5 12.5V4.16667C17.5 3.24619 16.7538 2.5 15.8333 2.5Z" stroke="#A6ABBD" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
                                                 <path d="M14.1667 14.1663V15.833C14.1667 16.275 13.9911 16.699 13.6785 17.0115C13.366 17.3241 12.942 17.4997 12.5 17.4997H4.16667C3.72464 17.4997 3.30072 17.3241 2.98816 17.0115C2.67559 16.699 2.5 16.275 2.5 15.833V7.49967C2.5 7.05765 2.67559 6.63372 2.98816 6.32116C3.30072 6.0086 3.72464 5.83301 4.16667 5.83301H5.83333" stroke="#A6ABBD" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
@@ -472,7 +472,7 @@
                                 <div class="client_dtl_parsnal">
                                     <span>{{auth_person.phone_number}}</span> 
                                     <div class="copy_tag_box">
-                                        <a href="javascript:void(0)" class="copy_tag">
+                                        <a href="#" onclick="copyText(this.parentNode.previousElementSibling)" class="copy_tag">
                                             <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                                                 <path d="M15.8333 2.5H7.49998C6.57951 2.5 5.83331 3.24619 5.83331 4.16667V12.5C5.83331 13.4205 6.57951 14.1667 7.49998 14.1667H15.8333C16.7538 14.1667 17.5 13.4205 17.5 12.5V4.16667C17.5 3.24619 16.7538 2.5 15.8333 2.5Z" stroke="#A6ABBD" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
                                                 <path d="M14.1667 14.1663V15.833C14.1667 16.275 13.9911 16.699 13.6785 17.0115C13.366 17.3241 12.942 17.4997 12.5 17.4997H4.16667C3.72464 17.4997 3.30072 17.3241 2.98816 17.0115C2.67559 16.699 2.5 16.275 2.5 15.833V7.49967C2.5 7.05765 2.67559 6.63372 2.98816 6.32116C3.30072 6.0086 3.72464 5.83301 4.16667 5.83301H5.83333" stroke="#A6ABBD" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
@@ -488,7 +488,7 @@
                                 <div class="client_dtl_parsnal">
                                     <span>{{auth_person.email}}</span> 
                                     <div class="copy_tag_box">
-                                        <a href="javascript:void(0)" class="copy_tag">
+                                        <a href="#" onclick="copyText(this.parentNode.previousElementSibling)" class="copy_tag">
                                             <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                                                 <path d="M15.8333 2.5H7.49998C6.57951 2.5 5.83331 3.24619 5.83331 4.16667V12.5C5.83331 13.4205 6.57951 14.1667 7.49998 14.1667H15.8333C16.7538 14.1667 17.5 13.4205 17.5 12.5V4.16667C17.5 3.24619 16.7538 2.5 15.8333 2.5Z" stroke="#A6ABBD" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
                                                 <path d="M14.1667 14.1663V15.833C14.1667 16.275 13.9911 16.699 13.6785 17.0115C13.366 17.3241 12.942 17.4997 12.5 17.4997H4.16667C3.72464 17.4997 3.30072 17.3241 2.98816 17.0115C2.67559 16.699 2.5 16.275 2.5 15.833V7.49967C2.5 7.05765 2.67559 6.63372 2.98816 6.32116C3.30072 6.0086 3.72464 5.83301 4.16667 5.83301H5.83333" stroke="#A6ABBD" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
@@ -1664,57 +1664,37 @@
     form.submit();
   });
 
-  function copyUsername(event) {    
-    var textElement = document.getElementById("username");
-    
-    var range = document.createRange();
-    range.selectNode(textElement);
-    window.getSelection().removeAllRanges();
-    window.getSelection().addRange(range);
+  
 
-    document.execCommand("copy");
-
-    alert("Text copied: " + textElement.textContent);
+  function copyText(element) {
+    if (element) {
+      var content = element.textContent.trim();
+  
+      // Create a temporary textarea element to hold the text
+      var tempTextarea = document.createElement("textarea");
+      tempTextarea.value = content;
+  
+      // Append the textarea to the document body
+      document.body.appendChild(tempTextarea);
+  
+      // Select the text in the textarea
+      tempTextarea.select();
+  
+      // Copy the selected text to the clipboard
+      document.execCommand("copy");
+  
+      // Remove the temporary textarea
+      document.body.removeChild(tempTextarea);
+  
+      // Alert or show a message to indicate successful copying
+    } else {
+      console.error("Element not found.");
+    }
   }
-
-  function copyName(event) {    
-    var textElement = document.getElementById("name");
-    
-    var range = document.createRange();
-    range.selectNode(textElement);
-    window.getSelection().removeAllRanges();
-    window.getSelection().addRange(range);
-
-    document.execCommand("copy");
-
-    alert("Text copied: " + textElement.textContent);
-  }
-
-  function copyEmail(event) {    
-    var textElement = document.getElementById("email");
-    
-    var range = document.createRange();
-    range.selectNode(textElement);
-    window.getSelection().removeAllRanges();
-    window.getSelection().addRange(range);
-
-    document.execCommand("copy");
-
-    alert("Text copied: " + textElement.textContent);
-  }
-
-  function copyPhone(event) {    
-    var textElement = document.getElementById("phone");
-    
-    var range = document.createRange();
-    range.selectNode(textElement);
-    window.getSelection().removeAllRanges();
-    window.getSelection().addRange(range);
-
-    document.execCommand("copy");
-
-    alert("Text copied: " + textElement.textContent);
-  }
+  
+  
+  
+  
 </script>
 <script src="{% static 'js/jquery-3.3.1.min.js' %}"></script>
 <script src="{% static 'js/jquery-ui.min.js' %}"></script>
