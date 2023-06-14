@@ -445,7 +445,15 @@ def client_edit(request, client_id):
 def client_list(request):
     clients = Client.objects.all()
     count = clients.count()
-    context = {'clients': clients, 'count': count}
+    client_auths = {}
+    for client in clients:
+        auth_person = AuthorizedPerson.objects.filter(client_id=client).first()
+        client_auths[client.id] = auth_person.name
+    client_auths_json = json.dumps(client_auths)
+    print(client_auths_json)
+
+    context = {'clients': clients, 'count': count,
+               'client_auths': client_auths_json}
     return render(request=request, template_name='client-list.html', context=context)
 
 

@@ -226,8 +226,8 @@
                                         </td>
                                         <td>
                                             <div class="client_dtls">
-                                                <div class="client_dtls_top">Arya Kagathara</div>
-                                                <div class="client_dtls_bottom">Dr. S P Kagathara</div>
+                                                <div class="client_dtls_top" id="clientDetails_{{ client.id }}"></div>
+                                                {% comment %} <div class="client_dtls_bottom">Dr. S P Kagathara</div> {% endcomment %}
                                             </div>
                                         </td>
                                         <td class="text-center">
@@ -385,6 +385,26 @@
             });
 
         });
+
+        function authPerson(clientId) {
+            var clientAuths = JSON.parse('{{ client_auths|safe }}');
+            var clientDetailsElement = document.getElementById('clientDetails_' + clientId);
+            var authPersonName = clientAuths[clientId];
+          
+            if (authPersonName) {
+              clientDetailsElement.innerHTML = authPersonName;
+            } else {
+              clientDetailsElement.innerHTML = 'Auth Person not found.';
+            }
+          }
+          
+          // Call the authPerson function for each client when the window loads
+          window.onload = function() {
+            {% for client in clients %}
+            authPerson('{{ client.id }}');
+            {% endfor %}
+          };
+          
     </script>
 </body>
 
