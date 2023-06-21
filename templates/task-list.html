@@ -1,3 +1,4 @@
+{% load static %}
 <!doctype html>
 <html lang="en">
 <head>
@@ -6,16 +7,18 @@
 <title>CA</title>
 
 <!--Stylesheet-->
-<link href="fonts/fonts.css" rel="stylesheet">
-<link href="css/bootstrap.min.css" rel="stylesheet">
-<link href="css/nice-select.css" rel="stylesheet">
-<link href="css/jquery-ui.min.css" rel="stylesheet">
+{% block custom_css %}
+<link href="{% static 'fonts/fonts.css' %}" rel="stylesheet">
+<link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+<link href="{% static 'css/nice-select.css' %}" rel="stylesheet">
+<link href="{% static 'css/jquery-ui.min.css' %}" rel="stylesheet">
 <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
-<link href="css/jquery.datetimepicker.css" rel="stylesheet" />
-<link href="css/style.css" rel="stylesheet">
-<link href="css/style-v2.css" rel="stylesheet">
-<link href="css/style-v3.css" rel="stylesheet">
-<link href="css/responsive.css" rel="stylesheet">
+<link href="{% static 'css/jquery.datetimepicker.css' %}" rel="stylesheet" />
+<link href="{% static 'css/style.css' %}" rel="stylesheet">
+<link href="{% static 'css/style-v2.css' %}" rel="stylesheet">
+<link href="{% static 'css/style-v3.css' %}" rel="stylesheet">
+<link href="{% static 'css/responsive.css' %}" rel="stylesheet">
+{% endblock custom_css %}
 <!--Stylesheet-->
 </head>
 <body>
@@ -30,7 +33,7 @@
                 <span></span>
             </a>
         </div>
-        <div class="logo"><a href="index.html"><img src="images/logo.svg" alt="logo"></a></div>
+        <div class="logo"><a href="index.html"><img src="{% static 'images/logo.svg' %}" alt="logo"></a></div>
         <div class="header_breadcrumb">
             <ul>
                 <li><a href="#">Home</a></li>
@@ -39,7 +42,7 @@
         </div>
         <div class="user_login flxrow">
             <a href="#">
-                <div class="img" style="background-image:url(images/user-img.png);"></div>
+                <div class="img" style="background-image:url({% static 'images/user-img.png' %});"></div>
                 <div class="name">
                     <p>Alexander <span>Admin</span></p>
                     <div class="down-caret">
@@ -69,7 +72,7 @@
             <div class="top_add_file">
                 <a href="javascript:void(0)">
                     Add Task
-                    <i>
+                    <i onclick="openSide()">
                         <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path d="M10 4.16699V15.8337" stroke="#2C3E50" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
                             <path d="M4.16663 10H15.8333" stroke="#2C3E50" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
@@ -84,7 +87,7 @@
                 <div class="task_col">
                     <div class="top_titles d-flex flex-wrap align-items-center">
                         <h3>Todo</h3> 
-                        <i>
+                        <i onclick="openSide()">
                             <svg width="20" height="21" viewBox="0 0 20 21" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <rect y="0.5" width="20" height="20" rx="2" fill="#F6F9FF"/>
                                 <path d="M10 4.66602V16.3327" stroke="#2A76F4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
@@ -150,7 +153,7 @@
                 <div class="task_col">
                     <div class="top_titles d-flex flex-wrap align-items-center">
                         <h3>In-Progress</h3> 
-                        <i>
+                        <i onclick="openSide()">
                             <svg width="20" height="21" viewBox="0 0 20 21" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <rect y="0.5" width="20" height="20" rx="2" fill="#F6F9FF"/>
                                 <path d="M10 4.66602V16.3327" stroke="#2A76F4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
@@ -248,7 +251,7 @@
                 <div class="task_col">
                     <div class="top_titles d-flex flex-wrap align-items-center">
                         <h3>Completed</h3> 
-                        <i>
+                        <i onclick="openSide()">
                             <svg width="20" height="21" viewBox="0 0 20 21" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <rect y="0.5" width="20" height="20" rx="2" fill="#F6F9FF"/>
                                 <path d="M10 4.66602V16.3327" stroke="#2A76F4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
@@ -388,7 +391,7 @@
                 <div class="task_col">
                     <div class="top_titles d-flex flex-wrap align-items-center">
                         <h3>Verified</h3> 
-                        <i>
+                        <i onclick="openSide()">
                             <svg width="20" height="21" viewBox="0 0 20 21" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <rect y="0.5" width="20" height="20" rx="2" fill="#F6F9FF"/>
                                 <path d="M10 4.66602V16.3327" stroke="#2A76F4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
@@ -527,9 +530,9 @@
                 </div>
             </div>
         </div>
-        <div class="rightside_task_form">
+        <div id="sideForm" class="rightside_task_form">
             <div class="closed_task_form">
-                <a href="javascript:void(0)">
+                <a href="#" onclick="closeSide()">
                     <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <circle cx="14" cy="14" r="14" fill="#E44B4B"/>
                         <path d="M18.7432 9.74219L9.25788 19.2275" stroke="white" stroke-width="2"/>
@@ -634,15 +637,15 @@
 <!--Wrapper End-->
 
 <!--JavaScript-->
-<script src="js/jquery-3.3.1.min.js"></script>
-<script src="js/jquery-ui.min.js"></script>
-<!-- <script src="js/jquery.ui.touch-punch.min.js"></script> -->
-<script src="js/popper.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
-<script src="js/jquery.datetimepicker.full.min.js"></script>
-<script src="js/bootstrap.min.js"></script>
-<script src="js/jquery.nice-select.js"></script>
-<script src="js/script.js"></script>
+<script src="{% static 'js/jquery-3.3.1.min.js' %}"></script>
+<script src="{% static 'js/jquery-ui.min.js' %}"></script>
+<!-- <script src="{% static 'js/jquery.ui.touch-punch.min.js' %}"></script> -->
+<script src="{% static 'js/popper.min.js' %}"></script>
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.jsx`"></script>
+<script src="{% static 'js/jquery.datetimepicker.full.min.js' %}"></script>
+<script src="{% static 'js/bootstrap.min.js' %}"></script>
+<script src="{% static 'js/jquery.nice-select.js' %}"></script>
+<script src="{% static 'js/script.js' %}"></script>
 <script>
     jQuery( function() {
 
@@ -667,9 +670,11 @@
         //jQuery('.ui-sortable').draggable();
         
     } );
-    jQuery(".select-multiple").select2({
-        tags: true,
-        /*tokenSeparators: [',', ' ']*/
+    $(document).ready(function() {
+        $(".select-multiple").select2({
+            tags: true,
+            /*tokenSeparators: [',', ' ']*/
+        });
     });
     jQuery(function(){
         jQuery('#search-from-date').datetimepicker({
@@ -695,14 +700,24 @@
          timepicker:false
         });
        });
-       jQuery(document).on('click','.top_add_file a, .task_col .top_titles i ,.ui-sortable .ui-widget.ui-widget-content', function(e) {
+       {% comment %} jQuery(document).on('click','.top_add_file a, .task_col .top_titles i ,.ui-sortable .ui-widget.ui-widget-content', function(e) {
             jQuery('body').addClass('open_sidebar');
             jQuery('.rightside_task_form').addClass('active');
        });
        jQuery(".closed_task_form a").on('click', function(e) {
             jQuery('body').removeClass('open_sidebar');
             jQuery('.rightside_task_form').removeClass('active');
-       });
+       }); {% endcomment %}
+
+       function openSide() {
+            var myForm = document.getElementById('sideForm');
+            myForm.classList.add('active')
+       }
+
+       function closeSide() {
+            var myForm = document.getElementById('sideForm');
+            myForm.classList.remove('active')
+       }
 </script>
 <!--JavaScript-->
 

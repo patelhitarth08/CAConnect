@@ -1,3 +1,4 @@
+{% load static %}
 <!doctype html>
 <html lang="en">
 <head>
@@ -6,15 +7,17 @@
 <title>CA</title>
 
 <!--Stylesheet-->
-<link href="fonts/fonts.css" rel="stylesheet">
-<link href="css/bootstrap.min.css" rel="stylesheet">
-<link href="css/nice-select.css" rel="stylesheet">
-<link href="css/jquery-ui.min.css" rel="stylesheet">
-<link href="css/datatables.min.css" rel="stylesheet">
-<link href="css/style.css" rel="stylesheet">
-<link href="css/style-v3.css" rel="stylesheet">
-<link href="css/style-v2.css" rel="stylesheet">
-<link href="css/responsive.css" rel="stylesheet">
+{% block custom_css %}
+<link href="{% static 'fonts/fonts.css/' %}" rel="stylesheet">
+<link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+<link href="{% static 'css/nice-select.css' %}" rel="stylesheet">
+<link href="{% static 'css/jquery-ui.min.css' %}" rel="stylesheet">
+<link href="{% static 'css/datatables.min.css' %}" rel="stylesheet">
+<link href="{% static 'css/style.css' %}" rel="stylesheet">
+<link href="{% static 'css/style-v3.css' %}" rel="stylesheet">
+<link href="{% static 'css/style-v2.css' %}" rel="stylesheet">
+<link href="{% static 'css/responsive.css' %}" rel="stylesheet">
+{% endblock custom_css %}
 <!--Stylesheet-->
 
 </head>
@@ -30,7 +33,7 @@
                 <span></span>
             </a>
         </div>
-        <div class="logo"><a href="index.html"><img src="images/logo.svg" alt="logo"></a></div>
+        <div class="logo"><a href="index.html"><img src="{% static 'images/logo.svg' %}" alt="logo"></a></div>
         <div class="search_head">
             <form action="">
                 <input type="text" class="input-search" placeholder="Search here...">
@@ -60,9 +63,9 @@
         </div>
         <div class="user_login flxrow">
             <a href="#">
-                <div class="img" style="background-image:url(images/user-img.png);"></div>
+                <div class="img" style="background-image:url({% static 'images/user-img.png' %});"></div>
                 <div class="name">
-                    <p>Alexander <span>Admin</span></p>
+                    <p>{{request.session.username}} <span>{{request.session.type}}</span></p>
                     <div class="down-caret">
                         <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path d="M5 7.5L10 12.5L15 7.5" stroke="black" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
@@ -91,19 +94,23 @@
                     <div class="filter_right">
                     <div class="filter_right_list switch-box">
                         <div class="custom-switch">
-                            <input type="checkbox" class="custom-control-input" id="customswitch1">
+                            {% if employee.status == 0 %}
+                                <input type="checkbox" onclick="changeStatus({{ employee.id }})" checked class="custom-control-input" id="customswitch1">
+                            {% else %}
+                                <input type="checkbox" onclick="changeStatus({{ employee.id }})"  class="custom-control-input" id="customswitch1">
+                            {% endif %}
                             <label class="custom-control-label" for="customswitch1"></label>
                         </div>
                     </div>
                     <div class="filter_right_list edit_file">
-                        <a href="javascript:void(0)">
+                        <a href="employee-edit">
                             <svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <path d="M1.33337 13.6663H4.66671L13.4167 4.91627C13.8587 4.47424 14.1071 3.87472 14.1071 3.2496C14.1071 2.62448 13.8587 2.02496 13.4167 1.58293C12.9747 1.14091 12.3752 0.892578 11.75 0.892578C11.1249 0.892578 10.5254 1.14091 10.0834 1.58293L1.33337 10.3329V13.6663Z" stroke="#A6ABBD" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
                             </svg>
                         </a>
                     </div>
                     <div class="filter_right_list delete_file">
-                        <a href="javascript:void(0)" data-toggle="modal" data-target="#delete-pop">
+                        <a href="/CAadmin/delete-employee/{{employee.id}}" data-toggle="modal" data-target="#delete-pop">
                             <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <path d="M3.33337 5.83301H16.6667" stroke="#A6ABBD" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
                                 <path d="M8.33337 9.16699V14.167" stroke="#A6ABBD" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
@@ -122,7 +129,7 @@
                             <div class="client_dtl">
                                 <div class="label_title">Username</div>
                                 <div class="client_dtl_parsnal">
-                                    <span>Alexa@123</span>
+                                    <span>{{employee.username}}</span>
                                 </div>
                             </div>
                         </div>
@@ -130,7 +137,7 @@
                             <div class="client_dtl">
                                 <div class="label_title">Name</div>
                                 <div class="client_dtl_parsnal">
-                                    <span>Alexander</span>
+                                    <span>{{employee.name}}</span>
                                 </div>
                             </div>
                         </div>
@@ -138,7 +145,7 @@
                             <div class="client_dtl">
                                 <div class="label_title">Email</div>
                                 <div class="client_dtl_parsnal">
-                                    <span>info.alexander@gmail.com</span>
+                                    <span>{{employee.email}}</span>
                                 </div>
                             </div>
                         </div>
@@ -150,17 +157,31 @@
 </div>
 
 <!--Wrapper End-->
+<script>
+    function changeStatus(employee_id) {
+        var xhttp;    
+        
+        xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+            document.getElementById("txtHint").innerHTML = this.responseText;
+            }
+        };
+        xhttp.open("GET", "/CAadmin/change-status?id="+employee_id+"&type=Employee", true);
+        xhttp.send();
+    }
+</script>
 
 <!--JavaScript-->
-<script src="js/jquery-3.3.1.min.js"></script>
-<script src="js/jquery-ui.min.js"></script>
-<script src="js/popper.min.js"></script>
-<script src="js/jquery.dataTables.min.js"></script>
-<script src="js/dataTables.responsive.min.js"></script>
-<script src="js/responsive.bootstrap.min.js"></script>
-<script src="js/bootstrap.min.js"></script>
-<script src="js/jquery.nice-select.js"></script>
-<script src="js/script.js"></script>
+<script src="{% static 'js/jquery-3.3.1.min.js' %}"></script>
+<script src="{% static 'js/jquery-ui.min.js' %}"></script>
+<script src="{% static 'js/popper.min.js' %}"></script>
+<script src="{% static 'js/jquery.dataTables.min.js' %}"></script>
+<script src="{% static 'js/dataTables.responsive.min.js' %}"></script>
+<script src="{% static 'js/responsive.bootstrap.min.js' %}"></script>
+<script src="{% static 'js/bootstrap.min.js' %}"></script>
+<script src="{% static 'js/jquery.nice-select.js' %}"></script>
+<script src="{% static 'js/script.js' %}"></script>
 <!--JavaScript-->
 
 

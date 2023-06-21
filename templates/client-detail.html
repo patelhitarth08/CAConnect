@@ -65,7 +65,7 @@
             <a href="#">
                 <div class="img" style="background-image:url({% static 'images/user-img.png' %});"></div>
                 <div class="name">
-                    <p>Alexander <span>Admin</span></p>
+                    <p>{{request.session.username}} <span>{{request.session.type}}</span></p>
                     <div class="down-caret">
                         <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path d="M5 7.5L10 12.5L15 7.5" stroke="black" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
@@ -94,28 +94,25 @@
                 <div class="filter_right">
                     <div class="filter_right_list switch-box">
                         <div class="custom-switch">
-                            <form id="myForm" method="POST" action="{% url 'CAadmin:toggle_status' %}">
-                                {% csrf_token %}
-                                <input type="hidden" name="client_id" value="{{ client.id }}">
-                                {% if client.status == 0 %}
-                                    <input type="checkbox" checked class="custom-control-input" id="customswitch1">
-                                {% else %}
-                                    <input type="checkbox"  class="custom-control-input" id="customswitch1">
-                                {% endif %}
-                                <label class="custom-control-label" for="customswitch1"></label>
-                            </form>
+                            {% if client.status == 0 %}
+                                <input type="checkbox" onclick="changeStatus({{ client.id }})" checked class="custom-control-input" id="customswitch1">
+                            {% else %}
+                                <input type="checkbox" onclick="changeStatus({{ client.id }})"  class="custom-control-input" id="customswitch1">
+                            {% endif %}
+                            <label class="custom-control-label" for="customswitch1"></label>
+
                         </div>
                     </div>
                     
                     <div class="filter_right_list edit_file">
-                        <a href="javascript:void(0)">
+                        <a href="/CAadmin/client-edit/{{client.id}}">
                             <svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <path d="M1.33337 13.6663H4.66671L13.4167 4.91627C13.8587 4.47424 14.1071 3.87472 14.1071 3.2496C14.1071 2.62448 13.8587 2.02496 13.4167 1.58293C12.9747 1.14091 12.3752 0.892578 11.75 0.892578C11.1249 0.892578 10.5254 1.14091 10.0834 1.58293L1.33337 10.3329V13.6663Z" stroke="#A6ABBD" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
                             </svg>
                         </a>
                     </div>
                     <div class="filter_right_list delete_file">
-                        <a href="javascript:void(0)" data-toggle="modal" data-target="#delete-pop">
+                        <a href="/CAadmin/delete-client/{{client.id}}" data-toggle="modal" data-target="#delete-pop">
                             <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <path d="M3.33337 5.83301H16.6667" stroke="#A6ABBD" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
                                 <path d="M8.33337 9.16699V14.167" stroke="#A6ABBD" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
@@ -515,17 +512,20 @@
                     <div class="tab-pane fade show active" id="select_cat_tab_pane_1" role="tabpanel" aria-labelledby="select_cat_tab_1" tabindex="0">
                         <div class="tab-pane-wrap">
                             <div class="top_add_file">
-                                <a href="javascript:void(0)" class="modal_personal_file">
-                                    Add personal file
-                                    <i>
-                                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                            <path d="M10 4.16699V15.8337" stroke="#2C3E50" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                                            <path d="M4.16663 10H15.8333" stroke="#2C3E50" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                                        </svg>
+                                {% if person != 'Client' %}
+                                <a href="javascript:void(0)" onclick="openModal()"class="modal_personal_file">
+                                        Add personal file 
+                                        <i>
+                                            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M10 4.16699V15.8337" stroke="#2C3E50" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                                <path d="M4.16663 10H15.8333" stroke="#2C3E50" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                            </svg>
                                             
-                                    </i>
-                                </a>
-                            </div>
+                                        </i>
+                                    </a>
+                                {% endif %}
+                                </div>
+                            
                             <table id="personal_files" class="table table-striped nowrap" style="width:100%" border="0">
                                 <thead>
                                     <tr>
@@ -618,7 +618,57 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
+                                    {% for item in personal_files %}
+                                        {% with cli=item.client files=item.files %}
+                                            {% for file in files %}
+                                                <tr>
+                                                    <td>{{file.file_name}}</td>
+                                                    <td>{{file.category}}</td>
+                                                    <td>{{cli.name}}</td>
+                                                    <td>{{file.month}} {{file.year}}</td>
+                                                    <td>{{file.description}}</td>
+                                                    <td class="button_action">
+                                                        <div class="button_grp">
+                                                            <div class="button_box view_box_bnt">
+                                                                <a href="view_per_file/{{file.id}}">
+                                                                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                                        <path d="M10 11.6663C10.9205 11.6663 11.6667 10.9201 11.6667 9.99967C11.6667 9.0792 10.9205 8.33301 10 8.33301C9.07957 8.33301 8.33337 9.0792 8.33337 9.99967C8.33337 10.9201 9.07957 11.6663 10 11.6663Z" stroke="#A6ABBD" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                                                        <path d="M18.3333 10.0003C16.1108 13.8895 13.3333 15.8337 9.99996 15.8337C6.66663 15.8337 3.88913 13.8895 1.66663 10.0003C3.88913 6.11116 6.66663 4.16699 9.99996 4.16699C13.3333 4.16699 16.1108 6.11116 18.3333 10.0003Z" stroke="#A6ABBD" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                                                    </svg>
+                                                                </a>
+                                                            </div>
+                                                            <div class="button_box download_box_btn">
+                                                                <a href="download_per_file/{{file.id}}">
+                                                                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                                        <path d="M11.6666 2.5V5.83333C11.6666 6.05435 11.7544 6.26631 11.9107 6.42259C12.067 6.57887 12.2789 6.66667 12.5 6.66667H15.8333" stroke="#A6ABBD" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                                                        <path d="M14.1666 17.5H5.83329C5.39127 17.5 4.96734 17.3244 4.65478 17.0118C4.34222 16.6993 4.16663 16.2754 4.16663 15.8333V4.16667C4.16663 3.72464 4.34222 3.30072 4.65478 2.98816C4.96734 2.67559 5.39127 2.5 5.83329 2.5H11.6666L15.8333 6.66667V15.8333C15.8333 16.2754 15.6577 16.6993 15.3451 17.0118C15.0326 17.3244 14.6087 17.5 14.1666 17.5Z" stroke="#A6ABBD" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                                                        <path d="M10 9.16699V14.167" stroke="#A6ABBD" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                                                        <path d="M7.5 11.667L10 14.167L12.5 11.667" stroke="#A6ABBD" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                                                    </svg>
+                                                                </a>
+                                                            </div>
+                                                            {% if person != 'Client' %}
+                                                            
+                                                            <div class="button_box delete_box_btn">
+                                                                <a href="delete_per_file/{{file.id}}/{{client.id}}">
+                                                                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                                        <path d="M3.33337 5.83301H16.6667" stroke="#A6ABBD" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                                                        <path d="M8.33337 9.16699V14.167" stroke="#A6ABBD" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                                                        <path d="M11.6666 9.16699V14.167" stroke="#A6ABBD" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                                                        <path d="M4.16663 5.83301L4.99996 15.833C4.99996 16.275 5.17555 16.699 5.48811 17.0115C5.80068 17.3241 6.2246 17.4997 6.66663 17.4997H13.3333C13.7753 17.4997 14.1992 17.3241 14.5118 17.0115C14.8244 16.699 15 16.275 15 15.833L15.8333 5.83301" stroke="#A6ABBD" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                                                        <path d="M7.5 5.83333V3.33333C7.5 3.11232 7.5878 2.90036 7.74408 2.74408C7.90036 2.5878 8.11232 2.5 8.33333 2.5H11.6667C11.8877 2.5 12.0996 2.5878 12.2559 2.74408C12.4122 2.90036 12.5 3.11232 12.5 3.33333V5.83333" stroke="#A6ABBD" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                                                    </svg>
+                                                                
+                                                                </a>
+                                                            </div>
+                                                            {% endif %}
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            {% endfor %}
+                                        {% endwith %}
+                                    {% endfor %}
+                                        <tr> 
                                         <td>Audits-reports-2022</td>
                                         <td>Corporate</td>
                                         <td>Alexander</td>
@@ -1374,7 +1424,7 @@
                     <div class="tab-pane fade" id="select_cat_tab_pane_2" role="tabpanel" aria-labelledby="select_cat_tab_1" tabindex="0">
                         <div class="tab-pane-wrap">
                             <div class="top_add_file">
-                                <a href="javascript:void(0)" class="modal_general_file">
+                                <a href="javascript:void(0)" onclick="openModal1()" class="modal_general_file">
                                     Add General file
                                     <i>
                                         <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -1394,6 +1444,51 @@
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    {% for item in general_files %}
+                                        {% with cli=item.client2 files=item.files2 %}
+                                            {% for file in files %}
+                                                <tr>
+                                                    <td>{{file.file_name}}</td>
+                                                    <td>{{file.description}}</td>
+                                                    <td class="button_action">
+                                                        <div class="button_grp">
+                                                            <div class="button_box view_box_bnt">
+                                                                <a href="view_gen_file/{{file.id}}">
+                                                                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                                        <path d="M10 11.6663C10.9205 11.6663 11.6667 10.9201 11.6667 9.99967C11.6667 9.0792 10.9205 8.33301 10 8.33301C9.07957 8.33301 8.33337 9.0792 8.33337 9.99967C8.33337 10.9201 9.07957 11.6663 10 11.6663Z" stroke="#A6ABBD" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                                                        <path d="M18.3333 10.0003C16.1108 13.8895 13.3333 15.8337 9.99996 15.8337C6.66663 15.8337 3.88913 13.8895 1.66663 10.0003C3.88913 6.11116 6.66663 4.16699 9.99996 4.16699C13.3333 4.16699 16.1108 6.11116 18.3333 10.0003Z" stroke="#A6ABBD" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                                                    </svg>
+                                                                </a>
+                                                            </div>
+                                                            <div class="button_box download_box_btn">
+                                                                <a href="download_gen_file/{{file.id}}">
+                                                                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                                        <path d="M11.6666 2.5V5.83333C11.6666 6.05435 11.7544 6.26631 11.9107 6.42259C12.067 6.57887 12.2789 6.66667 12.5 6.66667H15.8333" stroke="#A6ABBD" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                                                        <path d="M14.1666 17.5H5.83329C5.39127 17.5 4.96734 17.3244 4.65478 17.0118C4.34222 16.6993 4.16663 16.2754 4.16663 15.8333V4.16667C4.16663 3.72464 4.34222 3.30072 4.65478 2.98816C4.96734 2.67559 5.39127 2.5 5.83329 2.5H11.6666L15.8333 6.66667V15.8333C15.8333 16.2754 15.6577 16.6993 15.3451 17.0118C15.0326 17.3244 14.6087 17.5 14.1666 17.5Z" stroke="#A6ABBD" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                                                        <path d="M10 9.16699V14.167" stroke="#A6ABBD" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                                                        <path d="M7.5 11.667L10 14.167L12.5 11.667" stroke="#A6ABBD" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                                                    </svg>
+                                                                </a>
+                                                            </div>
+                                                            
+                                                            <div class="button_box delete_box_btn">
+                                                                <a href="delete_gen_file/{{file.id}}/{{client.id}}">
+                                                                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                                        <path d="M3.33337 5.83301H16.6667" stroke="#A6ABBD" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                                                        <path d="M8.33337 9.16699V14.167" stroke="#A6ABBD" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                                                        <path d="M11.6666 9.16699V14.167" stroke="#A6ABBD" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                                                        <path d="M4.16663 5.83301L4.99996 15.833C4.99996 16.275 5.17555 16.699 5.48811 17.0115C5.80068 17.3241 6.2246 17.4997 6.66663 17.4997H13.3333C13.7753 17.4997 14.1992 17.3241 14.5118 17.0115C14.8244 16.699 15 16.275 15 15.833L15.8333 5.83301" stroke="#A6ABBD" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                                                        <path d="M7.5 5.83333V3.33333C7.5 3.11232 7.5878 2.90036 7.74408 2.74408C7.90036 2.5878 8.11232 2.5 8.33333 2.5H11.6667C11.8877 2.5 12.0996 2.5878 12.2559 2.74408C12.4122 2.90036 12.5 3.11232 12.5 3.33333V5.83333" stroke="#A6ABBD" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                                                    </svg>
+                                                                    
+                                                                </a>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            {% endfor %}
+                                        {% endwith %}
+                                    {% endfor %}
                                     <tr>
                                         <td>Audits-reports-2022</td>
                                         <td>Cursus turpis vestibulum, dui in pharetra</td>
@@ -1525,17 +1620,29 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form action="POST">
+                <form action="add_personal/{{client.id}}" method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
                     <div class="form_row">
+                        
                         <div class="form_col_1-2">
                             <div class="input_container">
-                                <input type="file" name="" id="file_upload_2">
+                                <input type="file" name="file" id="file_upload_2">
                                 <label for="file_upload_2">Browse file</label>
                             </div>
                         </div>
                         <div class="form_col_1-2">
                             <div class="input_container">
-                                <select name="">
+                                <input type="text" name="number" id="number" placeholder="Number" class="input_field"></textarea>
+                            </div>
+                        </div>
+                        <div class="form_col_1-2">
+                            <div class="input_container">
+                                <input type="text" name="file_name" id="file_name" placeholder="File Name" class="input_field"></textarea>
+                            </div>
+                        </div>
+                        <div class="form_col_1-2">
+                            <div class="input_container">
+                                <select name="category">
                                     <option value="Category type">Category type</option>
                                     <option value="Category 1">Category 1</option>
                                     <option value="Category 2">Category 2</option>
@@ -1547,7 +1654,7 @@
                         </div>
                         <div class="form_col_1-2">
                             <div class="input_container">
-                                <select name="">
+                                <select name="month">
                                     <option value="Month">Month</option>
                                     <option value="January">January</option>
                                     <option value="February">February</option>
@@ -1566,7 +1673,7 @@
                         </div>
                         <div class="form_col_1-2">
                             <div class="input_container">
-                                <select name="">
+                                <select name="year">
                                     <option value="Year">Year</option>
                                     <option value="2022">2022</option>
                                     <option value="2021">2021</option>
@@ -1583,9 +1690,10 @@
                                 </select>
                             </div>
                         </div>
+                        
                         <div class="form_col_1-1">
                             <div class="input_container">
-                                <textarea name="" id="" placeholder="Description" class="input_field"></textarea>
+                                <textarea name="description" id="description" placeholder="Description" class="input_field"></textarea>
                             </div>
                         </div>
                     </div>
@@ -1624,17 +1732,29 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form action="POST">
+                <form action="add_general/{{client.id}}" method = "POST" enctype="multipart/form-data">
+                    {% csrf_token %}
                     <div class="form_row">
-                        <div class="form_col_1-1">
+                        <div class="form_col_1-2">
                             <div class="input_container">
-                                <input type="file" name="" id="file_upload_3">
+                                <input type="file" name="file" id="file_upload_3">
                                 <label for="file_upload_3">Browse file</label>
+                            </div>
+                        </div>
+                        <div class="form_col_1-2">
+                            <div class="input_container">
+                                <input type="text" name="number" id="number" placeholder="Number" class="input_field"></textarea>
                             </div>
                         </div>
                         <div class="form_col_1-1">
                             <div class="input_container">
-                                <textarea name="" id="" placeholder="Description" class="input_field"></textarea>
+                                <input type="text" name="file_name" id="file_name" placeholder="File Name" class="input_field"></textarea>
+                            </div>
+                        </div>
+                        
+                        <div class="form_col_1-1">
+                            <div class="input_container">
+                                <textarea name="description" id="description" placeholder="Description" class="input_field"></textarea>
                             </div>
                         </div>
                     </div>
@@ -1656,13 +1776,26 @@
     var checkbox = document.getElementById('customswitch1');
 
   // Add event listener to capture the input event
-  checkbox.addEventListener('input', function() {
-    // Get the form element
-    var form = document.getElementById('myForm');
+    {% comment %} checkbox.addEventListener('input', function() {
+        // Get the form element
+        var form = document.getElementById('myForm');
 
-    // Submit the form
-    form.submit();
-  });
+        // Submit the form
+        form.submit();
+    }); {% endcomment %}
+
+    function changeStatus(client_id) {
+        var xhttp;    
+        
+        xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+            document.getElementById("txtHint").innerHTML = this.responseText;
+            }
+        };
+        xhttp.open("GET", "/CAadmin/change-status?id="+client_id+"&type=Client", true);
+        xhttp.send();
+    }
 
   
 
@@ -1691,9 +1824,32 @@
       console.error("Element not found.");
     }
   }
-  
-  
-  
+  function openModal() {
+    // Open the modal for personal file
+    $('#modal_personal_file_add').modal('show');
+  }
+  function openModal1() {
+  // Open the modal for general file
+  $('#modal_general_file_add').modal('show');
+}
+
+const fileInput = document.getElementById('file_upload_2');
+    const label = document.querySelector('label[for="file_upload_2"]');
+
+    fileInput.addEventListener('change', (event) => {
+        const fileName = event.target.files[0].name;
+        label.textContent = fileName;
+    });
+
+    const fileInput1 = document.getElementById('file_upload_3');
+    const label1 = document.querySelector('label[for="file_upload_3"]');
+
+    fileInput1.addEventListener('change', (event) => {
+        const fileName = event.target.files[0].name;
+        label1.textContent = fileName;
+    });
+
+    
   
 </script>
 <script src="{% static 'js/jquery-3.3.1.min.js' %}"></script>

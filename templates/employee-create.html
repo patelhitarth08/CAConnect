@@ -1,3 +1,4 @@
+{% load static %}
 <!doctype html>
 <html lang="en">
 <head>
@@ -6,13 +7,15 @@
 <title>CA</title>
 
 <!--Stylesheet-->
-<link href="fonts/fonts.css" rel="stylesheet">
-<link href="css/bootstrap.min.css" rel="stylesheet">
-<link href="css/nice-select.css" rel="stylesheet">
-<link href="css/jquery-ui.min.css" rel="stylesheet">
-<link href="css/style.css" rel="stylesheet">
-<link href="css/style-v3.css" rel="stylesheet">
-<link href="css/responsive.css" rel="stylesheet">
+{% block custom_css %}
+<link href="{% static 'fonts/fonts.css' %}" rel="stylesheet">
+<link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+<link href="{% static 'css/nice-select.css' %}" rel="stylesheet">
+<link href="{% static 'css/jquery-ui.min.css' %}" rel="stylesheet">
+<link href="{% static 'css/style.css' %}" rel="stylesheet">
+<link href="{% static 'css/style-v3.css' %}" rel="stylesheet">
+<link href="{% static 'css/responsive.css' %}" rel="stylesheet">
+{% endblock custom_css %}
 <!--Stylesheet-->
 
 </head>
@@ -28,7 +31,7 @@
                 <span></span>
             </a>
         </div>
-        <div class="logo"><a href="index.html"><img src="images/logo.svg" alt="logo"></a></div>
+        <div class="logo"><a href="index.html"><img src="{% static 'images/logo.svg' %}" alt="logo"></a></div>
         <div class="header_breadcrumb">
             <ul>
                 <li><a href="#">Home</a></li>
@@ -37,9 +40,9 @@
         </div>
         <div class="user_login flxrow">
             <a href="#">
-                <div class="img" style="background-image:url(images/user-img.png);"></div>
+                <div class="img" style="background-image:url({% static 'images/user-img.png' %});"></div>
                 <div class="name">
-                    <p>Alexander <span>Admin</span></p>
+                    <p>{{request.session.username}} <span>{{request.session.type}}</span></p>
                     <div class="down-caret">
                         <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path d="M5 7.5L10 12.5L15 7.5" stroke="black" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
@@ -49,9 +52,9 @@
             </a>
             <div class="user_dropdown">
                 <ul>
-                    <li><a href="#">Profile <span><img src="images/profile-icon.svg" alt="profile icon"></span></a></li>
-                    <li><a href="#">Keyboard Shortcuts <span><img src="images/shortcut-icon.svg" alt="shortcut icon"></span></a></li>
-                    <li><a href="#">Logout <span><img src="images/logout-icon.svg" alt="logout icon"></span></a></li>
+                    <li><a href="#">Profile <span><img src="{% static 'images/profile-icon.svg' %}" alt="profile icon"></span></a></li>
+                    <li><a href="#">Keyboard Shortcuts <span><img src="{% static 'images/shortcut-icon.svg' %}" alt="shortcut icon"></span></a></li>
+                    <li><a href="#">Logout <span><img src="{% static 'images/logout-icon.svg' %}" alt="logout icon"></span></a></li>
                 </ul>
             </div>
         </div>
@@ -67,32 +70,38 @@
         </div>
         <div class="page-block">
             <div class="admin-edit-form">
-                <form>
+                <form method="POST">
+                    {% csrf_token %}
+                    {% if message != None %}
+                    <div class="alert alert-danger">
+                        {{message}}
+                    </div>
+                    {% endif %}
                     <div class="row">
                         <div class="col-lg-4">
                             <div class="form-input">
-                                <input class="input-text" type="text" placeholder="Username*">
+                                <input class="input-text" name="username" type="text" placeholder="Username*">
                             </div>
                         </div>
                         <div class="col-lg-4">
                             <div class="form-input">
-                                <input class="input-text" type="text" placeholder="Name*">
+                                <input class="input-text" name="name" type="text" placeholder="Name*">
                             </div>
                         </div>
                         <div class="col-lg-4">
                             <div class="form-input">
-                                <input class="input-text" type="email" placeholder="Email*">
+                                <input class="input-text" name="email" type="email" placeholder="Email*">
                             </div>
                         </div>
                         <div class="col-lg-4">
                             <div class="form-input">
-                                <input class="input-text" type="password" placeholder="Password*">
+                                <input class="input-text" name="password" type="password" placeholder="Password*">
                                 <div class="icon"></div>
                             </div>
                         </div>
                         <div class="col-lg-4">
                             <div class="form-input">
-                                <input class="input-text" type="password" placeholder="Conform password*">
+                                <input class="input-text" name="c_password" type="password" placeholder="Conform password*">
                                 <div class="icon"></div>
                             </div>
                         </div>
@@ -110,12 +119,12 @@
 <!--Wrapper End-->
 
 <!--JavaScript-->
-<script src="js/jquery-3.3.1.min.js"></script>
-<script src="js/jquery-ui.min.js"></script>
-<script src="js/popper.min.js"></script>
-<script src="js/bootstrap.min.js"></script>
-<script src="js/jquery.nice-select.js"></script>
-<script src="js/script.js"></script>
+<script src="{% static 'js/jquery-3.3.1.min.js' %}"></script>
+<script src="{% static 'js/jquery-ui.min.js' %}"></script>
+<script src="{% static 'js/popper.min.js' %}"></script>
+<script src="{% static 'js/bootstrap.min.js' %}"></script>
+<script src="{% static 'js/jquery.nice-select.js' %}"></script>
+<script src="{% static 'js/script.js' %}"></script>
 <!--JavaScript-->
 
 </body>

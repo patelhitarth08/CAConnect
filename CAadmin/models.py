@@ -1,6 +1,18 @@
 from django.db import models
 
 
+class Login(models.Model):
+    TYPES = (
+        ('Admin', 'Admin'),
+        ('Employee', 'Client'),
+        ('Client', 'Client'),
+    )
+
+    username = models.CharField(max_length=50, unique=True)
+    password = models.CharField(max_length=100)
+    type = models.CharField(max_length=10, choices=TYPES)
+
+
 class CA(models.Model):
     username = models.CharField(max_length=50, unique=True)
     email = models.EmailField()
@@ -95,3 +107,28 @@ class AuthorizedPerson(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class Employee(models.Model):
+    username = models.CharField(max_length=50, unique=True)
+    name = models.CharField(max_length=100)
+    email = models.EmailField()
+    password = models.CharField(max_length=100)
+    status = models.BooleanField(default=True)
+
+class Personal_file(models.Model):
+    client = models.ForeignKey(Client, on_delete=models.CASCADE, default=None)
+    file_name = models.CharField(max_length=50)
+    category = models.CharField(max_length=20)
+    month = models.CharField(max_length=15)
+    year = models.CharField(max_length=15)
+    description = models.CharField(max_length=100)
+    number = models.CharField(max_length=20)
+    file = models.FileField(upload_to='media/personal_files')
+
+class General_file(models.Model):
+    client = models.ForeignKey(Client, on_delete=models.CASCADE, default=None)
+    file_name = models.CharField(max_length=50)
+    number = models.CharField(max_length=15)
+    description = models.CharField(max_length=50)
+    file = models.FileField(upload_to='media/general_files')
