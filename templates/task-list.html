@@ -54,9 +54,9 @@
             </a>
             <div class="user_dropdown">
                 <ul>
-                    <li><a href="#">Profile <span><img src="images/profile-icon.svg" alt="profile icon"></span></a></li>
-                    <li><a href="#">Keyboard Shortcuts <span><img src="images/shortcut-icon.svg" alt="shortcut icon"></span></a></li>
-                    <li><a href="#">Logout <span><img src="images/logout-icon.svg" alt="logout icon"></span></a></li>
+                    <li><a href="#">Profile <span><img src="{% static 'images/profile-icon.svg' %}" alt="profile icon"></span></a></li>
+                    <li><a href="#">Keyboard Shortcuts <span><img src="{% static 'images/shortcut-icon.svg' %}" alt="shortcut icon"></span></a></li>
+                    <li><a href="#">Logout <span><img src="{% static 'images/logout-icon.svg' %}" alt="logout icon"></span></a></li>
                 </ul>
             </div>
         </div>
@@ -72,7 +72,7 @@
             <div class="top_add_file">
                 <a href="javascript:void(0)">
                     Add Task
-                    <i onclick="openSide()">
+                    <i>
                         <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path d="M10 4.16699V15.8337" stroke="#2C3E50" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
                             <path d="M4.16663 10H15.8333" stroke="#2C3E50" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
@@ -87,7 +87,7 @@
                 <div class="task_col">
                     <div class="top_titles d-flex flex-wrap align-items-center">
                         <h3>Todo</h3> 
-                        <i onclick="openSide()">
+                        <i>
                             <svg width="20" height="21" viewBox="0 0 20 21" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <rect y="0.5" width="20" height="20" rx="2" fill="#F6F9FF"/>
                                 <path d="M10 4.66602V16.3327" stroke="#2A76F4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
@@ -96,14 +96,16 @@
                         </i>
                     </div>
                     <div class="column">
-                        <div class="portlet">
+                        {% for data in task_data %}
+                        {% if data.task.status == "Todo" %}
+                        <div class="portlet" id="drag-{{data.task.id}}" onclick="fillCard({{data.task.id}})">
                             <div class="drg_full">
                                 <div class="portlet-header-top">
                                     <div class="left_numb">
                                         #1
                                     </div>
                                     <div class="right_portlet_date">
-                                        23 March 
+                                        {{data.task.start_date}}
                                         <i>
                                             <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
                                                 <path d="M10.5002 2.91602H3.50016C2.85583 2.91602 2.3335 3.43835 2.3335 4.08268V11.0827C2.3335 11.727 2.85583 12.2493 3.50016 12.2493H10.5002C11.1445 12.2493 11.6668 11.727 11.6668 11.0827V4.08268C11.6668 3.43835 11.1445 2.91602 10.5002 2.91602Z" stroke="#959595" stroke-linecap="round" stroke-linejoin="round"/>
@@ -116,8 +118,8 @@
                                     </div>
                                 </div>
                                 <div class="portlet-header">
-                                    <h3>Task title</h3>
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Orci amet magna amet, tempor donec sit nunc, ultricies.</p>
+                                    <h3>{{data.task.task_title}}</h3>
+                                    <p>{{data.task.description}}</p>
                                 </div>
                                 <div class="user_specify">
                                     <i>
@@ -127,33 +129,57 @@
                                             <path d="M4.62598 14.1368C4.81161 13.5189 5.19145 12.9774 5.70916 12.5925C6.22687 12.2076 6.85486 11.9998 7.49998 12H10.5C11.1459 11.9998 11.7747 12.208 12.2928 12.5938C12.8108 12.9796 13.1906 13.5223 13.3755 14.1412" stroke="#959595" stroke-linecap="round" stroke-linejoin="round"/>
                                         </svg>
                                     </i>
-                                    John Doe
+                                    {{ data.employee_name}}
                                 </div>
                                 <div class="portlet-bottom">
+                                    {% for tag in data.task.tags.all %} 
                                     <div class="task_priority">
-                                        Urgent
+                                        {{tag.name}}
                                     </div>
-                                    <div class="asap_txt">
-                                        ASAP
-                                    </div>
+                                    {% endfor %}
+                                    
+                                    {% if data.task.priority == "High" %}
                                     <div class="priority_status high_priority">
-                                        High
+                                        {{data.task.priority}}
                                         <i>
                                             <svg width="14" height="19" viewBox="0 0 14 19" fill="none" xmlns="http://www.w3.org/2000/svg">
                                                 <path d="M7 9C9 6.04 7 2 6 1C6 4.038 4.227 5.741 3 7C1.774 8.26 1 10.24 1 12C1 13.5913 1.63214 15.1174 2.75736 16.2426C3.88258 17.3679 5.4087 18 7 18C8.5913 18 10.1174 17.3679 11.2426 16.2426C12.3679 15.1174 13 13.5913 13 12C13 10.468 11.944 8.06 11 7C9.214 10 8.209 10 7 9Z" stroke="#198754" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
                                             </svg>
-                                                
+                                            
                                         </i>
                                     </div>
+                                    {% elif data.task.priority == "Medium" %}
+                                    <div class="priority_status medium_priority">
+                                        {{data.task.priority}}
+                                        <i>
+                                            <svg width="14" height="19" viewBox="0 0 14 19" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M7 9C9 6.04 7 2 6 1C6 4.038 4.227 5.741 3 7C1.774 8.26 1 10.24 1 12C1 13.5913 1.63214 15.1174 2.75736 16.2426C3.88258 17.3679 5.4087 18 7 18C8.5913 18 10.1174 17.3679 11.2426 16.2426C12.3679 15.1174 13 13.5913 13 12C13 10.468 11.944 8.06 11 7C9.214 10 8.209 10 7 9Z" stroke="#198754" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                            </svg>
+                                            
+                                        </i>
+                                    </div>
+                                    {% else %}
+                                    <div class="priority_status">
+                                        {{data.task.priority}}
+                                        <i>
+                                            <svg width="14" height="19" viewBox="0 0 14 19" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M7 9C9 6.04 7 2 6 1C6 4.038 4.227 5.741 3 7C1.774 8.26 1 10.24 1 12C1 13.5913 1.63214 15.1174 2.75736 16.2426C3.88258 17.3679 5.4087 18 7 18C8.5913 18 10.1174 17.3679 11.2426 16.2426C12.3679 15.1174 13 13.5913 13 12C13 10.468 11.944 8.06 11 7C9.214 10 8.209 10 7 9Z" stroke="#198754" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                            </svg>
+                                            
+                                        </i>
+                                    </div>
+                                    {% endif %}
                                 </div>
                             </div>
                         </div>
+                        {% endif %}
+                        {% endfor %}
                     </div>
                 </div>
                 <div class="task_col">
                     <div class="top_titles d-flex flex-wrap align-items-center">
                         <h3>In-Progress</h3> 
-                        <i onclick="openSide()">
+                        <i>
                             <svg width="20" height="21" viewBox="0 0 20 21" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <rect y="0.5" width="20" height="20" rx="2" fill="#F6F9FF"/>
                                 <path d="M10 4.66602V16.3327" stroke="#2A76F4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
@@ -162,14 +188,16 @@
                         </i>
                     </div>
                     <div class="column">
-                        <div class="portlet">
+                        {% for data in task_data %}
+                        {% if data.task.status == "In-Progress" %}
+                        <div class="portlet"  id="drag-{{data.task.id}}" onclick="fillCard({{data.task.id}})">
                             <div class="drg_full">
                                 <div class="portlet-header-top">
                                     <div class="left_numb">
                                         #1
                                     </div>
                                     <div class="right_portlet_date">
-                                        23 March 
+                                        {{data.task.start_date}}
                                         <i>
                                             <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
                                                 <path d="M10.5002 2.91602H3.50016C2.85583 2.91602 2.3335 3.43835 2.3335 4.08268V11.0827C2.3335 11.727 2.85583 12.2493 3.50016 12.2493H10.5002C11.1445 12.2493 11.6668 11.727 11.6668 11.0827V4.08268C11.6668 3.43835 11.1445 2.91602 10.5002 2.91602Z" stroke="#959595" stroke-linecap="round" stroke-linejoin="round"/>
@@ -182,76 +210,68 @@
                                     </div>
                                 </div>
                                 <div class="portlet-header">
-                                    <h3>Task title</h3>
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Orci amet magna amet, tempor donec sit nunc, ultricies.</p>
+                                    <h3>{{data.task.task_title}}</h3>
+                                    <p>{{data.task.description}}</p>
+                                </div>
+                                <div class="user_specify">
+                                    <i>
+                                        <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M9 15.75C12.7279 15.75 15.75 12.7279 15.75 9C15.75 5.27208 12.7279 2.25 9 2.25C5.27208 2.25 2.25 5.27208 2.25 9C2.25 12.7279 5.27208 15.75 9 15.75Z" stroke="#959595" stroke-linecap="round" stroke-linejoin="round"/>
+                                            <path d="M9 9.75C10.2426 9.75 11.25 8.74264 11.25 7.5C11.25 6.25736 10.2426 5.25 9 5.25C7.75736 5.25 6.75 6.25736 6.75 7.5C6.75 8.74264 7.75736 9.75 9 9.75Z" stroke="#959595" stroke-linecap="round" stroke-linejoin="round"/>
+                                            <path d="M4.62598 14.1368C4.81161 13.5189 5.19145 12.9774 5.70916 12.5925C6.22687 12.2076 6.85486 11.9998 7.49998 12H10.5C11.1459 11.9998 11.7747 12.208 12.2928 12.5938C12.8108 12.9796 13.1906 13.5223 13.3755 14.1412" stroke="#959595" stroke-linecap="round" stroke-linejoin="round"/>
+                                        </svg>
+                                    </i>
+                                    {{ data.employee_name}}
                                 </div>
                                 <div class="portlet-bottom">
+                                    {% for tag in data.task.tags.all %} 
                                     <div class="task_priority">
-                                        Urgent
+                                        {{tag.name}}
                                     </div>
-                                    <div class="asap_txt">
-                                        ASAP
-                                    </div>
+                                    {% endfor %}
+                                    
+                                    {% if data.task.priority == "High" %}
                                     <div class="priority_status high_priority">
-                                        High
+                                        {{data.task.priority}}
                                         <i>
                                             <svg width="14" height="19" viewBox="0 0 14 19" fill="none" xmlns="http://www.w3.org/2000/svg">
                                                 <path d="M7 9C9 6.04 7 2 6 1C6 4.038 4.227 5.741 3 7C1.774 8.26 1 10.24 1 12C1 13.5913 1.63214 15.1174 2.75736 16.2426C3.88258 17.3679 5.4087 18 7 18C8.5913 18 10.1174 17.3679 11.2426 16.2426C12.3679 15.1174 13 13.5913 13 12C13 10.468 11.944 8.06 11 7C9.214 10 8.209 10 7 9Z" stroke="#198754" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
                                             </svg>
-                                                
+                                            
                                         </i>
                                     </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="portlet">
-                            <div class="drg_full">
-                                <div class="portlet-header-top">
-                                    <div class="left_numb">
-                                        #1
-                                    </div>
-                                    <div class="right_portlet_date">
-                                        23 March 
-                                        <i>
-                                            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                <path d="M10.5002 2.91602H3.50016C2.85583 2.91602 2.3335 3.43835 2.3335 4.08268V11.0827C2.3335 11.727 2.85583 12.2493 3.50016 12.2493H10.5002C11.1445 12.2493 11.6668 11.727 11.6668 11.0827V4.08268C11.6668 3.43835 11.1445 2.91602 10.5002 2.91602Z" stroke="#959595" stroke-linecap="round" stroke-linejoin="round"/>
-                                                <path d="M9.3335 1.75V4.08333" stroke="#959595" stroke-linecap="round" stroke-linejoin="round"/>
-                                                <path d="M4.6665 1.75V4.08333" stroke="#959595" stroke-linecap="round" stroke-linejoin="round"/>
-                                                <path d="M2.3335 6.41602H11.6668" stroke="#959595" stroke-linecap="round" stroke-linejoin="round"/>
-                                                <path d="M5.83317 8.75H4.6665V9.91667H5.83317V8.75Z" stroke="#959595" stroke-linecap="round" stroke-linejoin="round"/>
-                                            </svg>
-                                        </i>
-                                    </div>
-                                </div>
-                                <div class="portlet-header">
-                                    <h3>Task title</h3>
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Orci amet magna amet, tempor donec sit nunc, ultricies.</p>
-                                </div>
-                                <div class="portlet-bottom">
-                                    <div class="task_priority">
-                                        Urgent
-                                    </div>
-                                    <div class="asap_txt">
-                                        ASAP
-                                    </div>
-                                    <div class="priority_status high_priority">
-                                        High
+                                    {% elif data.task.priority == "Medium" %}
+                                    <div class="priority_status medium_priority">
+                                        {{data.task.priority}}
                                         <i>
                                             <svg width="14" height="19" viewBox="0 0 14 19" fill="none" xmlns="http://www.w3.org/2000/svg">
                                                 <path d="M7 9C9 6.04 7 2 6 1C6 4.038 4.227 5.741 3 7C1.774 8.26 1 10.24 1 12C1 13.5913 1.63214 15.1174 2.75736 16.2426C3.88258 17.3679 5.4087 18 7 18C8.5913 18 10.1174 17.3679 11.2426 16.2426C12.3679 15.1174 13 13.5913 13 12C13 10.468 11.944 8.06 11 7C9.214 10 8.209 10 7 9Z" stroke="#198754" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
                                             </svg>
-                                                
+                                            
                                         </i>
                                     </div>
+                                    {% else %}
+                                    <div class="priority_status">
+                                        {{data.task.priority}}
+                                        <i>
+                                            <svg width="14" height="19" viewBox="0 0 14 19" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M7 9C9 6.04 7 2 6 1C6 4.038 4.227 5.741 3 7C1.774 8.26 1 10.24 1 12C1 13.5913 1.63214 15.1174 2.75736 16.2426C3.88258 17.3679 5.4087 18 7 18C8.5913 18 10.1174 17.3679 11.2426 16.2426C12.3679 15.1174 13 13.5913 13 12C13 10.468 11.944 8.06 11 7C9.214 10 8.209 10 7 9Z" stroke="#198754" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                            </svg>
+                                            
+                                        </i>
+                                    </div>
+                                    {% endif %}
                                 </div>
                             </div>
                         </div>
+                        {% endif %}
+                        {% endfor %}
                     </div>
                 </div>
                 <div class="task_col">
                     <div class="top_titles d-flex flex-wrap align-items-center">
                         <h3>Completed</h3> 
-                        <i onclick="openSide()">
+                        <i>
                             <svg width="20" height="21" viewBox="0 0 20 21" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <rect y="0.5" width="20" height="20" rx="2" fill="#F6F9FF"/>
                                 <path d="M10 4.66602V16.3327" stroke="#2A76F4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
@@ -260,14 +280,16 @@
                         </i>
                     </div>
                     <div class="column">
-                        <div class="portlet">
+                        {% for data in task_data %}
+                        {% if data.task.status == "Completed" %}
+                        <div class="portlet" id="drag-{{data.task.id}}" onclick="fillCard({{data.task.id}})">
                             <div class="drg_full">
                                 <div class="portlet-header-top">
                                     <div class="left_numb">
                                         #1
                                     </div>
                                     <div class="right_portlet_date">
-                                        23 March 
+                                        {{data.task.start_date}}
                                         <i>
                                             <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
                                                 <path d="M10.5002 2.91602H3.50016C2.85583 2.91602 2.3335 3.43835 2.3335 4.08268V11.0827C2.3335 11.727 2.85583 12.2493 3.50016 12.2493H10.5002C11.1445 12.2493 11.6668 11.727 11.6668 11.0827V4.08268C11.6668 3.43835 11.1445 2.91602 10.5002 2.91602Z" stroke="#959595" stroke-linecap="round" stroke-linejoin="round"/>
@@ -280,118 +302,68 @@
                                     </div>
                                 </div>
                                 <div class="portlet-header">
-                                    <h3>Task title</h3>
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Orci amet magna amet, tempor donec sit nunc, ultricies.</p>
+                                    <h3>{{data.task.task_title}}</h3>
+                                    <p>{{data.task.description}}</p>
+                                </div>
+                                <div class="user_specify">
+                                    <i>
+                                        <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M9 15.75C12.7279 15.75 15.75 12.7279 15.75 9C15.75 5.27208 12.7279 2.25 9 2.25C5.27208 2.25 2.25 5.27208 2.25 9C2.25 12.7279 5.27208 15.75 9 15.75Z" stroke="#959595" stroke-linecap="round" stroke-linejoin="round"/>
+                                            <path d="M9 9.75C10.2426 9.75 11.25 8.74264 11.25 7.5C11.25 6.25736 10.2426 5.25 9 5.25C7.75736 5.25 6.75 6.25736 6.75 7.5C6.75 8.74264 7.75736 9.75 9 9.75Z" stroke="#959595" stroke-linecap="round" stroke-linejoin="round"/>
+                                            <path d="M4.62598 14.1368C4.81161 13.5189 5.19145 12.9774 5.70916 12.5925C6.22687 12.2076 6.85486 11.9998 7.49998 12H10.5C11.1459 11.9998 11.7747 12.208 12.2928 12.5938C12.8108 12.9796 13.1906 13.5223 13.3755 14.1412" stroke="#959595" stroke-linecap="round" stroke-linejoin="round"/>
+                                        </svg>
+                                    </i>
+                                    {{ data.employee_name}}
                                 </div>
                                 <div class="portlet-bottom">
+                                    {% for tag in data.task.tags.all %} 
                                     <div class="task_priority">
-                                        Urgent
+                                        {{tag.name}}
                                     </div>
-                                    <div class="asap_txt">
-                                        ASAP
-                                    </div>
+                                    {% endfor %}
+                                    
+                                    {% if data.task.priority == "High" %}
                                     <div class="priority_status high_priority">
-                                        High
+                                        {{data.task.priority}}
                                         <i>
                                             <svg width="14" height="19" viewBox="0 0 14 19" fill="none" xmlns="http://www.w3.org/2000/svg">
                                                 <path d="M7 9C9 6.04 7 2 6 1C6 4.038 4.227 5.741 3 7C1.774 8.26 1 10.24 1 12C1 13.5913 1.63214 15.1174 2.75736 16.2426C3.88258 17.3679 5.4087 18 7 18C8.5913 18 10.1174 17.3679 11.2426 16.2426C12.3679 15.1174 13 13.5913 13 12C13 10.468 11.944 8.06 11 7C9.214 10 8.209 10 7 9Z" stroke="#198754" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
                                             </svg>
-                                                
+                                            
                                         </i>
                                     </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="portlet">
-                            <div class="drg_full">
-                                <div class="portlet-header-top">
-                                    <div class="left_numb">
-                                        #1
-                                    </div>
-                                    <div class="right_portlet_date">
-                                        23 March 
-                                        <i>
-                                            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                <path d="M10.5002 2.91602H3.50016C2.85583 2.91602 2.3335 3.43835 2.3335 4.08268V11.0827C2.3335 11.727 2.85583 12.2493 3.50016 12.2493H10.5002C11.1445 12.2493 11.6668 11.727 11.6668 11.0827V4.08268C11.6668 3.43835 11.1445 2.91602 10.5002 2.91602Z" stroke="#959595" stroke-linecap="round" stroke-linejoin="round"/>
-                                                <path d="M9.3335 1.75V4.08333" stroke="#959595" stroke-linecap="round" stroke-linejoin="round"/>
-                                                <path d="M4.6665 1.75V4.08333" stroke="#959595" stroke-linecap="round" stroke-linejoin="round"/>
-                                                <path d="M2.3335 6.41602H11.6668" stroke="#959595" stroke-linecap="round" stroke-linejoin="round"/>
-                                                <path d="M5.83317 8.75H4.6665V9.91667H5.83317V8.75Z" stroke="#959595" stroke-linecap="round" stroke-linejoin="round"/>
-                                            </svg>
-                                        </i>
-                                    </div>
-                                </div>
-                                <div class="portlet-header">
-                                    <h3>Task title</h3>
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Orci amet magna amet, tempor donec sit nunc, ultricies.</p>
-                                </div>
-                                <div class="portlet-bottom">
-                                    <div class="task_priority">
-                                        Urgent
-                                    </div>
-                                    <div class="asap_txt">
-                                        ASAP
-                                    </div>
+                                    {% elif data.task.priority == "Medium" %}
                                     <div class="priority_status medium_priority">
-                                        Medium
+                                        {{data.task.priority}}
                                         <i>
                                             <svg width="14" height="19" viewBox="0 0 14 19" fill="none" xmlns="http://www.w3.org/2000/svg">
                                                 <path d="M7 9C9 6.04 7 2 6 1C6 4.038 4.227 5.741 3 7C1.774 8.26 1 10.24 1 12C1 13.5913 1.63214 15.1174 2.75736 16.2426C3.88258 17.3679 5.4087 18 7 18C8.5913 18 10.1174 17.3679 11.2426 16.2426C12.3679 15.1174 13 13.5913 13 12C13 10.468 11.944 8.06 11 7C9.214 10 8.209 10 7 9Z" stroke="#198754" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
                                             </svg>
-                                                
+                                            
                                         </i>
                                     </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="portlet">
-                            <div class="drg_full">
-                                <div class="portlet-header-top">
-                                    <div class="left_numb">
-                                        #1
-                                    </div>
-                                    <div class="right_portlet_date">
-                                        23 March 
-                                        <i>
-                                            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                <path d="M10.5002 2.91602H3.50016C2.85583 2.91602 2.3335 3.43835 2.3335 4.08268V11.0827C2.3335 11.727 2.85583 12.2493 3.50016 12.2493H10.5002C11.1445 12.2493 11.6668 11.727 11.6668 11.0827V4.08268C11.6668 3.43835 11.1445 2.91602 10.5002 2.91602Z" stroke="#959595" stroke-linecap="round" stroke-linejoin="round"/>
-                                                <path d="M9.3335 1.75V4.08333" stroke="#959595" stroke-linecap="round" stroke-linejoin="round"/>
-                                                <path d="M4.6665 1.75V4.08333" stroke="#959595" stroke-linecap="round" stroke-linejoin="round"/>
-                                                <path d="M2.3335 6.41602H11.6668" stroke="#959595" stroke-linecap="round" stroke-linejoin="round"/>
-                                                <path d="M5.83317 8.75H4.6665V9.91667H5.83317V8.75Z" stroke="#959595" stroke-linecap="round" stroke-linejoin="round"/>
-                                            </svg>
-                                        </i>
-                                    </div>
-                                </div>
-                                <div class="portlet-header">
-                                    <h3>Task title</h3>
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Orci amet magna amet, tempor donec sit nunc, ultricies.</p>
-                                </div>
-                                <div class="portlet-bottom">
-                                    <div class="task_priority">
-                                        Urgent
-                                    </div>
-                                    <div class="asap_txt">
-                                        ASAP
-                                    </div>
+                                    {% else %}
                                     <div class="priority_status">
-                                        Low
+                                        {{data.task.priority}}
                                         <i>
                                             <svg width="14" height="19" viewBox="0 0 14 19" fill="none" xmlns="http://www.w3.org/2000/svg">
                                                 <path d="M7 9C9 6.04 7 2 6 1C6 4.038 4.227 5.741 3 7C1.774 8.26 1 10.24 1 12C1 13.5913 1.63214 15.1174 2.75736 16.2426C3.88258 17.3679 5.4087 18 7 18C8.5913 18 10.1174 17.3679 11.2426 16.2426C12.3679 15.1174 13 13.5913 13 12C13 10.468 11.944 8.06 11 7C9.214 10 8.209 10 7 9Z" stroke="#198754" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
                                             </svg>
-                                                
+                                            
                                         </i>
                                     </div>
+                                    {% endif %}
                                 </div>
                             </div>
                         </div>
+                        {% endif %}
+                        {% endfor %}
                     </div>
                 </div>
                 <div class="task_col">
                     <div class="top_titles d-flex flex-wrap align-items-center">
                         <h3>Verified</h3> 
-                        <i onclick="openSide()">
+                        <i>
                             <svg width="20" height="21" viewBox="0 0 20 21" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <rect y="0.5" width="20" height="20" rx="2" fill="#F6F9FF"/>
                                 <path d="M10 4.66602V16.3327" stroke="#2A76F4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
@@ -400,14 +372,16 @@
                         </i>
                     </div>
                     <div class="column">
-                        <div class="portlet">
+                        {% for data in task_data %}
+                        {% if data.task.status == "Verified" %}
+                        <div class="portlet" id="drag-{{data.task.id}}" onclick="fillCard({{data.task.id}})">
                             <div class="drg_full">
                                 <div class="portlet-header-top">
                                     <div class="left_numb">
                                         #1
                                     </div>
                                     <div class="right_portlet_date">
-                                        23 March 
+                                        {{data.task.start_date}}
                                         <i>
                                             <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
                                                 <path d="M10.5002 2.91602H3.50016C2.85583 2.91602 2.3335 3.43835 2.3335 4.08268V11.0827C2.3335 11.727 2.85583 12.2493 3.50016 12.2493H10.5002C11.1445 12.2493 11.6668 11.727 11.6668 11.0827V4.08268C11.6668 3.43835 11.1445 2.91602 10.5002 2.91602Z" stroke="#959595" stroke-linecap="round" stroke-linejoin="round"/>
@@ -420,119 +394,69 @@
                                     </div>
                                 </div>
                                 <div class="portlet-header">
-                                    <h3>Task title</h3>
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Orci amet magna amet, tempor donec sit nunc, ultricies.</p>
+                                    <h3>{{data.task.task_title}}</h3>
+                                    <p>{{data.task.description}}</p>
+                                </div>
+                                <div class="user_specify">
+                                    <i>
+                                        <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M9 15.75C12.7279 15.75 15.75 12.7279 15.75 9C15.75 5.27208 12.7279 2.25 9 2.25C5.27208 2.25 2.25 5.27208 2.25 9C2.25 12.7279 5.27208 15.75 9 15.75Z" stroke="#959595" stroke-linecap="round" stroke-linejoin="round"/>
+                                            <path d="M9 9.75C10.2426 9.75 11.25 8.74264 11.25 7.5C11.25 6.25736 10.2426 5.25 9 5.25C7.75736 5.25 6.75 6.25736 6.75 7.5C6.75 8.74264 7.75736 9.75 9 9.75Z" stroke="#959595" stroke-linecap="round" stroke-linejoin="round"/>
+                                            <path d="M4.62598 14.1368C4.81161 13.5189 5.19145 12.9774 5.70916 12.5925C6.22687 12.2076 6.85486 11.9998 7.49998 12H10.5C11.1459 11.9998 11.7747 12.208 12.2928 12.5938C12.8108 12.9796 13.1906 13.5223 13.3755 14.1412" stroke="#959595" stroke-linecap="round" stroke-linejoin="round"/>
+                                        </svg>
+                                    </i>
+                                    {{ data.employee_name}}
                                 </div>
                                 <div class="portlet-bottom">
+                                    {% for tag in data.task.tags.all %} 
                                     <div class="task_priority">
-                                        Urgent
+                                        {{tag.name}}
                                     </div>
-                                    <div class="asap_txt">
-                                        ASAP
-                                    </div>
+                                    {% endfor %}
+                                    
+                                    {% if data.task.priority == "High" %}
                                     <div class="priority_status high_priority">
-                                        High
+                                        {{data.task.priority}}
                                         <i>
                                             <svg width="14" height="19" viewBox="0 0 14 19" fill="none" xmlns="http://www.w3.org/2000/svg">
                                                 <path d="M7 9C9 6.04 7 2 6 1C6 4.038 4.227 5.741 3 7C1.774 8.26 1 10.24 1 12C1 13.5913 1.63214 15.1174 2.75736 16.2426C3.88258 17.3679 5.4087 18 7 18C8.5913 18 10.1174 17.3679 11.2426 16.2426C12.3679 15.1174 13 13.5913 13 12C13 10.468 11.944 8.06 11 7C9.214 10 8.209 10 7 9Z" stroke="#198754" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
                                             </svg>
-                                                
+                                            
                                         </i>
                                     </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="portlet">
-                            <div class="drg_full">
-                                <div class="portlet-header-top">
-                                    <div class="left_numb">
-                                        #1
-                                    </div>
-                                    <div class="right_portlet_date">
-                                        23 March 
-                                        <i>
-                                            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                <path d="M10.5002 2.91602H3.50016C2.85583 2.91602 2.3335 3.43835 2.3335 4.08268V11.0827C2.3335 11.727 2.85583 12.2493 3.50016 12.2493H10.5002C11.1445 12.2493 11.6668 11.727 11.6668 11.0827V4.08268C11.6668 3.43835 11.1445 2.91602 10.5002 2.91602Z" stroke="#959595" stroke-linecap="round" stroke-linejoin="round"/>
-                                                <path d="M9.3335 1.75V4.08333" stroke="#959595" stroke-linecap="round" stroke-linejoin="round"/>
-                                                <path d="M4.6665 1.75V4.08333" stroke="#959595" stroke-linecap="round" stroke-linejoin="round"/>
-                                                <path d="M2.3335 6.41602H11.6668" stroke="#959595" stroke-linecap="round" stroke-linejoin="round"/>
-                                                <path d="M5.83317 8.75H4.6665V9.91667H5.83317V8.75Z" stroke="#959595" stroke-linecap="round" stroke-linejoin="round"/>
-                                            </svg>
-                                        </i>
-                                    </div>
-                                </div>
-                                <div class="portlet-header">
-                                    <h3>Task title</h3>
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Orci amet magna amet, tempor donec sit nunc, ultricies.</p>
-                                </div>
-                                <div class="portlet-bottom">
-                                    <div class="task_priority">
-                                        Urgent
-                                    </div>
-                                    <div class="asap_txt">
-                                        ASAP
-                                    </div>
+                                    {% elif data.task.priority == "Medium" %}
                                     <div class="priority_status medium_priority">
-                                        Medium
+                                        {{data.task.priority}}
                                         <i>
                                             <svg width="14" height="19" viewBox="0 0 14 19" fill="none" xmlns="http://www.w3.org/2000/svg">
                                                 <path d="M7 9C9 6.04 7 2 6 1C6 4.038 4.227 5.741 3 7C1.774 8.26 1 10.24 1 12C1 13.5913 1.63214 15.1174 2.75736 16.2426C3.88258 17.3679 5.4087 18 7 18C8.5913 18 10.1174 17.3679 11.2426 16.2426C12.3679 15.1174 13 13.5913 13 12C13 10.468 11.944 8.06 11 7C9.214 10 8.209 10 7 9Z" stroke="#198754" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
                                             </svg>
-                                                
+                                            
                                         </i>
                                     </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="portlet">
-                            <div class="drg_full">
-                                <div class="portlet-header-top">
-                                    <div class="left_numb">
-                                        #1
-                                    </div>
-                                    <div class="right_portlet_date">
-                                        23 March 
-                                        <i>
-                                            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                <path d="M10.5002 2.91602H3.50016C2.85583 2.91602 2.3335 3.43835 2.3335 4.08268V11.0827C2.3335 11.727 2.85583 12.2493 3.50016 12.2493H10.5002C11.1445 12.2493 11.6668 11.727 11.6668 11.0827V4.08268C11.6668 3.43835 11.1445 2.91602 10.5002 2.91602Z" stroke="#959595" stroke-linecap="round" stroke-linejoin="round"/>
-                                                <path d="M9.3335 1.75V4.08333" stroke="#959595" stroke-linecap="round" stroke-linejoin="round"/>
-                                                <path d="M4.6665 1.75V4.08333" stroke="#959595" stroke-linecap="round" stroke-linejoin="round"/>
-                                                <path d="M2.3335 6.41602H11.6668" stroke="#959595" stroke-linecap="round" stroke-linejoin="round"/>
-                                                <path d="M5.83317 8.75H4.6665V9.91667H5.83317V8.75Z" stroke="#959595" stroke-linecap="round" stroke-linejoin="round"/>
-                                            </svg>
-                                        </i>
-                                    </div>
-                                </div>
-                                <div class="portlet-header">
-                                    <h3>Task title</h3>
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Orci amet magna amet, tempor donec sit nunc, ultricies.</p>
-                                </div>
-                                <div class="portlet-bottom">
-                                    <div class="task_priority">
-                                        Urgent
-                                    </div>
-                                    <div class="asap_txt">
-                                        ASAP
-                                    </div>
+                                    {% else %}
                                     <div class="priority_status">
-                                        Low
+                                        {{data.task.priority}}
                                         <i>
                                             <svg width="14" height="19" viewBox="0 0 14 19" fill="none" xmlns="http://www.w3.org/2000/svg">
                                                 <path d="M7 9C9 6.04 7 2 6 1C6 4.038 4.227 5.741 3 7C1.774 8.26 1 10.24 1 12C1 13.5913 1.63214 15.1174 2.75736 16.2426C3.88258 17.3679 5.4087 18 7 18C8.5913 18 10.1174 17.3679 11.2426 16.2426C12.3679 15.1174 13 13.5913 13 12C13 10.468 11.944 8.06 11 7C9.214 10 8.209 10 7 9Z" stroke="#198754" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
                                             </svg>
-                                                
+                                            
                                         </i>
                                     </div>
+                                    {% endif %}
                                 </div>
                             </div>
                         </div>
+                        {% endif %}
+                        {% endfor %}
                     </div>
                 </div>
             </div>
         </div>
         <div id="sideForm" class="rightside_task_form">
             <div class="closed_task_form">
-                <a href="#" onclick="closeSide()">
+                <a href="#">
                     <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <circle cx="14" cy="14" r="14" fill="#E44B4B"/>
                         <path d="M18.7432 9.74219L9.25788 19.2275" stroke="white" stroke-width="2"/>
@@ -541,53 +465,53 @@
                 </a>
             </div>
             <div class="rightside_task_form_inner">
-                <form action="">
-                        <div class="side_form">
+                <form method="POST">
+                    {% csrf_token %}
+                    <div class="side_form">
                         <div class="form_row">
                             <div class="form_col_1-1">
                                 <div class="input_container">
                                     <label for="">Task title</label>
-                                    <input type="text" name="" id="" placeholder="Task title" class="input_field">
+                                    <input type="text" name="task_title" id="task_title" placeholder="Task title" class="input_field">
                                 </div>
                             </div>
                             <div class="form_col_1-1">
                                 <div class="input_container">
                                     <label for="">Description</label>
-                                    <textarea name="" id="" placeholder="Description" class="input_field"></textarea>
+                                    <textarea name="description" id="description" placeholder="Description" class="input_field"></textarea>
                                 </div>
                             </div>
                             <div class="form_col_1-2">
                                 <div class="input_container">
                                     <label for="">Due date</label>
-                                    <input type="text" id="duedatefield" name="" placeholder="Due date" class="input_field">
+                                    <input type="text" id="duedatefield" autocomplete="off" name="due_date" placeholder="Due date" class="input_field">
                                 </div>
                             </div>
                             <div class="form_col_1-2">
                                 <div class="input_container">
                                     <label for="">Status</label>
-                                    <select name="" id="">
-                                        <option value="Draft">Draft</option>
-                                        <option value="Inbox">Inbox</option>
-                                        <option value="Send">Send</option>
+                                    <select name="status" id="status">
+                                        <option value="Todo">Todo</option>
+                                        <option value="In-Progress">In-Progress</option>
+                                        <option value="Completed">Completed</option>
+                                        <option value="Verified">Verified</option>
                                     </select>
                                 </div>
                             </div>
                             <div class="form_col_1-2">
                                 <div class="input_container">
                                     <label for="">Assign to</label>
-                                    <select name="" id="">
-                                        <option value="John">John</option>
-                                        <option value="John 2">John 2</option>
-                                        <option value="John 3">John 3</option>
-                                        <option value="John 4">John 4</option>
-                                        <option value="John 5">John 5</option>
+                                    <select name="assign_to" id="assign_to">
+                                        {% for employee in employees %}
+                                        <option value="{{employee.id}}">{{employee.name}}</option>
+                                        {% endfor %}
                                     </select>
                                 </div>
                             </div>
                             <div class="form_col_1-2">
                                 <div class="input_container">
                                     <label for="">Priority</label>
-                                    <select name="" id="">
+                                    <select name="priority" id="priority">
                                         <option value="High">High</option>
                                         <option value="Medium">Medium</option>
                                         <option value="Low">Low</option>
@@ -597,10 +521,11 @@
                             <div class="form_col_1-1">
                                 <div class="input_container select_multiple_container">
                                     <label for="">Tags</label>
-                                    <select class="form-control select-multiple" multiple="multiple">
-                                        <option selected="selected">Blog cat</option>
-                                        <option selected="selected">Unknow</option>
-                                      </select>
+                                    <select class="form-control select-multiple"  name="tags" multiple="multiple">
+                                        {% for tag in tags %}
+                                        <option value="{{tag.name}}">{{tag.name}}</option>
+                                        {% endfor %}
+                                    </select>
                                 </div>
                             </div>
                             <div class="form_col_1-1">
@@ -612,19 +537,19 @@
                             <div class="form_col_1-2">
                                 <div class="input_container">
                                     <label for="">Start date</label>
-                                    <input type="text" name="" id="search-from-date" class="input_field">
+                                    <input type="text" autocomplete="off" name="start_date" id="search-from-date" class="input_field">
                                 </div>
                             </div>
                             <div class="form_col_1-2">
                                 <div class="input_container">
-                                    <label for="">Start date</label>
-                                    <input type="text" name="" id="search-to-date" class="input_field">
+                                    <label for="">End date</label>
+                                    <input type="text" autocomplete="off" name="end_date" id="search-to-date" class="input_field">
                                 </div>
                             </div>
                             <div class="form_col_1-1">
                                 <div class="form_submit flxrow">
                                     <input class="primary_btn" type="submit" value="Save">
-                                    <input type="submit" value="Delete" class="primary_btn cancle_btn">
+                                    <input type="submit" name="delete" id="delete" value="Delete" class="primary_btn cancle_btn">
                                 </div>
                             </div>
                         </div>
@@ -641,21 +566,46 @@
 <script src="{% static 'js/jquery-ui.min.js' %}"></script>
 <!-- <script src="{% static 'js/jquery.ui.touch-punch.min.js' %}"></script> -->
 <script src="{% static 'js/popper.min.js' %}"></script>
-<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.jsx`"></script>
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 <script src="{% static 'js/jquery.datetimepicker.full.min.js' %}"></script>
 <script src="{% static 'js/bootstrap.min.js' %}"></script>
 <script src="{% static 'js/jquery.nice-select.js' %}"></script>
 <script src="{% static 'js/script.js' %}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+
 <script>
     jQuery( function() {
 
-        jQuery( ".column" ).sortable({
-          connectWith: ".column",
-          handle: ".drg_full",
-          cancel: ".portlet-toggle",
-          placeholder: "portlet-placeholder"
-        });
-     
+        jQuery(".column").sortable({
+            connectWith: ".column",
+            handle: ".drg_full",
+            cancel: ".portlet-toggle",
+            placeholder: "portlet-placeholder",
+            update: function(event, ui) {
+                
+                if (ui.sender != null){
+                    var id = ui.item.attr("id");
+                    var taskId = id.match(/\d+/)[0];
+                    var updatedColumn = ui.item.closest(".task_col").find('.top_titles h3').html();
+                    console.log(updatedColumn)
+
+                    var url = "/CAadmin/update-task-status?taskId=" + taskId + "&column=" + updatedColumn;
+    
+                    // Make an AJAX GET request to update the task status
+                    var xhr = new XMLHttpRequest();
+                    xhr.open("GET", url);
+                    xhr.onload = function() {
+                    if (xhr.status === 200) {
+                        console.log("Task status updated successfully");
+                        // Perform any additional actions after updating the task status
+                    } else {
+                        console.error("Failed to update task status");
+                    }
+                    };
+                    xhr.send();
+                }
+            }
+          });
         jQuery( ".portlet" )
           .addClass( "ui-widget ui-widget-content ui-helper-clearfix" )
           .find( ".portlet-header" )
@@ -699,27 +649,97 @@
          format:'d/m/Y',
          timepicker:false
         });
-       });
-       {% comment %} jQuery(document).on('click','.top_add_file a, .task_col .top_titles i ,.ui-sortable .ui-widget.ui-widget-content', function(e) {
-            jQuery('body').addClass('open_sidebar');
-            jQuery('.rightside_task_form').addClass('active');
-       });
-       jQuery(".closed_task_form a").on('click', function(e) {
-            jQuery('body').removeClass('open_sidebar');
-            jQuery('.rightside_task_form').removeClass('active');
-       }); {% endcomment %}
+    });
+    jQuery(document).on('click','.task_col .top_titles i', function(e) {
+        $('form').trigger('reset');
+        var formAction = '';
+        $('form').attr('action', formAction); 
+        jQuery('body').addClass('open_sidebar');
+        jQuery('.rightside_task_form').addClass('active');
+        var element = jQuery(this).closest('.task_col').find('.top_titles h3');
+        var text = element.text().trim();
 
-       function openSide() {
-            var myForm = document.getElementById('sideForm');
-            myForm.classList.add('active')
-       }
+        var statusSelect = document.getElementById('status');
+        var selectedOption = statusSelect.querySelector('option[value="' + text + '"]');
+        selectedOption.selected = true;
+        $(statusSelect).niceSelect('update');      
+         
+    });
+    jQuery(document).on('click','.ui-sortable .ui-widget.ui-widget-content', function(e) {
+        jQuery('body').addClass('open_sidebar');
+        jQuery('.rightside_task_form').addClass('active');
+        var element = jQuery(this).closest('.task_col').find('.top_titles h3');
+        var text = element.text().trim();
 
-       function closeSide() {
-            var myForm = document.getElementById('sideForm');
-            myForm.classList.remove('active')
-       }
+        var statusSelect = document.getElementById('status');
+        var selectedOption = statusSelect.querySelector('option[value="' + text + '"]');
+        selectedOption.selected = true;
+        $(statusSelect).niceSelect('update');      
+         
+    });
+    jQuery(document).on('click','.top_add_file a', function(e) {
+        $('form').trigger('reset');
+        jQuery('body').addClass('open_sidebar');
+        jQuery('.rightside_task_form').addClass('active');
+        
+
+        var statusSelect = document.getElementById('status');
+        var selectedOption = statusSelect.querySelector('option[value="Todo"]');
+        selectedOption.selected = true;
+        $(statusSelect).niceSelect('update');      
+         
+    });
+    jQuery(".closed_task_form a").on('click', function(e) {
+        jQuery('body').removeClass('open_sidebar');
+        jQuery('.rightside_task_form').removeClass('active');
+    });
+
+    function fillCard(taskId) {
+        var xhr = new XMLHttpRequest();
+        xhr.open('GET', '/CAadmin/get-task-details/?taskId=' + taskId, true);
+        
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState === 4) {
+                if (xhr.status === 200) {
+                    var taskDetails = JSON.parse(xhr.responseText);
+                    // Assuming the task details are returned as a JSON object
+                    
+                    // Auto-fill the form fields
+                    document.querySelector('input[name="task_title"]').value = taskDetails.task_title;
+                    document.querySelector('textarea[name="description"]').value = taskDetails.description;
+                    document.querySelector('input[name="due_date"]').value = moment(taskDetails.due_date).format('DD/MM/YYYY');
+                    document.querySelector('select[name="status"]').value = taskDetails.status;
+                    $(document.querySelector('select[name="status"]')).niceSelect('update');      
+                    document.querySelector('select[name="assign_to"]').value = taskDetails.assign_to;
+                    $(document.querySelector('select[name="assign_to"]')).niceSelect('update');      
+                    document.querySelector('select[name="priority"]').value = taskDetails.priority;
+                    $(document.querySelector('select[name="priority"]')).niceSelect('update');      
+
+                    // Add selected options to the tags select multiple field
+                    var tagsSelect = document.querySelector('.select-multiple');
+                    tagsSelect.innerHTML = ''; // Clear existing options before adding new ones 
+                    for (var i = 0; i < taskDetails.tags.length; i++) {
+                        var option = document.createElement('option');
+                        option.value = taskDetails.tags[i];
+                        option.text = taskDetails.tags[i];
+                        tagsSelect.appendChild(option);
+                        option.selected = true;
+                    }
+                    
+                    // Auto-fill the time tracking fields
+                    document.querySelector('input[name="start_date"]').value = moment(taskDetails.start_date).format('DD/MM/YYYY HH:mm');
+                    document.querySelector('input[name="end_date"]').value = moment(taskDetails.end_date).format('DD/MM/YYYY HH:mm');
+                
+                    var form = $('form');
+                    var formAction = '/CAadmin/update-task/' + taskId;
+                    form.attr('action', formAction);                    
+                } else {
+                    console.log('Error: ' + xhr.status);
+                }
+          }
+        };        
+        xhr.send();
+    }
 </script>
-<!--JavaScript-->
-
 </body>
 </html>

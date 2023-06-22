@@ -1,12 +1,15 @@
+from django.views.decorators.http import require_GET
+from datetime import datetime
+from django.utils.safestring import mark_safe
 from django.db import transaction
 import csv
 import json
 from django.core.files.storage import default_storage
 from django.db import IntegrityError
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseBadRequest, JsonResponse
 from django.shortcuts import redirect, render
 
-from CAadmin.models import Address, AuthorizedPerson, Client, Employee, Login, PersonalDetails, CA, Personal_file, General_file
+from CAadmin.models import Address, AuthorizedPerson, Client, Employee, Login, PersonalDetails, CA, Personal_file, General_file, Tag, Task
 from django.contrib.auth.hashers import make_password, check_password
 from django.shortcuts import get_object_or_404
 from django.contrib import messages
@@ -707,4 +710,137 @@ def delete_gen_file(request, file_id, client_id):
 
 
 def task_list(request):
-    return render(request, template_name="task-list.html")
+    if request.method == "POST":
+        title = request.POST['task_title']
+        description = request.POST['description']
+        due_date_str = request.POST['due_date']
+        due_date = datetime.strptime(due_date_str, "%d/%m/%Y").date()
+        status = request.POST['status']
+        assign_to = request.POST['assign_to']
+        priority = request.POST['priority']
+        tags = request.POST.getlist('tags')
+        print(tags)
+        start_date_str = request.POST['start_date']
+        start_date = datetime.strptime(start_date_str, "%d/%m/%Y %H:%M")
+        end_date_str = request.POST['end_date']
+        end_date = datetime.strptime(end_date_str, "%d/%m/%Y %H:%M")
+
+        tag_ids = []
+        for tag_obj in tags:
+            tag = Tag.objects.filter(name=tag_obj).first()
+            if tag != None:
+                tag_ids.append(tag.id)
+            else:
+                new_tag = Tag(name=tag_obj)
+                new_tag.save()
+                tag_ids.append(new_tag.id)
+
+        task = Task(task_title=title, description=description, due_date=due_date, status=status,
+                    assign_to=Employee.objects.filter(id=assign_to).first(), priority=priority, start_date=start_date, end_date=end_date)
+        task.save()
+        task.tags.set(tag_ids)
+    tasks = Task.objects.all()
+    employees = Employee.objects.all()
+    tags = Tag.objects.all()
+    task_data = []
+    for task in tasks:
+        task_data.append({
+            'task': task,
+            'employee_name': task.assign_to.name
+        })
+
+    context = {'task_data': task_data, 'employees': employees, 'tags': tags}
+    return render(request, template_name="task-list.html", context=context)
+
+
+def get_task_details(request):
+    task_id = request.GET.get('taskId')
+    task = get_object_or_404(Task, id=task_id)
+
+    task_details = {
+        'task_title': task.task_title,
+        'description': task.description,
+        # Convert datetime to string
+        'due_date': task.due_date.strftime('%Y-%m-%d'),
+        'status': task.status,
+        'assign_to': task.assign_to.id,  # Assuming assign_to is a foreign key to User model
+        'priority': task.priority,
+        # Assuming tags is a ManyToManyField
+        'tags': [tag.name for tag in task.tags.all()],
+        # Convert datetime to string
+        'start_date': task.start_date.strftime('%Y-%m-%d'),
+        # Convert datetime to string
+        'end_date': task.end_date.strftime('%Y-%m-%d')
+    }
+
+    return JsonResponse(task_details)
+
+
+def update_task(request, task_id):
+    if request.method == 'POST':
+        if 'delete' in request.POST:
+            task = get_object_or_404(Task, id=task_id)
+            task.delete()
+            return redirect("/CAadmin/task-list")
+        task = get_object_or_404(Task, id=task_id)
+
+        # Retrieve form data
+        task.task_title = request.POST.get('task_title')
+        task.description = request.POST.get('description')
+
+        due_date_str = request.POST.get('due_date')
+        task.due_date = datetime.strptime(due_date_str, "%d/%m/%Y").date()
+
+        task.status = request.POST.get('status')
+        assign_to = request.POST.get('assign_to')
+        employee = Employee.objects.filter(id=assign_to).first()
+        task.assign_to = employee
+        task.priority = request.POST.get('priority')
+        tags = request.POST.getlist('tags')
+        tag_ids = []
+        for tag_obj in tags:
+            tag = Tag.objects.filter(name=tag_obj).first()
+            if tag != None:
+                tag_ids.append(tag.id)
+            else:
+                new_tag = Tag(name=tag_obj)
+                new_tag.save()
+                tag_ids.append(new_tag.id)
+        task.tags.set(tag_ids)
+        start_date_str = request.POST.get('start_date')
+        task.start_date = datetime.strptime(start_date_str, "%d/%m/%Y %H:%M")
+        end_date_str = request.POST.get('end_date')
+        task.end_date = datetime.strptime(end_date_str, "%d/%m/%Y %H:%M")
+
+        # Save the updated task
+        task.save()
+
+        return redirect("/CAadmin/task-list")
+
+    # If the request method is not POST, return an error
+    return redirect("/CAadmin/task-list")
+
+
+def update_task_status(request):
+    if request.method == 'GET':
+        task_id = request.GET.get('taskId')
+        column = request.GET.get('column')
+
+        # Perform necessary validations and error handling
+        if task_id is None or column is None:
+            return HttpResponseBadRequest("Missing parameters")
+
+        try:
+            # Fetch the task from the database using the task_id
+            task = Task.objects.filter(id=task_id).first()
+            # Update the task status with the new column value
+            task.status = column
+            task.save()
+            print(column)
+
+            # Return a success response
+            return HttpResponse("Task status updated successfully")
+        except Task.DoesNotExist:
+            return HttpResponseBadRequest("Task not found")
+
+    return HttpResponseBadRequest("Invalid request method")

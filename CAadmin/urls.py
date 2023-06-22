@@ -2,6 +2,7 @@ from django.urls import path
 from . import views
 app_name = "CAadmin"
 
+
 urlpatterns = [
     path("login", views.login, name="login"),
     path("dashboard", views.dashboard, name="dashboard"),
@@ -43,6 +44,9 @@ urlpatterns = [
     path("client-detail/delete_gen_file/<int:file_id>/<int:client_id>",
          views.delete_gen_file, name="delete_gen_file"),
     path("task-list", views.task_list, name="task_list"),
-
-
+    path("get-task-details/", views.get_task_details, name="get_task_details"),
+    path("update-task-status/", views.update_task_status,
+         name="update_task_status"),
+    path("update-task/<int:task_id>",
+         views.update_task, name="update_task"),
 ]

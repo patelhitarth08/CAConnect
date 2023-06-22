@@ -116,6 +116,7 @@ class Employee(models.Model):
     password = models.CharField(max_length=100)
     status = models.BooleanField(default=True)
 
+
 class Personal_file(models.Model):
     client = models.ForeignKey(Client, on_delete=models.CASCADE, default=None)
     file_name = models.CharField(max_length=50)
@@ -126,9 +127,39 @@ class Personal_file(models.Model):
     number = models.CharField(max_length=20)
     file = models.FileField(upload_to='media/personal_files')
 
+
 class General_file(models.Model):
     client = models.ForeignKey(Client, on_delete=models.CASCADE, default=None)
     file_name = models.CharField(max_length=50)
     number = models.CharField(max_length=15)
     description = models.CharField(max_length=50)
     file = models.FileField(upload_to='media/general_files')
+
+
+class Task(models.Model):
+    task_title = models.CharField(max_length=255)
+    description = models.TextField()
+    due_date = models.DateField()
+    status = models.CharField(max_length=20, choices=(
+        ('Todo', 'Todo'),
+        ('In-Progress', 'In-Progress'),
+        ('Completed', 'Completed'),
+        ('Verified', 'Verified')
+    ))
+    assign_to = models.ForeignKey(
+        Employee, on_delete=models.CASCADE, default=None)
+    priority = models.CharField(max_length=20, choices=(
+        ('High', 'High'),
+        ('Medium', 'Medium'),
+        ('Low', 'Low')
+    ))
+    tags = models.ManyToManyField('Tag')
+    start_date = models.DateTimeField(blank=True, null=True)
+    end_date = models.DateTimeField(blank=True, null=True)
+
+
+class Tag(models.Model):
+    name = models.CharField(max_length=255)
+
+    def __str__(self):
+        return self.name
