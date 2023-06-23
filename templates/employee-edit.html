@@ -14,8 +14,10 @@
 <link href="{% static 'css/jquery-ui.min.css' %}" rel="stylesheet">
 <link href="{% static 'css/style.css' %}" rel="stylesheet">
 <link href="{% static 'css/style-v3.css' %}" rel="stylesheet">
+<link href="{% static 'css/style-v2.css' %}" rel="stylesheet">
 <link href="{% static 'css/responsive.css' %}" rel="stylesheet">
 {% endblock custom_css %}
+
 <!--Stylesheet-->
 
 </head>
@@ -68,6 +70,7 @@
         <div class="page-title d-flex flex-wrap align-items-center justify-content-between">
             <h2>Employee details</h2>
         </div>
+        
         <div class="page-block">
             <div class="admin-edit-form">
                 <form method="POST">
@@ -80,36 +83,32 @@
                     <div class="row">
                         <div class="col-lg-4">
                             <div class="form-input">
+                                <label for="username">Username</label>
                                 <input class="input-text" type="text" name="username" value="{{employee.username}}" placeholder="Username*">
                             </div>
                         </div>
                         <div class="col-lg-4">
                             <div class="form-input">
+                                <label for="name">Name</label>
                                 <input class="input-text" type="text" name="name" value="{{employee.name}}" placeholder="Name*">
                             </div>
                         </div>
                         <div class="col-lg-4">
                             <div class="form-input">
+                                <label for="email">Email</label>
                                 <input class="input-text" type="email" name="email" value="{{employee.email}}" placeholder="Email*">
                             </div>
                         </div>
-                        <div class="col-lg-4">
-                            <div class="form-input">
-                                <input class="input-text" type="password" disabled value="{{employee.password}}" name="password" placeholder="Password*">
-                                {% comment %} <div class="icon"></div> {% endcomment %}
-                            </div>
-                        </div>
-                        <div class="col-lg-4">
-                            <div class="form-input">
-                                <input class="input-text" type="password" name="c_password" placeholder="Conform password*">
-                                <div class="icon"></div>
-                            </div>
-                        </div>
+                        
+                        <a href="javascript:void(0)" onclick="openModal()"class="modal_personal_file">
+                            Change Password 
+                        </a>
                         <div class="col-lg-12">
                             <div class="form-submit">
                                 <input class="primary_btn" type="submit" value="Submit">
                             </div>
                         </div>
+                        
                     </div>
                 </form>
             </div>
@@ -117,6 +116,38 @@
     </div>
 </div>
 <!--Wrapper End-->
+<div class="modal fade modal_cat_add modal_change_password" id="modal_change_password" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel">Change Password</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body admin-edit-form ">
+                <form id="myForm" action="/CAadmin/change_employee_password/{{employee.id}}" method="POST">
+                    {% csrf_token %}
+                    <div class="form_row">
+                        
+                        <div class="form_col_1-2">
+                            <div class="input_container form-input">
+                                <input type="password" required name="password" id="password" placeholder="password" class="input_field"></textarea>
+                                <div class="icon"></div>
+                            </div>
+                        </div>
+                        <div class="form_col_1-2">
+                            <div class="input_container form-input">
+                                <input type="password" required name="c_password" id="c_password" placeholder="Confirm Password" class="input_field"></textarea>
+                                <div class="icon"></div>
+                            </div>
+                        </div>
+                        <div class="form_submit flxrow">
+                            <input type="submit" value="Submit" class="primary_btn">
+                        </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
 
 <!--JavaScript-->
 <script src="{% static 'js/jquery-3.3.1.min.js' %}"></script>
@@ -125,6 +156,23 @@
 <script src="{% static 'js/bootstrap.min.js' %}"></script>
 <script src="{% static 'js/jquery.nice-select.js' %}"></script>
 <script src="{% static 'js/script.js' %}"></script>
+<script>
+    function openModal() {
+        // Open the modal for personal file
+        $('#modal_change_password').modal('show');
+      }
+      
+      document.getElementById('myForm').addEventListener('submit', function(event) {
+        console.log("hi");
+        var password = document.getElementById('password').value;
+        var confirm_password = document.getElementById('c_password').value;
+
+        if (password !== confirm_password) {
+            event.preventDefault(); // Prevent form submission
+            alert("Password and Confirm Password do not match.");
+        }
+    });
+</script>
 <!--JavaScript-->
 
 </body>

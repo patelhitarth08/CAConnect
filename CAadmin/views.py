@@ -1,3 +1,4 @@
+from django.urls import reverse
 from django.views.decorators.http import require_GET
 from datetime import datetime
 from django.utils.safestring import mark_safe
@@ -244,6 +245,7 @@ def client_edit(request, client_id):
             with transaction.atomic():
 
                 client = Client.objects.filter(id=client_id).first()
+                login = Login.objects.filter(username=client.username).first()
 
                 type_form = request.POST['type_form']
                 company_type = request.POST['company_type']
@@ -252,8 +254,6 @@ def client_edit(request, client_id):
                 name = request.POST['name']
                 email = request.POST['email']
                 p_number = request.POST['p_number']
-                password = client.password
-                c_password = request.POST['c_password']
                 category_type = request.POST['category_type']
                 group = request.POST['group']
                 dob = request.POST['dob']
@@ -278,11 +278,6 @@ def client_edit(request, client_id):
                 a_emails = request.POST.getlist('a_email')
                 a_p_nos = request.POST.getlist('a_p_no')
 
-                if check_password(password, make_password(c_password)) != True:
-                    message = "Password does not match with Confirm Password"
-                    context = {'message': message}
-                    return render(request=request, template_name='client-edit.html', context=context)
-
                 client.client_type = type_form
                 client.company_type = company_type
                 client.residence_status = r_status
@@ -293,7 +288,6 @@ def client_edit(request, client_id):
                 client.birth_date = dob
                 client.category = category_type
                 client.group_with = group
-                client.password = make_password(password)
 
                 o_address = Address.objects.filter(
                     client_id=client_id, type="Office").first()
@@ -344,10 +338,7 @@ def client_edit(request, client_id):
                 o_address.save()
                 r_address.save()
 
-                login = Login.objects.filter(
-                    username=username).first()
                 login.username = username
-                login.password = make_password(password)
                 login.type = "Client"
                 login.save()
 
@@ -494,6 +485,7 @@ def delete_client(request, client_id):
         client_id=client_id, type="Residence").first()
     o_address = Address.objects.filter(
         client_id=client_id, type="Office").first()
+    login = Login.objects.filter(username=client.username).first()
 
     for auth_person in auth_persons:
         auth_person.delete()
@@ -502,8 +494,9 @@ def delete_client(request, client_id):
     o_address.delete()
 
     client.delete()
+    login.delete()
 
-    return redirect('/CAadmin/client_list')
+    return redirect('/CAadmin/client-list')
 
 
 def employees_list(request):
@@ -714,16 +707,21 @@ def task_list(request):
         title = request.POST['task_title']
         description = request.POST['description']
         due_date_str = request.POST['due_date']
-        due_date = datetime.strptime(due_date_str, "%d/%m/%Y").date()
+        due_date = None
+        if due_date_str != "":
+            due_date = datetime.strptime(due_date_str, "%d/%m/%Y").date()
         status = request.POST['status']
         assign_to = request.POST['assign_to']
         priority = request.POST['priority']
         tags = request.POST.getlist('tags')
-        print(tags)
         start_date_str = request.POST['start_date']
-        start_date = datetime.strptime(start_date_str, "%d/%m/%Y %H:%M")
+        start_date = None
+        if start_date_str != "":
+            start_date = datetime.strptime(start_date_str, "%d/%m/%Y %H:%M")
         end_date_str = request.POST['end_date']
-        end_date = datetime.strptime(end_date_str, "%d/%m/%Y %H:%M")
+        end_date = None
+        if end_date_str != "":
+            end_date = datetime.strptime(end_date_str, "%d/%m/%Y %H:%M")
 
         tag_ids = []
         for tag_obj in tags:
@@ -735,8 +733,24 @@ def task_list(request):
                 new_tag.save()
                 tag_ids.append(new_tag.id)
 
-        task = Task(task_title=title, description=description, due_date=due_date, status=status,
-                    assign_to=Employee.objects.filter(id=assign_to).first(), priority=priority, start_date=start_date, end_date=end_date)
+        task = Task()
+        task.task_title = title
+        task.description = description
+        if due_date != None:
+            task.due_date = due_date
+        task.status = "Todo"
+        if assign_to != "All":
+            task.assign_to = Employee.objects.filter(id=assign_to).first()
+        else:
+            task.assign_to = None
+        task.priority = priority
+        if start_date != None:
+            task.start_date = start_date
+        if end_date != None:
+            task.end_date = end_date
+
+        # task_title=title, description=description, due_date=due_date, status=status,
+        # assign_to=Employee.objects.filter(id=assign_to).first(), priority=priority, start_date=start_date, end_date=end_date
         task.save()
         task.tags.set(tag_ids)
     tasks = Task.objects.all()
@@ -744,34 +758,58 @@ def task_list(request):
     tags = Tag.objects.all()
     task_data = []
     for task in tasks:
-        task_data.append({
-            'task': task,
-            'employee_name': task.assign_to.name
-        })
+        if task.assign_to != None:
+            task_data.append({
+                'task': task,
+                'employee_name': task.assign_to.name
+            })
+        else:
+            task_data.append({
+                'task': task,
+                'employee_name': ""
+            })
 
-    context = {'task_data': task_data, 'employees': employees, 'tags': tags}
+    context = {'task_data': task_data, 'employees': employees,
+               'tags': tags}
     return render(request, template_name="task-list.html", context=context)
 
 
 def get_task_details(request):
     task_id = request.GET.get('taskId')
     task = get_object_or_404(Task, id=task_id)
-
-    task_details = {
-        'task_title': task.task_title,
-        'description': task.description,
-        # Convert datetime to string
-        'due_date': task.due_date.strftime('%Y-%m-%d'),
-        'status': task.status,
-        'assign_to': task.assign_to.id,  # Assuming assign_to is a foreign key to User model
-        'priority': task.priority,
-        # Assuming tags is a ManyToManyField
-        'tags': [tag.name for tag in task.tags.all()],
-        # Convert datetime to string
-        'start_date': task.start_date.strftime('%Y-%m-%d'),
-        # Convert datetime to string
-        'end_date': task.end_date.strftime('%Y-%m-%d')
-    }
+    print(task)
+    if task.assign_to != None:
+        task_details = {
+            'task_title': task.task_title,
+            'description': task.description,
+            # Convert datetime to string
+            'due_date': task.due_date.strftime('%Y-%m-%d'),
+            'status': task.status,
+            'assign_to': task.assign_to.id,  # Assuming assign_to is a foreign key to User model
+            'priority': task.priority,
+            # Assuming tags is a ManyToManyField
+            'tags': [tag.name for tag in task.tags.all()],
+            # Convert datetime to string
+            'start_date': task.start_date.strftime('%Y-%m-%d'),
+            # Convert datetime to string
+            'end_date': task.end_date.strftime('%Y-%m-%d')
+        }
+    else:
+        task_details = {
+            'task_title': task.task_title,
+            'description': task.description,
+            # Convert datetime to string
+            'due_date': task.due_date.strftime('%Y-%m-%d'),
+            'status': task.status,
+            'assign_to': None,  # Assuming assign_to is a foreign key to User model
+            'priority': task.priority,
+            # Assuming tags is a ManyToManyField
+            'tags': [tag.name for tag in task.tags.all()],
+            # Convert datetime to string
+            'start_date': task.start_date.strftime('%Y-%m-%d'),
+            # Convert datetime to string
+            'end_date': task.end_date.strftime('%Y-%m-%d')
+        }
 
     return JsonResponse(task_details)
 
@@ -789,7 +827,8 @@ def update_task(request, task_id):
         task.description = request.POST.get('description')
 
         due_date_str = request.POST.get('due_date')
-        task.due_date = datetime.strptime(due_date_str, "%d/%m/%Y").date()
+        if due_date_str != None:
+            task.due_date = datetime.strptime(due_date_str, "%d/%m/%Y").date()
 
         task.status = request.POST.get('status')
         assign_to = request.POST.get('assign_to')
@@ -808,9 +847,12 @@ def update_task(request, task_id):
                 tag_ids.append(new_tag.id)
         task.tags.set(tag_ids)
         start_date_str = request.POST.get('start_date')
-        task.start_date = datetime.strptime(start_date_str, "%d/%m/%Y %H:%M")
+        if start_date_str != None:
+            task.start_date = datetime.strptime(
+                start_date_str, "%d/%m/%Y %H:%M")
         end_date_str = request.POST.get('end_date')
-        task.end_date = datetime.strptime(end_date_str, "%d/%m/%Y %H:%M")
+        if end_date_str != None:
+            task.end_date = datetime.strptime(end_date_str, "%d/%m/%Y %H:%M")
 
         # Save the updated task
         task.save()
@@ -844,3 +886,29 @@ def update_task_status(request):
             return HttpResponseBadRequest("Task not found")
 
     return HttpResponseBadRequest("Invalid request method")
+
+
+def change_password(request, client_id):
+    password = request.POST['password']
+    c_password = request.POST['c_password']
+    client = Client.objects.filter(id=client_id).first()
+    login = Login.objects.filter(username=client.username).first()
+    client.password = make_password(password)
+    login.password = make_password(password)
+    client.save()
+    login.save()
+
+    return redirect('/CAadmin/client-edit/' + str(client_id))
+
+
+def change_employee_password(request, employee_id):
+    password = request.POST['password']
+    c_password = request.POST['c_password']
+    employee = Employee.objects.filter(id=employee_id).first()
+    login = Login.objects.filter(username=employee.username).first()
+    employee.password = make_password(password)
+    login.password = make_password(password)
+    employee.save()
+    login.save()
+
+    return redirect('/CAadmin/employee-edit/' + str(employee_id))

@@ -133,8 +133,8 @@ header .header_wrapper {padding: 0 50px;align-items: center;background: var(--bg
 .logo a img {height:46px; width:auto;}
 
 .search_head {width: 59.71%;position: relative;margin: 0 auto;}
-.search_head_inner { width: 100%; position: relative; }
-.search_head_inner .search_results_wrap { position: absolute; top: 100%; left: 0; right: 0; background-color: #ffffff; -webkit-box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1); -moz-box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1); -ms-box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1); box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);border-radius: 5px; margin-top: 4px; padding: 30px 11px 24px;  max-height: 309px; overflow-y: auto; }
+.search_head_inner {width: 100%; position: relative; }
+.search_head_inner .search_results_wrap {position: absolute; top: 100%; left: 0; right: 0; background-color: #ffffff; -webkit-box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1); -moz-box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1); -ms-box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1); box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);border-radius: 5px; margin-top: 4px; padding: 30px 11px 24px;  max-height: 309px; overflow-y: auto; }
 .search_results_inner { width: 100%; position: relative; }
 .search_results_inner .saearch_list_blk { width: 100%; position: relative; }
 .search_results_inner .saearch_list_blk + .saearch_list_blk { padding-top: 24px; }

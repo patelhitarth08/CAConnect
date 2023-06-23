@@ -33,7 +33,11 @@
                 <span></span>
             </a>
         </div>
-        <div class="logo"><a href="index.html"><img src="{% static 'images/logo.svg' %}" alt="logo"></a></div>
+        {% if request.session.type == "Admin" or request.session.type == "Employee" %}
+        <div class="logo"><a href="dashboard"><img src="{% static 'images/logo.svg' %}" alt="logo"></a></div>
+        {% else %}
+        <div class="logo"><a href="#"><img src="{% static 'images/logo.svg' %}" alt="logo"></a></div>
+        {% endif %}
         <div class="header_breadcrumb">
             <ul>
                 <li><a href="#">Home</a></li>
@@ -44,7 +48,7 @@
             <a href="#">
                 <div class="img" style="background-image:url({% static 'images/user-img.png' %});"></div>
                 <div class="name">
-                    <p>Alexander <span>Admin</span></p>
+                    <p>{{request.session.username}} <span>{{request.session.type}}</span></p>
                     <div class="down-caret">
                         <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path d="M5 7.5L10 12.5L15 7.5" stroke="black" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
@@ -69,6 +73,7 @@
     <div class="page-wrapper admin-edit-page task-list-page">
         <div class="page-title d-flex flex-wrap align-items-center justify-content-between">
             <h1>Task manager</h1>
+            {% if request.session.type != "Employee" %}
             <div class="top_add_file">
                 <a href="javascript:void(0)">
                     Add Task
@@ -77,16 +82,18 @@
                             <path d="M10 4.16699V15.8337" stroke="#2C3E50" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
                             <path d="M4.16663 10H15.8333" stroke="#2C3E50" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
                         </svg>
-
+                        
                     </i>
                 </a>
             </div>
+            {% endif %}
         </div>
         <div class="task-block">
             <div class="task_row">
                 <div class="task_col">
                     <div class="top_titles d-flex flex-wrap align-items-center">
                         <h3>Todo</h3> 
+                        {% comment %} {% if request.session.type != "Employee" %}
                         <i>
                             <svg width="20" height="21" viewBox="0 0 20 21" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <rect y="0.5" width="20" height="20" rx="2" fill="#F6F9FF"/>
@@ -94,8 +101,10 @@
                                 <path d="M4.1665 10.5H15.8332" stroke="#2A76F4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                             </svg>
                         </i>
+                        {% endif %} {% endcomment %} 
                     </div>
                     <div class="column">
+                        
                         {% for data in task_data %}
                         {% if data.task.status == "Todo" %}
                         <div class="portlet" id="drag-{{data.task.id}}" onclick="fillCard({{data.task.id}})">
@@ -121,6 +130,7 @@
                                     <h3>{{data.task.task_title}}</h3>
                                     <p>{{data.task.description}}</p>
                                 </div>
+                                {% if data.employee_name != "" %}
                                 <div class="user_specify">
                                     <i>
                                         <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -131,6 +141,7 @@
                                     </i>
                                     {{ data.employee_name}}
                                 </div>
+                                {% endif %}
                                 <div class="portlet-bottom">
                                     {% for tag in data.task.tags.all %} 
                                     <div class="task_priority">
@@ -179,6 +190,7 @@
                 <div class="task_col">
                     <div class="top_titles d-flex flex-wrap align-items-center">
                         <h3>In-Progress</h3> 
+                        {% comment %} {% if request.session.type != "Employee" %}
                         <i>
                             <svg width="20" height="21" viewBox="0 0 20 21" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <rect y="0.5" width="20" height="20" rx="2" fill="#F6F9FF"/>
@@ -186,6 +198,7 @@
                                 <path d="M4.1665 10.5H15.8332" stroke="#2A76F4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                             </svg>
                         </i>
+                        {% endif %} {% endcomment %}
                     </div>
                     <div class="column">
                         {% for data in task_data %}
@@ -213,6 +226,7 @@
                                     <h3>{{data.task.task_title}}</h3>
                                     <p>{{data.task.description}}</p>
                                 </div>
+                                {% if data.employee_name != "" %}
                                 <div class="user_specify">
                                     <i>
                                         <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -223,6 +237,7 @@
                                     </i>
                                     {{ data.employee_name}}
                                 </div>
+                                {% endif %}
                                 <div class="portlet-bottom">
                                     {% for tag in data.task.tags.all %} 
                                     <div class="task_priority">
@@ -271,6 +286,7 @@
                 <div class="task_col">
                     <div class="top_titles d-flex flex-wrap align-items-center">
                         <h3>Completed</h3> 
+                        {% comment %} {% if request.session.type != "Employee" %}
                         <i>
                             <svg width="20" height="21" viewBox="0 0 20 21" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <rect y="0.5" width="20" height="20" rx="2" fill="#F6F9FF"/>
@@ -278,6 +294,7 @@
                                 <path d="M4.1665 10.5H15.8332" stroke="#2A76F4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                             </svg>
                         </i>
+                        {% endif %} {% endcomment %}
                     </div>
                     <div class="column">
                         {% for data in task_data %}
@@ -305,6 +322,7 @@
                                     <h3>{{data.task.task_title}}</h3>
                                     <p>{{data.task.description}}</p>
                                 </div>
+                                {% if data.employee_name != "" %}
                                 <div class="user_specify">
                                     <i>
                                         <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -315,6 +333,7 @@
                                     </i>
                                     {{ data.employee_name}}
                                 </div>
+                                {% endif %}
                                 <div class="portlet-bottom">
                                     {% for tag in data.task.tags.all %} 
                                     <div class="task_priority">
@@ -363,6 +382,7 @@
                 <div class="task_col">
                     <div class="top_titles d-flex flex-wrap align-items-center">
                         <h3>Verified</h3> 
+                        {% comment %} {% if request.session.type != "Employee" %}
                         <i>
                             <svg width="20" height="21" viewBox="0 0 20 21" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <rect y="0.5" width="20" height="20" rx="2" fill="#F6F9FF"/>
@@ -370,6 +390,7 @@
                                 <path d="M4.1665 10.5H15.8332" stroke="#2A76F4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                             </svg>
                         </i>
+                        {% endif %} {% endcomment %}
                     </div>
                     <div class="column">
                         {% for data in task_data %}
@@ -397,6 +418,7 @@
                                     <h3>{{data.task.task_title}}</h3>
                                     <p>{{data.task.description}}</p>
                                 </div>
+                                {% if data.employee_name != "" %}
                                 <div class="user_specify">
                                     <i>
                                         <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -407,6 +429,7 @@
                                     </i>
                                     {{ data.employee_name}}
                                 </div>
+                                {% endif %}
                                 <div class="portlet-bottom">
                                     {% for tag in data.task.tags.all %} 
                                     <div class="task_priority">
@@ -472,13 +495,13 @@
                             <div class="form_col_1-1">
                                 <div class="input_container">
                                     <label for="">Task title</label>
-                                    <input type="text" name="task_title" id="task_title" placeholder="Task title" class="input_field">
+                                    <input type="text" required name="task_title" id="task_title" placeholder="Task title*" class="input_field">
                                 </div>
                             </div>
                             <div class="form_col_1-1">
                                 <div class="input_container">
                                     <label for="">Description</label>
-                                    <textarea name="description" id="description" placeholder="Description" class="input_field"></textarea>
+                                    <textarea name="description" required id="description" placeholder="Description*" class="input_field"></textarea>
                                 </div>
                             </div>
                             <div class="form_col_1-2">
@@ -502,6 +525,7 @@
                                 <div class="input_container">
                                     <label for="">Assign to</label>
                                     <select name="assign_to" id="assign_to">
+                                        <option value="All">All</option>
                                         {% for employee in employees %}
                                         <option value="{{employee.id}}">{{employee.name}}</option>
                                         {% endfor %}
@@ -513,7 +537,7 @@
                                     <label for="">Priority</label>
                                     <select name="priority" id="priority">
                                         <option value="High">High</option>
-                                        <option value="Medium">Medium</option>
+                                        <option selected value="Medium">Medium</option>
                                         <option value="Low">Low</option>
                                     </select>
                                 </div>
@@ -575,6 +599,7 @@
 
 <script>
     jQuery( function() {
+       
 
         jQuery(".column").sortable({
             connectWith: ".column",
@@ -587,7 +612,7 @@
                     var id = ui.item.attr("id");
                     var taskId = id.match(/\d+/)[0];
                     var updatedColumn = ui.item.closest(".task_col").find('.top_titles h3').html();
-                    console.log(updatedColumn)
+                    console.log(ui)
 
                     var url = "/CAadmin/update-task-status?taskId=" + taskId + "&column=" + updatedColumn;
     
@@ -606,19 +631,19 @@
                 }
             }
           });
-        jQuery( ".portlet" )
+        
+          jQuery( ".portlet" )
           .addClass( "ui-widget ui-widget-content ui-helper-clearfix" )
           .find( ".portlet-header" )
-            .addClass( "ui-widget-header" )
-            .prepend( "<span class='ui-icon ui-icon-minusthick portlet-toggle'></span>");
-     
+          .addClass( "ui-widget-header" )
+          .prepend( "<span class='ui-icon ui-icon-minusthick portlet-toggle'></span>");
+           
        jQuery( ".portlet-toggle" ).on( "click", function() {
           var icon = jQuery( this );
           icon.toggleClass( "ui-icon-minusthick ui-icon-plusthick" );
           icon.closest( ".portlet" ).find( ".portlet-content" ).toggle();
         });
         //jQuery('.ui-sortable').draggable();
-        
     } );
     $(document).ready(function() {
         $(".select-multiple").select2({
@@ -659,23 +684,27 @@
         var element = jQuery(this).closest('.task_col').find('.top_titles h3');
         var text = element.text().trim();
 
-        var statusSelect = document.getElementById('status');
+        /* var statusSelect = document.getElementById('status');
         var selectedOption = statusSelect.querySelector('option[value="' + text + '"]');
         selectedOption.selected = true;
-        $(statusSelect).niceSelect('update');      
+        $(statusSelect).niceSelect('update');*/      
          
     });
     jQuery(document).on('click','.ui-sortable .ui-widget.ui-widget-content', function(e) {
+        var type = sessionStorage.getItem('type');
+        console.log(type);
+        if (type != "Employee") {
         jQuery('body').addClass('open_sidebar');
         jQuery('.rightside_task_form').addClass('active');
         var element = jQuery(this).closest('.task_col').find('.top_titles h3');
         var text = element.text().trim();
 
-        var statusSelect = document.getElementById('status');
+     /*   var statusSelect = document.getElementById('status');
         var selectedOption = statusSelect.querySelector('option[value="' + text + '"]');
         selectedOption.selected = true;
-        $(statusSelect).niceSelect('update');      
-         
+        $(statusSelect).niceSelect('update');*/      
+        
+    }     
     });
     jQuery(document).on('click','.top_add_file a', function(e) {
         $('form').trigger('reset');
@@ -683,11 +712,11 @@
         jQuery('.rightside_task_form').addClass('active');
         
 
-        var statusSelect = document.getElementById('status');
+/*        var statusSelect = document.getElementById('status');
         var selectedOption = statusSelect.querySelector('option[value="Todo"]');
         selectedOption.selected = true;
         $(statusSelect).niceSelect('update');      
-         
+  */       
     });
     jQuery(".closed_task_form a").on('click', function(e) {
         jQuery('body').removeClass('open_sidebar');
@@ -710,8 +739,10 @@
                     document.querySelector('input[name="due_date"]').value = moment(taskDetails.due_date).format('DD/MM/YYYY');
                     document.querySelector('select[name="status"]').value = taskDetails.status;
                     $(document.querySelector('select[name="status"]')).niceSelect('update');      
-                    document.querySelector('select[name="assign_to"]').value = taskDetails.assign_to;
-                    $(document.querySelector('select[name="assign_to"]')).niceSelect('update');      
+                    if (taskDetails.assign_to != null) {
+                        document.querySelector('select[name="assign_to"]').value = taskDetails.assign_to;
+                        $(document.querySelector('select[name="assign_to"]')).niceSelect('update');      
+                    }
                     document.querySelector('select[name="priority"]').value = taskDetails.priority;
                     $(document.querySelector('select[name="priority"]')).niceSelect('update');      
 

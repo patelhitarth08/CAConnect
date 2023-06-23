@@ -25,7 +25,7 @@
     <div class="login_main">
         <div class="login_wrap">
             <div class="logo"><a href="#"><img src="{% static 'images/logo.svg' %}" alt=""></a></div>
-            <div class="login_form">
+            <div class="login_form admin-edit-form">
                 <form class="needs-validation" method="POST" novalidate>
                     {% csrf_token %}
                     {% if msg != None %}
@@ -39,7 +39,7 @@
                             Please choose a Username / Email.
                         </div>
                     </span>
-                    <span class="form_row password">
+                    <span class="form_row password form-input">
                         <input class="input_text form-control" id="validationCustom02" type="password" placeholder="Password" name="password" required>
                         <i class="icon"></i>
                         <div class="invalid-feedback">

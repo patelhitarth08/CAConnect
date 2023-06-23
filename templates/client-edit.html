@@ -90,6 +90,7 @@
         <div class="dash_wrap_inner client-edit">
             <form method="POST" enctype="multipart/form-data">
                 {% csrf_token %}
+                
                 {% if message != None %}
                 <div class="alert alert-danger">
                     {{message}}
@@ -180,18 +181,7 @@
                                 <input type="number" name="p_number" id="p_number" class="input_field" value="{{client.phone_number}}" placeholder="{{client.phone_number}} (Phone Number*)">
                             </div>
                         </div>
-                        <div class="form_col_1-3">
-                            <div class="input_container">
-                                <input type="password" name="password" disabled required id="password" value="{{client.password}}" class="input_field" placeholder="Password*">
-                                {% comment %} <span class="show_hide_pwd"></span> {% endcomment %}
-                            </div>
-                        </div>
-                        <div class="form_col_1-3">
-                            <div class="input_container">
-                                <input type="password" name="c_password" required id="c_password" class="input_field" placeholder="Conform password*">
-                                <span class="show_hide_pwd"></span>
-                            </div>
-                        </div>
+                        
                         <div class="form_col_1-3">
                             <div class="input_container">
                                 <select name="category_type" id="category_type">
@@ -450,10 +440,48 @@
                 <div class="form_submit">
                     <input type="submit" value="Submit" class="primary_btn">
                 </div>
+                <a href="javascript:void(0)" onclick="openModal()"class="modal_personal_file">
+                    Change Password 
+                </a>
             </form>
         </div>
     </div>
 </div>
+
+
+<div class="modal fade modal_cat_add modal_change_password" id="modal_change_password" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel">Change Password</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body admin-edit-form ">
+                <form id="myForm" action="/CAadmin/change_password/{{client.id}}" method="POST">
+                    {% csrf_token %}
+                    <div class="form_row">
+                        
+                        <div class="form_col_1-2">
+                            <div class="input_container form-input">
+                                <input type="password" required name="password" id="password" placeholder="password" class="input_field"></textarea>
+                                <div class="icon"></div>
+                            </div>
+                        </div>
+                        <div class="form_col_1-2">
+                            <div class="input_container form-input">
+                                <input type="password" required name="c_password" id="c_password" placeholder="Confirm Password" class="input_field"></textarea>
+                                <div class="icon"></div>
+                            </div>
+                        </div>
+                        <div class="form_submit flxrow">
+                            <input type="submit" value="Submit" class="primary_btn">
+                        </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
 <!--Wrapper End-->
 
 <!--JavaScript-->
@@ -547,7 +575,6 @@
                 option.text = state;
                 option.value = state;
                 officeStateDropdown.appendChild(option);  
-                console.log(option)
             }
             $(officeStateDropdown).niceSelect('update');
 
@@ -559,7 +586,6 @@
                 option.text = state;
                 option.value = state;
                 residenceStateDropdown.appendChild(option);  
-                console.log(option)
             }
             $(residenceStateDropdown).niceSelect('update');
         }
@@ -571,7 +597,6 @@
                 var cityDropdown = document.getElementById('r_city');
             }
             
-            console.log(cityDropdown)
             var cities = statesCitiesData[state];
             cityDropdown.innerHTML = '';
             cities.forEach(function(city) {
@@ -585,8 +610,21 @@
         });
           }
           
+          function openModal() {
+            // Open the modal for personal file
+            $('#modal_change_password').modal('show');
+          }
           
-          
+          document.getElementById('myForm').addEventListener('submit', function(event) {
+            console.log("hi");
+            var password = document.getElementById('password').value;
+            var confirm_password = document.getElementById('c_password').value;
+    
+            if (password !== confirm_password) {
+                event.preventDefault(); // Prevent form submission
+                alert("Password and Confirm Password do not match.");
+            }
+        });
 </script>
 
 </body>

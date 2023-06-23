@@ -1,3 +1,4 @@
+from datetime import date, timedelta, datetime
 from django.db import models
 
 
@@ -136,10 +137,18 @@ class General_file(models.Model):
     file = models.FileField(upload_to='media/general_files')
 
 
+def get_next_date():
+    return date.today() + timedelta(days=1)
+
+
+def get_current_date():
+    return datetime.now()
+
+
 class Task(models.Model):
     task_title = models.CharField(max_length=255)
     description = models.TextField()
-    due_date = models.DateField()
+    due_date = models.DateField(default=get_next_date)
     status = models.CharField(max_length=20, choices=(
         ('Todo', 'Todo'),
         ('In-Progress', 'In-Progress'),
@@ -147,15 +156,15 @@ class Task(models.Model):
         ('Verified', 'Verified')
     ))
     assign_to = models.ForeignKey(
-        Employee, on_delete=models.CASCADE, default=None)
+        Employee, on_delete=models.SET_NULL, null=True)
     priority = models.CharField(max_length=20, choices=(
         ('High', 'High'),
         ('Medium', 'Medium'),
         ('Low', 'Low')
     ))
     tags = models.ManyToManyField('Tag')
-    start_date = models.DateTimeField(blank=True, null=True)
-    end_date = models.DateTimeField(blank=True, null=True)
+    start_date = models.DateTimeField(default=get_current_date)
+    end_date = models.DateTimeField(default=get_next_date)
 
 
 class Tag(models.Model):

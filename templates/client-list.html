@@ -35,7 +35,11 @@
                     <span></span>
                 </a>
             </div>
-            <div class="logo"><a href="index.html"><img src="{% static 'images/logo.svg' %}" alt="logo"></a></div>
+            {% if request.session.type == "Admin" or request.session.type == "Employee" %}
+            <div class="logo"><a href="/CAadmin/dashboard"><img src="{% static 'images/logo.svg' %}" alt="logo"></a></div>
+            {% else %}
+            <div class="logo"><a href="#"><img src="{% static 'images/logo.svg' %}" alt="logo"></a></div>
+            {% endif %}            
             <div class="search_head">
                 <form action="">
                     <input type="text" class="input-search" placeholder="Search here...">
@@ -94,13 +98,13 @@
                         </div>
                     </div>
                 </a>
-                <!-- <div class="user_dropdown">
+                <div class="user_dropdown">
                 <ul>
-                    <li><a href="#">Profile <span><img src="images/profile-icon.svg" alt="profile icon"></span></a></li>
-                    <li><a href="#">Keyboard Shortcuts <span><img src="images/shortcut-icon.svg" alt="shortcut icon"></span></a></li>
-                    <li><a href="#">Logout <span><img src="images/logout-icon.svg" alt="logout icon"></span></a></li>
+                    <li><a href="#">Profile <span><img src="{% static 'images/profile-icon.svg' %}" alt="profile icon"></span></a></li>
+                    <li><a href="#">Keyboard Shortcuts <span><img src="{% static 'images/shortcut-icon.svg' %}" alt="shortcut icon"></span></a></li>
+                    <li><a href="#">Logout <span><img src="{% static 'images/logout-icon.svg' %}" alt="logout icon"></span></a></li>
                 </ul>
-            </div> -->
+            </div> 
             </div>
         </div>
     </header>

@@ -49,4 +49,9 @@ urlpatterns = [
          name="update_task_status"),
     path("update-task/<int:task_id>",
          views.update_task, name="update_task"),
+    path("change_password/<int:client_id>",
+         views.change_password, name="change_password"),
+    path("change_employee_password/<int:employee_id>",
+         views.change_employee_password, name="change_employee_password"),
+
 ]
