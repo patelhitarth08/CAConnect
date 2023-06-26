@@ -3,7 +3,6 @@ function maxHeight() {
 	$('.announcebox').each(function () {
 		maxHeight = Math.max(maxHeight, $(this).outerHeight());
 	});
-	console.log(maxHeight);
 	$('.newsbox').height(maxHeight);
 }
 (function ($) {

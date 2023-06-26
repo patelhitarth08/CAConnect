@@ -37,70 +37,8 @@
         <div class="search_head">
             <form action="">
                 <div class="search_head_inner">
-                    <input type="text" class="input-search" placeholder="Search here...">
-                    <div class="search_results_wrap">
-                        <div class="search_results_inner">
-                            <div class="saearch_list_blk">
-                                <h4>Clients</h4>
-                                <div class="saearch_list_main saearch_client_list">
-                                    <!-- Repeat Div Start -->
-                                    <a href="javascript:void(0)" class="saearch_list">
-                                        <div class="left_image">
-                                            <div class="image_inner">
-                                                <img src="{% static 'images/clients_image_1.png'%}" alt="">
-                                            </div>
-                                        </div>
-                                        <div class="right_saearch_content">
-                                            <div class="search_name">Arya Kagathara</div>
-                                            <div class="deacription">Individual</div>
-                                        </div>
-                                    </a>
-                                    <a href="javascript:void(0)" class="saearch_list">
-                                        <div class="left_image">
-                                            <div class="image_inner">
-                                                <img src="{% static 'images/clients_image_2.png' %}" alt="">
-                                            </div>
-                                        </div>
-                                        <div class="right_saearch_content">
-                                            <div class="search_name">Hindustan Corporation</div>
-                                            <div class="deacription">Partnership - <strong>Arya Kagathara</strong></div>
-                                        </div>
-                                    </a>
-                                    <!-- Repeat Div End -->
-                                </div>
-                            </div>
-
-                            <div class="saearch_list_blk">
-                                <h4>Tasks</h4>
-                                <div class="saearch_list_main">
-                                    <!-- Repeat Div Start -->
-                                    <a href="javascript:void(0)" class="saearch_list">
-                                        <div class="left_image">
-                                            <div class="image_inner">
-                                                <img src="{% static 'images/edit-icon-dark.svg' %}" alt="">
-                                            </div>
-                                        </div>
-                                        <div class="right_saearch_content">
-                                            <div class="search_name">Complete IT filing of Arya Kagathara</div>
-                                            <div class="deacription">High - <strong>Pending</strong></div>
-                                        </div>
-                                    </a>
-                                    <a href="javascript:void(0)" class="saearch_list">
-                                        <div class="left_image">
-                                            <div class="image_inner">
-                                                <img src="{% static 'images/edit-icon-dark.svg' %}" alt="">
-                                            </div>
-                                        </div>
-                                        <div class="right_saearch_content">
-                                            <div class="search_name">ITR 2022</div>
-                                            <div class="deacription">Medium - <strong>Completed</strong></div>
-                                        </div>
-                                    </a>
-                                    <!-- Repeat Div End -->
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    <input type="text" class="input-search" autocomplete="off" oninput="getSuggestions()" id="search_box" placeholder="Search here...">
+                    <div class="search_results_wrap" id="suggestionBox"></div>
                     <div class="searchbtn-row flxrow">
                         <div class="search-filter">
                             <div class="search_filter_inner">
@@ -256,7 +194,174 @@
 <script src="{% static 'js/developer-chart.js' %}"></script>
 <script src="{% static 'js/script.js' %}"></script>
 <script>
+
+    var clients = JSON.parse('{{ clients|safe }}');
+    var tasks = JSON.parse('{{ task|safe }}')
+
+    const searchBox = document.getElementById('search_box');
+    if (searchBox.value != '') {
+        console.log("joo")
+        getSuggestions();
+    }
+    const suggestionBox = document.getElementById('suggestionBox');
+    suggestionBox.style.display = 'none';
+
+    searchBox.addEventListener('input', getSuggestions);
+
+
+    function getSuggestions() {
+        const query = searchBox.value;
+        if (query === '') {
+            hideSuggestionBox();
+            return;
+          }
+          else {
+            suggestionBox.style.display = '';
+
+          }
+          getSuggestionsFromServer(query)
+          .then(suggestions => {
+            const clientSuggestions = suggestions.clientSuggestions; // Replace with the property name for client suggestions from the server response
+            const taskSuggestions = suggestions.taskSuggestions; // Replace with the property name for task suggestions from the server response
+        
+            displaySuggestions(clientSuggestions, taskSuggestions);
+          })
+          .catch(error => {
+            console.error('Error retrieving suggestions:', error);
+          });
+    }
+    function getSuggestionsFromServer(query) {
+        return new Promise((resolve, reject) => {
+          const lowerCaseQuery = query.toLowerCase();
+      
+          const clientSuggestions = clients
+            .filter(client => client.name.toLowerCase().startsWith(lowerCaseQuery))
+            .map(client => ({ name: client.name, id: client.id, type: client.type }));
+      
+          const taskSuggestions = tasks
+            .filter(task => task.title.toLowerCase().startsWith(lowerCaseQuery))
+            .map(task => ({id: task.id, title: task.title, priority: task.priority, status: task.status}));
+      
+          resolve({ clientSuggestions, taskSuggestions });
+        });
+      }
+      
+      
+      function displaySuggestions(ClientSuggestions, TaskSuggestions) {
+        suggestionBox.innerHTML = '';
+
+        //------------------
+       
+        const searchResultsInnerDiv = document.createElement('div');
+        searchResultsInnerDiv.classList.add('search_results_inner');
+      
+        displaySection(ClientSuggestions, 'Clients', searchResultsInnerDiv);
+        displaySection(TaskSuggestions, 'Tasks', searchResultsInnerDiv);
+      
+        suggestionBox.appendChild(searchResultsInnerDiv);
+        suggestionBox.style.display = 'block';
+
+
+        //-------------------
+
+      }
+      
+      function displaySection(suggestions, sectionName, searchResultsInnerDiv) {
+        
+        if(suggestions.length != 0) {
+
+        const sectionContainer = document.createElement('div');
+        sectionContainer.className = 'saearch_list_blk';
+
+        searchResultsInnerDiv.appendChild(sectionContainer);
+
+        const sectionHeading = document.createElement('h4');
+        sectionHeading.textContent = sectionName; // Replace with the appropriate heading from section object
+        sectionContainer.appendChild(sectionHeading);
     
+        const sectionList = document.createElement('div');
+        sectionList.classList.add('saearch_list_main', 'saearch_client_list');
+        sectionContainer.appendChild(sectionList);
+        
+        suggestions.forEach(suggestion => {
+           
+          const listItem = document.createElement('a');
+          listItem.href = 'javascript:void(0)';
+          listItem.className = 'saearch_list';
+          listItem.id = suggestion.id;
+          listItem.onclick = function() {
+            openSuggestion(sectionName, suggestion.id); // Replace 'yourFunction' with the actual function name and 'argument' with the desired argument
+          };
+          sectionList.appendChild(listItem)
+      
+          const leftImageDiv = document.createElement('div');
+          leftImageDiv.className = 'left_image';
+      
+          const imageInnerDiv = document.createElement('div');
+          imageInnerDiv.className = 'image_inner';
+      
+          const image = document.createElement('img');
+          if (sectionName == "Clients") {
+          image.src = '/static/images/clients_image_1.png';
+          }
+          else {
+          image.src = '/static/images/edit-icon-dark.svg';
+          }
+          image.alt = '';
+      
+         imageInnerDiv.appendChild(image);
+          leftImageDiv.appendChild(imageInnerDiv);
+          listItem.appendChild(leftImageDiv);
+      
+          const rightContentDiv = document.createElement('div');
+          rightContentDiv.className = 'right_saearch_content';
+      
+          const searchNameDiv = document.createElement('div');
+          searchNameDiv.className = 'search_name';
+          if (sectionName == "Clients") {
+              searchNameDiv.textContent = suggestion.name; // Replace with the appropriate name from suggestion object
+            }
+        else {
+            searchNameDiv.textContent = suggestion.title; // Replace with the appropriate name from suggestion object
+
+        }
+      
+            const descriptionDiv = document.createElement('div');
+            descriptionDiv.className = 'deacription';
+            if (sectionName == "Clients") {
+              descriptionDiv.textContent = suggestion.type; 
+            }
+            else {
+              descriptionDiv.textContent = suggestion.priority + " - "; 
+              const strongElement = document.createElement('strong');
+              strongElement.textContent = suggestion.status;
+              descriptionDiv.appendChild(strongElement);
+        
+            }
+            
+          rightContentDiv.appendChild(searchNameDiv);
+            rightContentDiv.appendChild(descriptionDiv);
+          listItem.appendChild(rightContentDiv);
+        });
+    }
+
+
+      }
+
+      function hideSuggestionBox() {
+        suggestionBox.style.display = 'none';
+      }
+
+      function openSuggestion(sectionName, id) {
+        if (sectionName === "Clients") {
+            // Navigate to client-details page
+            window.location.href = `/CAadmin/client-detail/${id}`; // Replace with the actual client details URL format and parameter
+          } else if (sectionName === "Tasks") {
+            // Navigate to task-list page
+            window.location.href = `/CAadmin/task-list`;
+          }
+      }
+     
 </script>
 <!--JavaScript-->
 

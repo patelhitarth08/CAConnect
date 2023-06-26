@@ -78,9 +78,9 @@ def login(request):
         request.session['username'] = request.POST['username']
         request.session['type'] = login.type
         if login.type == "Admin":
-            return render(request, template_name='dashboard.html')
+            return redirect("/CAadmin/dashboard")
         elif login.type == "Employee":
-            return render(request, template_name='dashboard.html')
+            return redirect("/CAadmin/dashboard")
         else:
             client = Client.objects.filter(username=login.username).first()
             return redirect("/CAadmin/client-detail/"+str(client.id))
@@ -90,7 +90,35 @@ def login(request):
 
 
 def dashboard(request):
-    return render(request=request, template_name='dashboard.html')
+    clients = Client.objects.all()
+    serialized_clients = []
+
+    for client in clients:
+        serialized_client = {
+            'name': client.name,
+            'id': client.id,  # Replace with the actual photo URL field
+            'type': client.client_type
+        }
+        serialized_clients.append(serialized_client)
+
+    task_list = Task.objects.all()
+    serialized_tasks = []
+
+    for task in task_list:
+        serialized_task = {
+            'title': task.task_title,
+            'priority': task.priority,
+            'status': task.status,
+            'id': task.id
+        }
+        serialized_tasks.append(serialized_task)
+
+    context = {
+        'clients': json.dumps(serialized_clients),
+        'task': json.dumps(serialized_tasks)
+    }
+
+    return render(request=request, template_name='dashboard.html', context=context)
 
 
 def contact_us(request):
