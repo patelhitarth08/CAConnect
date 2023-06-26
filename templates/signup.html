@@ -26,7 +26,7 @@
         <div class="login_wrap">
             <div class="logo"><a href="#"><img src="{% static 'images/logo.svg' %}" alt=""></a></div>
             <div class="login_form">
-                <form class="needs-validation" method="POST" novalidate>
+                <form class="needs-validation" enctype="multipart/form-data" method="POST" novalidate>
                     {% csrf_token %}
                     {% if msg != None %}
                         <div class="alert alert-danger">
@@ -43,6 +43,12 @@
                         <input class="input_text form-control" id="email" type="text" placeholder="Email" name="email" required>
                         <div class="invalid-feedback">
                             Enter Your Email
+                        </div>
+                    </span>
+                    <span class="form_row">
+                        <input class="input_text form-control" id="profile" type="file" placeholder="Profile Photo" name="profile">
+                        <div class="invalid-feedback">
+                            Enter Your Profile Photo
                         </div>
                     </span>
                     <span class="form_row password">

@@ -63,8 +63,7 @@
         </div>
         <div class="user_login flxrow">
             <a href="#">
-                <div class="img" style="background-image:url({% static 'images/user-img.png' %});"></div>
-                <div class="name">
+                <div class="img" style="background-image:url('/media/{{request.session.profile}}');"></div>                <div class="name">
                     <p>{{request.session.username}} <span>{{request.session.type}}</span></p>
                     <div class="down-caret">
                         <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">

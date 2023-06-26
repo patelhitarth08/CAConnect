@@ -25,6 +25,9 @@ def ca_signup(request):
         email = request.POST['email']
         password = request.POST['password']
         c_password = request.POST['c_password']
+        profile = request.FILES.get('profile')
+        print(profile)
+
         if password != c_password:
             msg = "Password does not match with Confirm Password"
             context = {'msg': msg}
@@ -35,8 +38,11 @@ def ca_signup(request):
             ca.username = username
             ca.email = email
             ca.password = make_password(password)
+            if profile != None:
+                ca.profile_photo = profile
             ca.save()
 
+            print(ca.profile_photo)
             login = Login()
             login.username = ca.username
             login.password = ca.password
@@ -77,6 +83,8 @@ def login(request):
 
         request.session['username'] = request.POST['username']
         request.session['type'] = login.type
+        request.session['profile'] = str(login.profile_photo)
+
         if login.type == "Admin":
             return redirect("/CAadmin/dashboard")
         elif login.type == "Employee":
@@ -97,7 +105,8 @@ def dashboard(request):
         serialized_client = {
             'name': client.name,
             'id': client.id,  # Replace with the actual photo URL field
-            'type': client.client_type
+            'type': client.client_type,
+            'profile': str(client.profile_photo)
         }
         serialized_clients.append(serialized_client)
 
@@ -112,10 +121,12 @@ def dashboard(request):
             'id': task.id
         }
         serialized_tasks.append(serialized_task)
+    # ca = CA.objects.filter(username='root').first()
 
     context = {
         'clients': json.dumps(serialized_clients),
-        'task': json.dumps(serialized_tasks)
+        'task': json.dumps(serialized_tasks),
+        # 'ca': ca
     }
 
     return render(request=request, template_name='dashboard.html', context=context)

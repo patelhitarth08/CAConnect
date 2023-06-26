@@ -82,7 +82,8 @@
         <div class="user_login flxrow">
             
             <a href="#" class="admin-btn">
-                <div class="img" style="background-image:url({% static 'images/user-img.png' %});"></div>
+                <div class="img" style="background-image:url('/media/{{request.session.profile}}');"></div>
+
                 <div class="name">
                     <p>{{request.session.username}} <span>{{request.session.type}}</span></p>
                     <div class="down-caret">
@@ -197,7 +198,6 @@
 
     var clients = JSON.parse('{{ clients|safe }}');
     var tasks = JSON.parse('{{ task|safe }}')
-
     const searchBox = document.getElementById('search_box');
     if (searchBox.value != '') {
         console.log("joo")
@@ -236,7 +236,7 @@
       
           const clientSuggestions = clients
             .filter(client => client.name.toLowerCase().startsWith(lowerCaseQuery))
-            .map(client => ({ name: client.name, id: client.id, type: client.type }));
+            .map(client => ({ name: client.name, id: client.id, type: client.type, profile: client.profile }));
       
           const taskSuggestions = tasks
             .filter(task => task.title.toLowerCase().startsWith(lowerCaseQuery))
@@ -302,7 +302,7 @@
       
           const image = document.createElement('img');
           if (sectionName == "Clients") {
-          image.src = '/static/images/clients_image_1.png';
+          image.src = '/media/' + suggestion.profile;
           }
           else {
           image.src = '/static/images/edit-icon-dark.svg';

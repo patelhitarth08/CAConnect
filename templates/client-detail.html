@@ -67,7 +67,8 @@
         </div>
         <div class="user_login flxrow">
             <a href="#">
-                <div class="img" style="background-image:url({% static 'images/user-img.png' %});"></div>
+                <div class="img" style="background-image:url('/media/{{request.session.profile}}');"></div>
+                
                 <div class="name">
                     <p>{{request.session.username}} <span>{{request.session.type}}</span></p>
                     <div class="down-caret">
@@ -92,9 +93,12 @@
 <!--Wrapper Start-->
 <div class="wrapper_main">
     <div class="dash_wrap">
-        <div class="dash_wrap_inner client-detai">
+        <div class="user_login dash_wrap_inner client-detai">
             <div class="page-title d-flex flex-wrap align-items-center justify-content-between">
+                <div style="display: flex; align-items: center;"> 
+                <div class="img" style="margin-right: 1em; background-image:url('/media/{{client.profile_photo}}');"></div>
                 <h1>{{client.name}}</h1>
+                </div>
                 <div class="filter_right">
                     <div class="filter_right_list switch-box">
                         <div class="custom-switch">
