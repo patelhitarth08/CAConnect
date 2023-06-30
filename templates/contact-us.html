@@ -55,17 +55,18 @@
                 </div>
                 <div class="contact-form-right">
                     <h2>Get in Touch</h2>
-                    <form action="">
-                        <span class="form-row"><input type="text" placeholder="Name*"></span>
+                    <form method="POST">
+                        {%csrf_token%}
+                        <span class="form-row"><input type="text" name="name" placeholder="Name*" required></span>
                         <span class="input-wrap flxrow">
-                            <div class="form-row"><input type="text" placeholder="Email"></div>
+                            <div class="form-row"><input type="text" name="email" placeholder="Email"></div>
                             <p>or</p>
-                            <div class="form-row"><input type="text" placeholder="Phone No"></div>
+                            <div class="form-row"><input type="tel" name="phone_number" placeholder="Phone No"></div>
                         </span>
-                        <span class="form-row"><input type="text" placeholder="Subject*"></span>
-                        <span class="form-row msg"><textarea name="" id="" cols="" rows="" placeholder="Message"></textarea></span>
-                        <span class="form-row"><input type="text" placeholder="From where did you get our reference?"></span>
-                        <span class="input-btn"><input type="button" class="primary_btn" value="Submit"></span>
+                        <span class="form-row"><input type="text" name="subject" placeholder="Subject*"  required></span>
+                        <span class="form-row msg"><textarea name="msg" id="msg" cols="" rows="" placeholder="Message"></textarea></span>
+                        <span class="form-row"><input type="text" name="ref" placeholder="From where did you get our reference?"></span>
+                        <span class="input-btn"><input type="submit" class="primary_btn" value="Submit"></span>
                     </form>
                 </div>
 

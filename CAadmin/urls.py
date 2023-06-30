@@ -54,4 +54,13 @@ urlpatterns = [
     path("change_employee_password/<int:employee_id>",
          views.change_employee_password, name="change_employee_password"),
 
+    path("inquiry-list", views.inquiry_list, name="inquiry_list"),
+    path("inquiry-view/<int:inquiry_id>",
+         views.inquiry_view, name="inquiry_view"),
+
+    path("inquiry-view/inquiry-delete/<int:inquiry_id>",
+         views.inquiry_delete, name="inquiry_delete"),
+    path("inquiry-delete/<int:inquiry_id>",
+         views.inquiry_delete, name="inquiry_delete"),
+
 ]

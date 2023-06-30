@@ -1,3 +1,4 @@
+from collections import defaultdict
 from django.urls import reverse
 from django.views.decorators.http import require_GET
 from datetime import datetime
@@ -10,7 +11,7 @@ from django.db import IntegrityError
 from django.http import HttpResponse, HttpResponseBadRequest, JsonResponse
 from django.shortcuts import redirect, render
 
-from CAadmin.models import Address, AuthorizedPerson, Client, Employee, Login, PersonalDetails, CA, Personal_file, General_file, Tag, Task
+from CAadmin.models import Address, AuthorizedPerson, Client, Employee, Login, PersonalDetails, CA, Personal_file, General_file, Tag, Task, Contact_us
 from django.contrib.auth.hashers import make_password, check_password
 from django.shortcuts import get_object_or_404
 from django.contrib import messages
@@ -40,13 +41,13 @@ def ca_signup(request):
             ca.password = make_password(password)
             if profile != None:
                 ca.profile_photo = profile
-            ca.save()
 
             print(ca.profile_photo)
             login = Login()
             login.username = ca.username
             login.password = ca.password
             login.type = "Admin"
+            ca.save()
             login.save()
 
             return redirect('/CAadmin/login')
@@ -121,19 +122,64 @@ def dashboard(request):
             'id': task.id
         }
         serialized_tasks.append(serialized_task)
-    # ca = CA.objects.filter(username='root').first()
+
+    clients = Client.objects.all()
+
+    client_counts = defaultdict(int)
+
+    labels = []
+
+    for client in clients:
+        client_type = client.client_type
+        if client_type == 'Individual':
+            label = 'Individual'
+        elif client_type == 'Company':
+            company_type = client.company_type
+            if company_type:
+                label = company_type
+        else:
+            continue
+
+        client_counts[label] += 1
+
+        if label not in labels:
+            labels.append(label)
+
+    data = {"labels": labels, "counts": dict(client_counts)}
+
+    client_data = json.dumps(data)
+
+    # For Bar Chart
+    label_order = ['Todo', 'In-Progress', 'Completed', 'Verified']
+
+    tasks = Task.objects.all()
+    task_counts = defaultdict(int)
+
+    for task in tasks:
+        status = task.status
+        task_counts[status] += 1
+
+    sorted_labels = sorted(
+        task_counts.keys(), key=lambda x: label_order.index(x))
+
+    counts = [task_counts[label] for label in sorted_labels]
+
+    data = {"labels": sorted_labels, "counts": counts}
+
+    task_data = json.dumps(data)
 
     context = {
         'clients': json.dumps(serialized_clients),
         'task': json.dumps(serialized_tasks),
-        # 'ca': ca
+        'pie_data': client_data,
+        'bar_data': task_data
     }
 
     return render(request=request, template_name='dashboard.html', context=context)
 
 
-def contact_us(request):
-    return render(request=request, template_name='contact-us.html')
+# def contact_us(request):
+#     return render(request=request, template_name='contact-us.html')
 
 
 def client_add(request):
@@ -380,7 +426,8 @@ def client_edit(request, client_id):
                 login.username = username
                 login.type = "Client"
                 login.save()
-
+                if request.session.get('type') == 'Client':
+                    return redirect('/CAadmin/client-detail/'+str(client_id))
                 return redirect('/CAadmin/client-list')
         except IntegrityError:
             message = 'User already exists!'
@@ -865,14 +912,31 @@ def update_task(request, task_id):
         task.task_title = request.POST.get('task_title')
         task.description = request.POST.get('description')
 
+        start_date_str = request.POST.get('start_date')
+        if start_date_str != None:
+            task.start_date = datetime.strptime(
+                start_date_str, "%d/%m/%Y %H:%M").date()
+        else:
+            task.start_date = start_date_str
+
+        end_date_str = request.POST.get('end_date')
+        if end_date_str != None:
+            task.end_date = datetime.strptime(
+                end_date_str, "%d/%m/%Y %H:%M").date()
+        else:
+            task.end_date = end_date_str
+
         due_date_str = request.POST.get('due_date')
         if due_date_str != None:
             task.due_date = datetime.strptime(due_date_str, "%d/%m/%Y").date()
 
         task.status = request.POST.get('status')
         assign_to = request.POST.get('assign_to')
-        employee = Employee.objects.filter(id=assign_to).first()
-        task.assign_to = employee
+        if assign_to == 'All':
+            task.assign_to = None
+        else:
+            employee = Employee.objects.filter(id=assign_to).first()
+            task.assign_to = employee
         task.priority = request.POST.get('priority')
         tags = request.POST.getlist('tags')
         tag_ids = []
@@ -885,13 +949,6 @@ def update_task(request, task_id):
                 new_tag.save()
                 tag_ids.append(new_tag.id)
         task.tags.set(tag_ids)
-        start_date_str = request.POST.get('start_date')
-        if start_date_str != None:
-            task.start_date = datetime.strptime(
-                start_date_str, "%d/%m/%Y %H:%M")
-        end_date_str = request.POST.get('end_date')
-        if end_date_str != None:
-            task.end_date = datetime.strptime(end_date_str, "%d/%m/%Y %H:%M")
 
         # Save the updated task
         task.save()
@@ -951,3 +1008,50 @@ def change_employee_password(request, employee_id):
     login.save()
 
     return redirect('/CAadmin/employee-edit/' + str(employee_id))
+
+
+def contact_us(request):
+    if request.method == "POST":
+        name = request.POST['name']
+        msg = request.POST['msg']
+        email = request.POST['email']
+        phone_number = request.POST['phone_number']
+        ref = request.POST['ref']
+        subject = request.POST['subject']
+
+        contact_us = Contact_us()
+        contact_us.name = name
+        contact_us.messaeg = msg
+        contact_us.email = email
+        contact_us.phone_number = phone_number
+        contact_us.ref = ref
+        contact_us.subject = subject
+
+        contact_us.save()
+        return redirect("/CAadmin/login")
+    return render(request, template_name="contact-us.html")
+
+
+def inquiry_list(request):
+    inquiry = Contact_us.objects.all()
+    count = inquiry.count()
+    print(count)
+    context = {
+        'inquirys': inquiry,
+        'count': count
+    }
+    return render(request, template_name="inquiry-list.html", context=context)
+
+
+def inquiry_view(request, inquiry_id):
+    inquiry = Contact_us.objects.filter(id=inquiry_id).first()
+    context = {
+        'inquiry': inquiry
+    }
+    return render(request, template_name="inquiry-view.html", context=context)
+
+
+def inquiry_delete(request, inquiry_id):
+    inquiry = Contact_us.objects.filter(id=inquiry_id).first()
+    inquiry.delete()
+    return redirect("/CAadmin/inquiry-list")
