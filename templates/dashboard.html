@@ -97,7 +97,7 @@
                 <ul>
                     <li><a href="#">Profile <span><img src="{% static 'images/profile-icon.svg' %}" alt="profile icon"></span></a></li>
                     <li><a href="#">Keyboard Shortcuts <span><img src="{% static 'images/shortcut-icon.svg' %}" alt="shortcut icon"></span></a></li>
-                    <li><a href="#">Logout <span><img src="{% static 'images/logout-icon.svg' %}" alt="logout icon"></span></a></li>
+                    <li><a href="logout">Logout <span><img src="{% static 'images/logout-icon.svg' %}" alt="logout icon"></span></a></li>
                 </ul>
             </div>
         </div>
@@ -127,7 +127,7 @@
                         <div class="info flxflexi">
                             <h4>Important Announcements</h4>
                             <p>Please check the latest announcements to stay updated.</p>
-                            <div class="btnbox"><a href="#" class="primary_btn">Read more</a></div>
+                            <div class="btnbox"><a href="announcement-page" class="primary_btn">Read more</a></div>
                         </div>
                         <div class="image flxfix">
                             <img src="{% static 'images/announce-img.png' %}" alt="announce">
@@ -137,30 +137,13 @@
                 <div class="an-col-2">
                     <div class="newsbox" id="newsContent">
                         <div class="news-row">
+                            {% for announcement in announcements  %}
                             <div class="item">
-                                <h6>a Latin sch ampdesd a Latin scholar from ampde from at ...</h6>
-                                <p>2 days ago</p>
+                                <h6>{{announcement.message}}</h6>
+                                <p id="formatted-date">{{ announcement.date }}</p>
                             </div>
-                            <div class="item">
-                                <h6>a Latin sch ampdesd a Latin scholar from ampde from at ...</h6>
-                                <p>2 days ago</p>
-                            </div>
-                            <div class="item">
-                                <h6>a Latin sch ampdesd a Latin scholar from ampde from at ...</h6>
-                                <p>2 days ago</p>
-                            </div>
-                            <div class="item">
-                                <h6>a Latin sch ampdesd a Latin scholar from ampde from at ...</h6>
-                                <p>2 days ago</p>
-                            </div>
-                            <div class="item">
-                                <h6>a Latin sch ampdesd a Latin scholar from ampde from at ...</h6>
-                                <p>2 days ago</p>
-                            </div>
-                            <div class="item">
-                                <h6>a Latin sch ampdesd a Latin scholar from ampde from at ...</h6>
-                                <p>2 days ago</p>
-                            </div>
+                            {% endfor %}
+                            
                         </div>
                     </div>
                 </div>
@@ -194,6 +177,8 @@
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script src="{% static 'js/developer-chart.js' %}"></script>
 <script src="{% static 'js/script.js' %}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+
 <script>
 
     const pie_data = JSON.parse('{{ pie_data|safe }}');
@@ -380,6 +365,41 @@
           }
       }
      
+      function updateAnnouncementDates() {
+        // Get all the announcement date elements
+        var dateElements = document.querySelectorAll('#formatted-date');
+
+        // Loop through each element and format the date
+        dateElements.forEach(function (element) {
+            var date = moment(element.innerText, 'MMMM DD, YYYY, h:mm a');
+            var currentDate = moment(); // Get the current date and time
+            var minutesAgo = currentDate.diff(date, 'minutes'); // Calculate the difference in minutes
+            var formattedDate = minutesAgo + ' minutes ago';
+            if (minutesAgo < 60) {
+                formattedDate = minutesAgo + ' minutes ago';
+            }
+            else {
+                if (minutesAgo < 1440) {
+                    var hoursAgo = Math.floor(minutesAgo / 60);
+                    formattedDate = hoursAgo + ' hours ago';
+                }
+                else {
+                    var daysAgo = Math.floor(minutesAgo / 1440);
+                    formattedDate = daysAgo + ' days ago';
+                }
+            }
+
+            // Replace the inner text of the element with the formatted date
+            element.innerText = formattedDate;
+        });
+    }
+
+
+    // Call the function initially
+    
+    updateAnnouncementDates();
+
+    // Call the function every 1 minute
 </script>
 <!--JavaScript-->
 

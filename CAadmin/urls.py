@@ -11,7 +11,6 @@ urlpatterns = [
     path("client-list", views.client_list, name="client_list"),
     path("show-client", views.show_client, name="show_client"),
     path("change-status", views.change_status, name="change_status"),
-    path("ajax-demo", views.ajax_demo, name="ajax_demo"),
     path("client-detail/<int:client_id>",
          views.client_detail, name="client_detail"),
     path("client-edit/<int:client_id>",
@@ -57,10 +56,17 @@ urlpatterns = [
     path("inquiry-list", views.inquiry_list, name="inquiry_list"),
     path("inquiry-view/<int:inquiry_id>",
          views.inquiry_view, name="inquiry_view"),
-
     path("inquiry-view/inquiry-delete/<int:inquiry_id>",
          views.inquiry_delete, name="inquiry_delete"),
     path("inquiry-delete/<int:inquiry_id>",
          views.inquiry_delete, name="inquiry_delete"),
 
+    path("announcement-page", views.announcement_page, name="announcement_page"),
+    path("get-announcement", views.get_announcement, name="get_announcement"),
+    path("update-announcement/<int:announcement_id>",
+         views.update_announcement, name="update_announcement"),
+
+    path("delete_announcement/<int:announcement_id>",
+         views.delete_announcement, name="delete_announcement"),
+    path("logout", views.logout, name="logout"),
 ]

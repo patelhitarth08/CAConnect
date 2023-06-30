@@ -55,7 +55,7 @@
                 <ul>
                     <li><a href="#">Profile <span><img src="{% static 'images/profile-icon.svg' %}" alt="profile icon"></span></a></li>
                     <li><a href="#">Keyboard Shortcuts <span><img src="{% static 'images/shortcut-icon.svg' %}" alt="shortcut icon"></span></a></li>
-                    <li><a href="#">Logout <span><img src="{% static 'images/logout-icon.svg' %}" alt="logout icon"></span></a></li>
+                    <li><a href="logout">Logout <span><img src="{% static 'images/logout-icon.svg' %}" alt="logout icon"></span></a></li>
                 </ul>
             </div>
         </div>
@@ -99,9 +99,7 @@
                             </div>
                         </div>
                         
-                        <a href="javascript:void(0)" onclick="openModal()"class="modal_personal_file">
-                            Change Password 
-                        </a>
+                       
                         <div class="col-lg-12">
                             <div class="form-submit">
                                 <input class="primary_btn" type="submit" value="Submit">
@@ -115,38 +113,6 @@
     </div>
 </div>
 <!--Wrapper End-->
-<div class="modal fade modal_cat_add modal_change_password" id="modal_change_password" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="staticBackdropLabel">Change Password</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body admin-edit-form ">
-                <form id="myForm" action="/CAadmin/change_employee_password/{{employee.id}}" method="POST">
-                    {% csrf_token %}
-                    <div class="form_row">
-                        
-                        <div class="form_col_1-2">
-                            <div class="input_container form-input">
-                                <input type="password" required name="password" id="password" placeholder="password" class="input_field"></textarea>
-                                <div class="icon"></div>
-                            </div>
-                        </div>
-                        <div class="form_col_1-2">
-                            <div class="input_container form-input">
-                                <input type="password" required name="c_password" id="c_password" placeholder="Confirm Password" class="input_field"></textarea>
-                                <div class="icon"></div>
-                            </div>
-                        </div>
-                        <div class="form_submit flxrow">
-                            <input type="submit" value="Submit" class="primary_btn">
-                        </div>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
 
 <!--JavaScript-->
 <script src="{% static 'js/jquery-3.3.1.min.js' %}"></script>
@@ -155,23 +121,6 @@
 <script src="{% static 'js/bootstrap.min.js' %}"></script>
 <script src="{% static 'js/jquery.nice-select.js' %}"></script>
 <script src="{% static 'js/script.js' %}"></script>
-<script>
-    function openModal() {
-        // Open the modal for personal file
-        $('#modal_change_password').modal('show');
-      }
-      
-      document.getElementById('myForm').addEventListener('submit', function(event) {
-        console.log("hi");
-        var password = document.getElementById('password').value;
-        var confirm_password = document.getElementById('c_password').value;
-
-        if (password !== confirm_password) {
-            event.preventDefault(); // Prevent form submission
-            alert("Password and Confirm Password do not match.");
-        }
-    });
-</script>
 <!--JavaScript-->
 
 </body>

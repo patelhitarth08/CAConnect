@@ -101,7 +101,7 @@
                 <ul>
                     <li><a href="#">Profile <span><img src="{% static 'images/profile-icon.svg' %}" alt="profile icon"></span></a></li>
                     <li><a href="#">Keyboard Shortcuts <span><img src="{% static 'images/shortcut-icon.svg' %}" alt="shortcut icon"></span></a></li>
-                    <li><a href="#">Logout <span><img src="{% static 'images/logout-icon.svg' %}" alt="logout icon"></span></a></li>
+                    <li><a href="logout">Logout <span><img src="{% static 'images/logout-icon.svg' %}" alt="logout icon"></span></a></li>
                 </ul>
             </div> 
             </div>
@@ -248,6 +248,16 @@
                                         </td>
                                         <td class="button_action">
                                             <div class="button_grp">
+                                                
+                                                <div class="button_box">
+                                                    <a href="#" onclick="openModal({{client.id}})">
+                                                        <svg style="color: rgb(132, 137, 148);" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-key" viewBox="0 0 16 16"> 
+                                                            <path d="M0 8a4 4 0 0 1 7.465-2H14a.5.5 0 0 1 .354.146l1.5 1.5a.5.5 0 0 1 0 .708l-1.5 1.5a.5.5 0 0 1-.708 0L13 9.207l-.646.647a.5.5 0 0 1-.708 0L11 9.207l-.646.647a.5.5 0 0 1-.708 0L9 9.207l-.646.647A.5.5 0 0 1 8 10h-.535A4 4 0 0 1 0 8zm4-3a3 3 0 1 0 2.712 4.285A.5.5 0 0 1 7.163 9h.63l.853-.854a.5.5 0 0 1 .708 0l.646.647.646-.647a.5.5 0 0 1 .708 0l.646.647.646-.647a.5.5 0 0 1 .708 0l.646.647.793-.793-1-1h-6.63a.5.5 0 0 1-.451-.285A3 3 0 0 0 4 5z" fill="#848994"></path> 
+                                                            <path d="M4 8a1 1 0 1 1-2 0 1 1 0 0 1 2 0z" fill="#848994"></path> 
+                                                        </svg>
+                                                    </a>                                                
+                                                </div>
+                                                
                                                 <div class="button_box view_box_bnt">
                                                     <a href="client-detail/{{client.id}}">
                                                         <svg width="20" height="20" viewBox="0 0 20 20" fill="none"
@@ -263,6 +273,7 @@
                                                         </svg>
                                                     </a>
                                                 </div>
+
                                                 <div class="button_box edit_box_btn">
                                                     <a href="client-edit/{{client.id}}">
                                                         <svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -309,6 +320,40 @@
         </div>
     </div>
 
+    <div class="modal fade modal_cat_add modal_change_password" id="modal_change_password" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="staticBackdropLabel">Change Password</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body admin-edit-form ">
+                    <form id="myForm" method="POST">
+                        {% csrf_token %}
+                        <div class="form_row">
+                            
+                            <div class="form_col_1-2">
+                                <div class="input_container form-input">
+                                    <input type="password" required name="password" id="password" placeholder="password" class="input_field"></textarea>
+                                    <div class="icon"></div>
+                                </div>
+                            </div>
+                            <div class="form_col_1-2">
+                                <div class="input_container form-input">
+                                    <input type="password" required name="c_password" id="c_password" placeholder="Confirm Password" class="input_field"></textarea>
+                                    <div class="icon"></div>
+                                </div>
+                            </div>
+                            <div class="form_submit flxrow">
+                                <input type="submit" value="Submit" class="primary_btn">
+                            </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+
 
     <!--Wrapper End-->
 
@@ -325,6 +370,25 @@
     <!--JavaScript-->
 
     <script>
+
+        function openModal(client_id) {
+            $('#modal_change_password').modal('show');
+            const form = document.getElementById('myForm');
+            console.log(client_id);
+            form.action = "/CAadmin/change_password/" + client_id;
+          }
+
+          
+          document.getElementById('myForm').addEventListener('submit', function(event) {
+            console.log("hi");
+            var password = document.getElementById('password').value;
+            var confirm_password = document.getElementById('c_password').value;
+    
+            if (password !== confirm_password) {
+                event.preventDefault(); // Prevent form submission
+                alert("Password and Confirm Password do not match.");
+            }
+        });
        
         jQuery(document).ready(function () {
             jQuery(".input_container .show_hide_pwd").click(function () {

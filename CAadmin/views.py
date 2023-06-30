@@ -1,3 +1,5 @@
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth import logout
 from collections import defaultdict
 from django.urls import reverse
 from django.views.decorators.http import require_GET
@@ -11,7 +13,7 @@ from django.db import IntegrityError
 from django.http import HttpResponse, HttpResponseBadRequest, JsonResponse
 from django.shortcuts import redirect, render
 
-from CAadmin.models import Address, AuthorizedPerson, Client, Employee, Login, PersonalDetails, CA, Personal_file, General_file, Tag, Task, Contact_us
+from CAadmin.models import Address, Announcement, AuthorizedPerson, Client, Employee, Login, PersonalDetails, CA, Personal_file, General_file, Tag, Task, Contact_us
 from django.contrib.auth.hashers import make_password, check_password
 from django.shortcuts import get_object_or_404
 from django.contrib import messages
@@ -27,7 +29,6 @@ def ca_signup(request):
         password = request.POST['password']
         c_password = request.POST['c_password']
         profile = request.FILES.get('profile')
-        print(profile)
 
         if password != c_password:
             msg = "Password does not match with Confirm Password"
@@ -42,7 +43,6 @@ def ca_signup(request):
             if profile != None:
                 ca.profile_photo = profile
 
-            print(ca.profile_photo)
             login = Login()
             login.username = ca.username
             login.password = ca.password
@@ -168,13 +168,15 @@ def dashboard(request):
 
     task_data = json.dumps(data)
 
+    announcements = Announcement.objects.all()
+
     context = {
         'clients': json.dumps(serialized_clients),
         'task': json.dumps(serialized_tasks),
         'pie_data': client_data,
-        'bar_data': task_data
+        'bar_data': task_data,
+        'announcements': announcements,
     }
-
     return render(request=request, template_name='dashboard.html', context=context)
 
 
@@ -466,16 +468,9 @@ def client_edit(request, client_id):
     return render(request=request, template_name='client-edit.html', context=context)
 
 
-def ajax_demo(request):
-    clients = Client.objects.all()
-    context = {'clients': clients}
-    return render(request=request, template_name='ajax-demo.html', context=context)
-
-
 def show_client(request):
     if request.method == 'GET':
         client_name = request.GET.get('name', '')
-        print(client_name)
         client = Client.objects.filter(name=client_name).first()
         response = None
         if client != None:
@@ -521,7 +516,6 @@ def client_list(request):
         auth_person = AuthorizedPerson.objects.filter(client_id=client).first()
         client_auths[client.id] = auth_person.name
     client_auths_json = json.dumps(client_auths)
-    print(client_auths_json)
 
     context = {'clients': clients, 'count': count,
                'client_auths': client_auths_json}
@@ -547,7 +541,6 @@ def client_detail(request, client_id):
         client1 = Client.objects.get(id=cli_id)
         files = Personal_file.objects.filter(client_id=cli_id).values()
         personal_files.append({'client': client1, 'files': files})
-    print(personal_files)
 
     general_files = []
     client_ids = General_file.objects.values_list(
@@ -557,7 +550,6 @@ def client_detail(request, client_id):
         client2 = Client.objects.get(id=cli_id)
         files = General_file.objects.filter(client_id=cli_id).values()
         general_files.append({'client2': client2, 'files2': files})
-    print(general_files)
     context = {'client': client, 'o_address': o_address,
                'r_address': r_address, 'auth_persons': auth_persons, 'person': person,
                'personal_files': personal_files, 'general_files': general_files}
@@ -588,7 +580,6 @@ def delete_client(request, client_id):
 def employees_list(request):
     employees = Employee.objects.all()
     count = employees.count()
-    print(count)
     context = {'employees': employees, 'count': count}
     return render(request, template_name='employees-list.html', context=context)
 
@@ -863,7 +854,6 @@ def task_list(request):
 def get_task_details(request):
     task_id = request.GET.get('taskId')
     task = get_object_or_404(Task, id=task_id)
-    print(task)
     if task.assign_to != None:
         task_details = {
             'task_title': task.task_title,
@@ -974,7 +964,6 @@ def update_task_status(request):
             # Update the task status with the new column value
             task.status = column
             task.save()
-            print(column)
 
             # Return a success response
             return HttpResponse("Task status updated successfully")
@@ -994,7 +983,7 @@ def change_password(request, client_id):
     client.save()
     login.save()
 
-    return redirect('/CAadmin/client-edit/' + str(client_id))
+    return redirect('/CAadmin/client-list')
 
 
 def change_employee_password(request, employee_id):
@@ -1007,7 +996,7 @@ def change_employee_password(request, employee_id):
     employee.save()
     login.save()
 
-    return redirect('/CAadmin/employee-edit/' + str(employee_id))
+    return redirect('/CAadmin/employees-list')
 
 
 def contact_us(request):
@@ -1035,7 +1024,6 @@ def contact_us(request):
 def inquiry_list(request):
     inquiry = Contact_us.objects.all()
     count = inquiry.count()
-    print(count)
     context = {
         'inquirys': inquiry,
         'count': count
@@ -1055,3 +1043,55 @@ def inquiry_delete(request, inquiry_id):
     inquiry = Contact_us.objects.filter(id=inquiry_id).first()
     inquiry.delete()
     return redirect("/CAadmin/inquiry-list")
+
+
+def announcement_page(request):
+    if request.method == 'POST':
+        title = request.POST['title']
+        message = request.POST['message']
+
+        announcement = Announcement(title=title, message=message)
+        announcement.save()
+
+        announcements = Announcement.objects.all()
+        context = {'announcements': announcements}
+        return render(request, template_name='announcement-page.html', context=context)
+
+    announcements = Announcement.objects.all()
+    context = {'announcements': announcements}
+    return render(request, template_name='announcement-page.html', context=context)
+
+
+def get_announcement(request):
+    if request.method == 'GET':
+        announcement_id = request.GET.get('id')
+        announcement = Announcement.objects.filter(id=announcement_id).first()
+        data = {
+            'title': announcement.title,
+            'message': announcement.message
+        }
+        return JsonResponse(data)
+    else:
+        return JsonResponse({'error': 'Invalid request method.'})
+
+
+def update_announcement(request, announcement_id):
+    if request.method == 'POST':
+        announcement = Announcement.objects.filter(id=announcement_id).first()
+        announcement.title = request.POST['title']
+        announcement.message = request.POST['message']
+        announcement.save()
+
+        return redirect('/CAadmin/announcement-page')
+
+
+def delete_announcement(request, announcement_id):
+    announcement = Announcement.objects.filter(id=announcement_id).first()
+    announcement.delete()
+    return redirect('/CAadmin/announcement-page')
+
+
+def logout(request):
+    request.session.flush()
+
+    return redirect('/CAadmin/login')

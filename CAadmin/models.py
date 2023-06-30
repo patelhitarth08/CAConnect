@@ -2,7 +2,6 @@ from datetime import date, timedelta, datetime
 from django.db import models
 
 
-
 def get_default_profile_photo():
     return 'profiles/profile.png'
 
@@ -27,6 +26,7 @@ class CA(models.Model):
     password = models.CharField(max_length=100)
     profile_photo = models.FileField(
         upload_to='profiles', default=get_default_profile_photo)
+
     def __str__(self):
         return self.username
 
@@ -185,6 +185,7 @@ class Tag(models.Model):
     def __str__(self):
         return self.name
 
+
 class Contact_us(models.Model):
     name = models.CharField(max_length=255)
     email = models.EmailField()
@@ -194,3 +195,7 @@ class Contact_us(models.Model):
     ref = models.CharField(max_length=255)
 
 
+class Announcement(models.Model):
+    title = models.CharField(max_length=255)
+    message = models.CharField(max_length=255)
+    date = models.DateTimeField(default=get_current_date)
