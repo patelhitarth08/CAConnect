@@ -22,6 +22,7 @@ class Login(models.Model):
 
 class CA(models.Model):
     username = models.CharField(max_length=50, unique=True)
+    name = models.CharField(max_length=255)
     email = models.EmailField()
     password = models.CharField(max_length=100)
     profile_photo = models.FileField(

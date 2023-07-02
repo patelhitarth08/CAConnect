@@ -25,6 +25,7 @@ def ca_signup(request):
     msg = None
     if request.method == "POST":
         username = request.POST['username']
+        name = request.POST['name']
         email = request.POST['email']
         password = request.POST['password']
         c_password = request.POST['c_password']
@@ -39,6 +40,7 @@ def ca_signup(request):
             ca = CA()
             ca.username = username
             ca.email = email
+            ca.name = name
             ca.password = make_password(password)
             if profile != None:
                 ca.profile_photo = profile
@@ -47,6 +49,9 @@ def ca_signup(request):
             login.username = ca.username
             login.password = ca.password
             login.type = "Admin"
+            if profile != None:
+                login.profile_photo = profile
+
             ca.save()
             login.save()
 
@@ -191,6 +196,7 @@ def client_add(request):
         r_status = request.POST['r_status']
         username = request.POST['username']
         name = request.POST['name']
+        profile = request.FILES.get('profile')
         email = request.POST['email']
         p_number = request.POST['p_number']
         password = request.POST['password']
@@ -236,6 +242,7 @@ def client_add(request):
                 client.residence_status = r_status
                 client.username = username
                 client.name = name
+                client.profile_photo = profile
                 client.email = email
                 client.phone_number = p_number
                 client.birth_date = dob
@@ -291,6 +298,7 @@ def client_add(request):
                 login = Login()
                 login.username = client.username
                 login.password = client.password
+                login.profile_photo = profile
                 login.type = "Client"
                 login.save()
 
@@ -589,6 +597,7 @@ def employee_create(request):
         username = request.POST['username']
         name = request.POST['name']
         email = request.POST['email']
+        profile = request.FILES.get('profile')
         password = request.POST['password']
         c_password = request.POST['c_password']
         if password != c_password:
@@ -603,12 +612,15 @@ def employee_create(request):
                 employee.username = username
                 employee.name = name
                 employee.email = email
+                employee.profile_photo = profile
+                print(profile)
                 employee.password = make_password(password)
                 employee.save()
 
                 login = Login()
                 login.username = employee.username
                 login.password = employee.password
+                login.profile_photo = profile
                 login.type = "Employee"
                 login.save()
 
@@ -1095,3 +1107,16 @@ def logout(request):
     request.session.flush()
 
     return redirect('/CAadmin/login')
+
+
+def admin_profile(request):
+    if request.session['type'] == "Admin":
+        user = CA.objects.filter(username=request.session['username']).first()
+        print(user)
+        context = {'user': user}
+        return render(request, template_name='admin-profile.html', context=context)
+    else:
+        user = Employee.objects.filter(
+            username=request.session['username']).first()
+        # context = {'user': user}
+        return redirect("/CAadmin/employees-details/" + user.id)

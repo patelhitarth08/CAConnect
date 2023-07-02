@@ -69,7 +69,7 @@
         </div>
         <div class="page-block">
             <div class="admin-edit-form">
-                <form method="POST">
+                <form method="POST" enctype="multipart/form-data">
                     {% csrf_token %}
                     {% if message != None %}
                     <div class="alert alert-danger">
@@ -87,6 +87,13 @@
                                 <input class="input-text" name="name" type="text" placeholder="Name*">
                             </div>
                         </div>
+                        <span class="form_row">
+                            <input class="input_text form-control" id="profile" type="file" placeholder="Profile Photo" name="profile">
+                            <div class="invalid-feedback">
+                                Enter Your Profile Photo
+                            </div>
+                           
+                        </span>
                         <div class="col-lg-4">
                             <div class="form-input">
                                 <input class="input-text" name="email" type="email" placeholder="Email*">

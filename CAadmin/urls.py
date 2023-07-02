@@ -69,4 +69,6 @@ urlpatterns = [
     path("delete_announcement/<int:announcement_id>",
          views.delete_announcement, name="delete_announcement"),
     path("logout", views.logout, name="logout"),
+    path("admin-profile", views.admin_profile, name="admin_profile"),
+
 ]

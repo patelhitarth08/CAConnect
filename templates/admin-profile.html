@@ -1,3 +1,4 @@
+{% load static %}
 <!doctype html>
 <html lang="en">
 <head>
@@ -6,13 +7,15 @@
 <title>CA</title>
 
 <!--Stylesheet-->
-<link href="fonts/fonts.css" rel="stylesheet">
-<link href="css/bootstrap.min.css" rel="stylesheet">
-<link href="css/nice-select.css" rel="stylesheet">
-<link href="css/jquery-ui.min.css" rel="stylesheet">
-<link href="css/style.css" rel="stylesheet">
-<link href="css/style-v3.css" rel="stylesheet">
-<link href="css/responsive.css" rel="stylesheet">
+{% block custom_css %}
+<link href="{% static 'fonts/fonts.css' %}" rel="stylesheet">
+<link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+<link href="{% static 'css/nice-select.css' %}" rel="stylesheet">
+<link href="{% static 'css/jquery-ui.min.css' %}" rel="stylesheet">
+<link href="{% static 'css/style.css' %}" rel="stylesheet">
+<link href="{% static 'css/style-v3.css' %}" rel="stylesheet">
+<link href="{% static 'css/responsive.css' %}" rel="stylesheet">
+{% endblock custom_css %}
 <!--Stylesheet-->
 
 </head>
@@ -28,7 +31,7 @@
                 <span></span>
             </a>
         </div>
-        <div class="logo"><a href="index.html"><img src="images/logo.svg" alt="logo"></a></div>
+        <div class="logo"><a href="dashboard"><img src="{% static 'images/logo.svg' %}" alt="logo"></a></div>
         <div class="header_breadcrumb">
             <ul>
                 <li><a href="#">Home</a></li>
@@ -37,7 +40,7 @@
         </div>
         <div class="user_login flxrow">
             <a href="#">
-                <div class="img" style="background-image:url(images/user-img.png);"></div>
+                <div class="img" style="background-image:url({% static 'images/user-img.png'%});"></div>
                 <div class="name">
                     <p>{{request.session.username}} <span>{{request.session.type}}</span></p>
                     <div class="down-caret">
@@ -49,9 +52,9 @@
             </a>
             <div class="user_dropdown">
                 <ul>
-                    <li><a href="#">Profile <span><img src="images/profile-icon.svg" alt="profile icon"></span></a></li>
-                    <li><a href="#">Keyboard Shortcuts <span><img src="images/shortcut-icon.svg" alt="shortcut icon"></span></a></li>
-                    <li><a href="#">Logout <span><img src="images/logout-icon.svg" alt="logout icon"></span></a></li>
+                    <li><a href="#">Profile <span><img src="{% static 'images/profile-icon.svg' %}" alt="profile icon"></span></a></li>
+                    <li><a href="#">Keyboard Shortcuts <span><img src="{% static 'images/shortcut-icon.svg' %}" alt="shortcut icon"></span></a></li>
+                    <li><a href="#">Logout <span><img src="{% static 'images/logout-icon.svg' %}" alt="logout icon"></span></a></li>
                 </ul>
             </div>
         </div>
@@ -65,7 +68,7 @@
         <div class="page-title d-flex flex-wrap align-items-center justify-content-between">
             <h1>Alexander</h1>
             <div class="title-icon">
-                <a class="icon" href="#"><img src="images/profile-edit-icon.svg" alt=""></a>
+                <a class="icon" href="#"><img src="{% static 'images/profile-edit-icon.svg' %}" alt=""></a>
             </div>
         </div>
         <div class="page-block">
@@ -75,19 +78,19 @@
                         <div class="col-lg-4">
                             <div class="form-box">
                                 <label class="form-label">Username</label>
-                                <div class="form-input">Alexa@123 <a class="icon" href="#"><img src="images/copy-icon.svg" alt=""></a></div>
+                                <div class="form-input">{{user.username}} <a class="icon" href="#"><img src="images/copy-icon.svg" alt=""></a></div>
                             </div>
                         </div>
                         <div class="col-lg-4">
                             <div class="form-box">
                                 <label class="form-label">Name</label>
-                                <div class="form-input">Alexander <a class="icon" href="#"><img src="images/copy-icon.svg" alt=""></a></div>
+                                <div class="form-input">{{user.name}} <a class="icon" href="#"><img src="images/copy-icon.svg" alt=""></a></div>
                             </div>
                         </div>
                         <div class="col-lg-4">
                             <div class="form-box">
                                 <label class="form-label">Email</label>
-                                <div class="form-input">info.alexander@gmail.com <a class="icon" href="#"><img src="images/copy-icon.svg" alt=""></a></div>
+                                <div class="form-input">{{user.email}} <a class="icon" href="#"><img src="images/copy-icon.svg" alt=""></a></div>
                             </div>
                         </div>
                     </div>
@@ -99,12 +102,12 @@
 <!--Wrapper End-->
 
 <!--JavaScript-->
-<script src="js/jquery-3.3.1.min.js"></script>
-<script src="js/jquery-ui.min.js"></script>
-<script src="js/popper.min.js"></script>
-<script src="js/bootstrap.min.js"></script>
-<script src="js/jquery.nice-select.js"></script>
-<script src="js/script.js"></script>
+<script src="{% static 'js/jquery-3.3.1.min.js' %}"></script>
+<script src="{% static 'js/jquery-ui.min.js' %}"></script>
+<script src="{% static 'js/popper.min.js' %}"></script>
+<script src="{% static 'js/bootstrap.min.js' %}"></script>
+<script src="{% static 'js/jquery.nice-select.js' %}"></script>
+<script src="{% static 'js/script.js' %}"></script>
 <!--JavaScript-->
 
 </body>

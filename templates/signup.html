@@ -40,6 +40,11 @@
                         </div>
                     </span>
                     <span class="form_row">
+                        <input class="input_text form-control" id="name" type="text" placeholder="Name" name="name" required>
+                        <div class="invalid-feedback">
+                            Enter Your Name.
+                        </div>
+                    </span><span class="form_row">
                         <input class="input_text form-control" id="email" type="text" placeholder="Email" name="email" required>
                         <div class="invalid-feedback">
                             Enter Your Email
@@ -50,6 +55,7 @@
                         <div class="invalid-feedback">
                             Enter Your Profile Photo
                         </div>
+                       
                     </span>
                     <span class="form_row password">
                         <input class="input_text form-control" id="password" name="password" type="password" placeholder="Password" required>
@@ -83,6 +89,21 @@
 <script src="{% static 'js/script.js' %}"></script>
 <!--JavaScript-->
 <script>
+    const profileInput = document.getElementById('profile');
+    
+    profileInput.addEventListener('change', function () {
+        const selectedFile = this.files[0];
+        console.log(selectedFile.type)
+        const allowedTypes = ['image/jpeg', 'image/png', 'image/jpg'];
+    
+        if (selectedFile && !allowedTypes.includes(selectedFile.type)) {
+            alert("Please select a valid profile photo (JPEG, PNG, or GIF).")
+            this.value = ''; // Clear the selected file
+        }
+    });
+    
+
+
     (function () {
         'use strict'
       

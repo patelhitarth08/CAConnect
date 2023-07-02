@@ -295,7 +295,11 @@
                 var currentDate = moment(); // Get the current date and time
                 var minutesAgo = currentDate.diff(date, 'minutes'); // Calculate the difference in minutes
                 var formattedDate = minutesAgo + ' minutes ago';
-                if (minutesAgo < 60) {
+                if (minutesAgo < 1) {
+                    var secondAgo = currentDate.diff(date, 'second'); // Calculate the difference in minutes
+                    formattedDate = secondAgo + ' seconds ago';
+                }
+                else if (minutesAgo < 60) {
                     formattedDate = minutesAgo + ' minutes ago';
                 }
                 else {
